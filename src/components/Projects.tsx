@@ -34,6 +34,58 @@ export const Projects = () => {
         }
       }
     },
+     {
+      title: "AskMyDoc",
+      description: "Real-time Answer according to your Documents",
+      image: "https://iili.io/Fhtlf2V.png",
+      tags: ["React", "Firebase", "Tailwind CSS","GitHub","Git","Gemini API"],
+      github: "https://github.com/RAKESHKUSHWAHA7518/Rag-application-with-VectorDB",
+      demo: "https://askmydoc-ten.vercel.app/",
+      details: {
+        overview: "An application that allows users to upload a PDF document, processes and embeds its content, and enables a chat-based Q&A interface to query the document's knowledge base using a large language model.",
+        features: [
+          "Real-time Answer according to your Documents ",
+          " Gen AI ",
+          " Vector DB",
+          " PDF Upload and Processing",
+          " Chat-based Q&A Interface",
+          "Gemini API Integration",
+          "Responsive Design with Tailwind CSS"
+           
+          
+        ],
+        techStack: {
+          frontend: ["React", "Context API", "Tailwind CSS","Gemini API"],
+          backend: ["Firebase", "Cloud Functions"],
+          deployment: ["Vercel"]
+        }
+      }
+    },
+     {
+      title: "AI Coding Assistant",
+      description: "Real-time Answer  AI Coding Assistant",
+      image: "https://iili.io/FhtjzHG.png",
+      tags: ["React", "Firebase", "Tailwind CSS","GitHub","Git","Gemini API"],
+      github: "https://github.com/RAKESHKUSHWAHA7518/coding-assistant",
+      demo: "https://coding-assistant-seven.vercel.app/",
+      details: {
+        overview: "An application that allows users to upload a PDF document, processes and embeds its content, and enables a chat-based Q&A interface to query the document's knowledge base using a large language model.",
+        features: [
+          "Real-time Answer  AI Coding Assistant",
+          " Gen AI ",
+          "Codeing Assistant",
+          "Gemini API Integration",
+          "Responsive Design with Tailwind CSS"
+           
+          
+        ],
+        techStack: {
+          frontend: ["React", "Context API", "Tailwind CSS","Gemini API"],
+          backend: ["Firebase", "Cloud Functions"],
+          deployment: ["Vercel"]
+        }
+      }
+    },
     {
       title: " Food Application",
       description: "Real-time collaborative Cart management system",
