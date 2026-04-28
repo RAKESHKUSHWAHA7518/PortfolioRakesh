@@ -517,7 +517,7 @@
 import React, { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
-import { Code2, Palette, Database, Globe, Users, Trophy, CheckCircle2, Zap, Target } from 'lucide-react';
+import { Code2, Database, Globe, Users, Briefcase, CheckCircle2, Zap, Target, Bot, Cloud } from 'lucide-react';
 
 export const About = () => {
   const [ref, inView] = useInView({
@@ -525,7 +525,6 @@ export const About = () => {
     threshold: 0.1,
   });
 
-  // For animated border colors
   const [angle, setAngle] = useState(0);
 
   useEffect(() => {
@@ -540,26 +539,31 @@ export const About = () => {
   };
 
   const stats = [
-    { icon: <Code2 />, value: "6+", label: "Months Experience" },
-    { icon: <Users />, label: "Happy Clients", value: "2+" },
-    { icon: <Trophy />, label: "Awards Won", value: "0" },
-    { icon: <Globe />, label: "Countries", value: "2+" },
+    { icon: <Briefcase />, value: "1+", label: "Years Experience" },
+    { icon: <Users />, label: "Happy Clients", value: "3+" },
+    { icon: <Globe />, label: "Projects Shipped", value: "10+" },
+    { icon: <Code2 />, label: "Technologies", value: "20+" },
   ];
 
   const skills = [
     {
       category: "Frontend",
-      items: ["React", "TypeScript", "Next.js", "Javascript", "Shadcn", "Tailwind CSS", "Redux"],
+      items: ["React.js", "Next.js", "TypeScript", "JavaScript", "Shadcn/ui", "Tailwind CSS", "Redux", "Framer Motion"],
       icon: <Code2 className="w-6 h-6" />,
     },
     {
-      category: "UI/UX",
-      items: ["Figma", "User Research", "Prototyping", "Wireframing"],
-      icon: <Palette className="w-6 h-6" />,
+      category: "Backend & Cloud",
+      items: ["Node.js", "Express.js", "MongoDB", "Python", "Firebase", "AWS Lambda", "AWS EC2", "AWS S3", "AWS Cognito", "Docker"],
+      icon: <Cloud className="w-6 h-6" />,
     },
     {
-      category: "Backend",
-      items: ["Node.js", "Python", "MongoDB", "Express Js", "REST APIs"],
+      category: "AI & Voice Agents",
+      items: ["OpenAI", "Gemini", "RAG", "ElevenLabs", "Retell AI", "Vapi.ai", "Voiceflow", "LLM APIs", "AWS Comprehend"],
+      icon: <Bot className="w-6 h-6" />,
+    },
+    {
+      category: "Database & Tools",
+      items: ["MongoDB", "Firebase", "Git", "GitHub", "Postman", "Jira", "VS Code", "Bolt.new", "V0"],
       icon: <Database className="w-6 h-6" />,
     },
   ];
@@ -567,18 +571,18 @@ export const About = () => {
   const achievements = [
     {
       icon: <Target className="w-6 h-6" />,
-      title: "Problem Solver",
-      description: "Successfully delivered 2+ complex projects on time and within budget"
+      title: "Voice AI Pioneer",
+      description: "Achieved 20% improvement in voice accuracy via ElevenLabs, Retell & Vapi integration at Mindcraft Labs"
     },
     {
       icon: <Zap className="w-6 h-6" />,
       title: "Performance Expert",
-      description: "Improved application load times by 40% through optimization In BookNow"
+      description: "Reduced page load time by 40% at BookNow through React optimization and code splitting"
     },
     {
       icon: <CheckCircle2 className="w-6 h-6" />,
-      title: "Quality Focused",
-      description: "Maintained 98% test coverage across all projects"
+      title: "Content Creator",
+      description: "Founded Rkcoder.tech — grew to 10k monthly views within 5 months sharing dev tutorials"
     }
   ];
 
@@ -621,8 +625,8 @@ export const About = () => {
             transition={{ duration: 1, delay: 0.4 }}
             className="text-xl text-gray-600 dark:text-gray-400 max-w-3xl mx-auto"
           >
-            Passionate full-stack developer and UI/UX designer with a proven track record of 
-            creating beautiful, functional, and user-centered digital experiences.
+            Software Developer specializing in full-stack web development and AI-powered voice agents.
+            Building scalable applications and LLM-driven conversational systems at Mindcraft Labs.
           </motion.p>
         </motion.div>
 
@@ -641,20 +645,18 @@ export const About = () => {
               <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-6">Professional Journey</h3>
               <div className="space-y-4 text-gray-600 dark:text-gray-300">
                 <p>
-                  With over 6 Months of experience in web development, I specialize in building 
-                  scalable applications that solve real business problems. My approach combines 
-                  technical expertise with creative problem-solving.
+                  Software Developer with 1+ year of experience building full-stack web applications
+                  and AI-powered voice agents. Currently at Mindcraft Labs, I pioneer voice AI integrations
+                  using ElevenLabs, Retell AI, and Vapi.ai — achieving a 20% improvement in voice accuracy.
                 </p>
                 <p>
-                  I've had the privilege of working with diverse clients across multiple industries, 
-                  from startups to enterprise solutions, delivering high-quality solutions that exceed 
-                  expectations.
+                  I've worked across healthcare (HMS systems), e-commerce, and AI SaaS products — delivering
+                  scalable solutions using React.js, Next.js, Node.js, MongoDB, and AWS cloud services.
                 </p>
-                {/* <p>
-                  I'm passionate about staying current with emerging technologies and best practices, 
-                  regularly contributing to open-source projects and sharing knowledge with the 
-                  developer community.
-                </p> */}
+                <p>
+                  I also founded Rkcoder.tech, a coding platform that grew to 10k monthly views within
+                  5 months, and I'm passionate about sharing knowledge with the developer community.
+                </p>
               </div>
             </div>
           </motion.div>
@@ -747,7 +749,7 @@ export const About = () => {
           </div>
         </motion.div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           {skills.map((skill, index) => (
             <motion.div
               key={index}

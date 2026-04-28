@@ -130,7 +130,7 @@ export const Education = () => {
       period: "2021 - 2025",
       description:
         "Major in Computer Science with a focus on Web Development, MERN Stack, and UI/UX Design.",
-      achievements: ["7.3 CGPA", "2+ Internships"],
+      achievements: ["7.4 CGPA", "2+ Internships"],
     },
     {
       degree: "12th PCM",

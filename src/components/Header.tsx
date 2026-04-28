@@ -23,7 +23,7 @@ export const Header = () => {
             whileHover={{ scale: 1.05 }}
             className="text-2xl font-bold bg-gradient-to-r from-purple-600 to-blue-500 bg-clip-text text-transparent"
           >
-            Portfolio
+            RK
           </motion.div>
           
           <div className="hidden md:flex items-center space-x-8">
@@ -32,6 +32,7 @@ export const Header = () => {
             <NavLink href="#experience">Experience</NavLink>
             <NavLink href="#education">Education</NavLink>
             <NavLink href="#projects">Projects</NavLink>
+            <NavLink href="#certificates">Certificates</NavLink>
             <NavLink href="#contact">Contact</NavLink>
           </div>
 
@@ -84,12 +85,13 @@ export const Header = () => {
                 <MobileNavLink href="#experience" onClick={toggleMobileMenu}>Experience</MobileNavLink>
                 <MobileNavLink href="#education" onClick={toggleMobileMenu}>Education</MobileNavLink>
                 <MobileNavLink href="#projects" onClick={toggleMobileMenu}>Projects</MobileNavLink>
+                <MobileNavLink href="#certificates" onClick={toggleMobileMenu}>Certificates</MobileNavLink>
                 <MobileNavLink href="#contact" onClick={toggleMobileMenu}>Contact</MobileNavLink>
               </div>
               <div className="flex justify-center space-x-6 mt-6">
-                <SocialIcon icon={<Github />} href="https://github.com" />
-                <SocialIcon icon={<Linkedin />} href="https://linkedin.com" />
-                <SocialIcon icon={<Mail />} href="mailto:your.email@example.com" />
+                <SocialIcon icon={<Github />} href="https://github.com/RAKESHKUSHWAHA7518" />
+                <SocialIcon icon={<Linkedin />} href="https://www.linkedin.com/in/rakesh-kushwaha-666726212/" />
+                <SocialIcon icon={<Mail />} href="mailto:rk7518329420@gmail.com" />
               </div>
             </motion.div>
           )}

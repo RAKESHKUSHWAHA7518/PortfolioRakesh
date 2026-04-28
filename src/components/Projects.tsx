@@ -11,7 +11,53 @@ export const Projects = () => {
 
   const projects = [
     {
-      title: " ShopNow Project",
+      title: "NextViseAI",
+      description: "AI-powered clinical NER tool for oncology biomarker processing using AWS Comprehend Medical",
+      image: "https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=600&auto=format&fit=crop&q=60",
+      tags: ["Python", "AWS Comprehend Medical", "Docker", "Node.js", "React", "Firebase"],
+      github: "https://github.com/RAKESHKUSHWAHA7518",
+      demo: "https://github.com/RAKESHKUSHWAHA7518",
+      details: {
+        overview: "Developed NextViseAI at Mindcraft Labs — integrating AWS Comprehend Medical within a Dockerized Python worker to automate clinical Named Entity Recognition (NER) tasks and oncology biomarker processing. Also designed a secure 'magic link' onboarding flow using AWS Serverless Application Model (SAM).",
+        features: [
+          "AWS Comprehend Medical for clinical NER",
+          "Dockerized Python worker for biomarker processing",
+          "Magic link authentication via AWS SAM",
+          "Serverless architecture with AWS Lambda",
+          "Oncology data pipeline automation",
+        ],
+        techStack: {
+          frontend: ["React", "TypeScript", "Tailwind CSS"],
+          backend: ["Python", "Node.js", "AWS Lambda", "AWS SAM", "Docker"],
+          deployment: ["AWS ECS", "AWS EC2"]
+        }
+      }
+    },
+    {
+      title: "SkillSwap",
+      description: "Full-stack platform to exchange skills mutually without monetary transactions",
+      image: "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=600&auto=format&fit=crop&q=60",
+      tags: ["React", "Node.js", "MongoDB", "Tailwind CSS", "Express.js"],
+      github: "https://github.com/RAKESHKUSHWAHA7518",
+      demo: "https://github.com/RAKESHKUSHWAHA7518",
+      details: {
+        overview: "Developed SkillSwap, a full-stack web application that connects users to exchange skills mutually without monetary transactions (e.g., Python for Graphic Design). Features skill-matching cards, gamification with credits and badges, and a clean responsive UI.",
+        features: [
+          "User authentication and profile management",
+          "Skill listing and discovery system",
+          "Skill-matching algorithm",
+          "Gamification: credits and badges",
+          "Responsive UI with smooth navigation",
+        ],
+        techStack: {
+          frontend: ["React.js", "Tailwind CSS"],
+          backend: ["Node.js", "Express.js", "MongoDB"],
+          deployment: ["Vercel"]
+        }
+      }
+    },
+    {
+      title: "ShopNow",
       description: " A comprehensive e-commerce platform designed for scalability and performance",
       image: "https://i.postimg.cc/HsdS4wLz/shopNow.png",
       tags: ["React", "Node.js", "mongodb ", "Redux","Express Js","GitHub","Git"],
@@ -63,21 +109,19 @@ export const Projects = () => {
     },
      {
       title: "AI Coding Assistant",
-      description: "Real-time Answer  AI Coding Assistant",
+      description: "AI-powered coding assistant for real-time code help and explanations",
       image: "https://iili.io/FhtjzHG.png",
       tags: ["React", "Firebase", "Tailwind CSS","GitHub","Git","Gemini API"],
       github: "https://github.com/RAKESHKUSHWAHA7518/coding-assistant",
       demo: "https://coding-assistant-seven.vercel.app/",
       details: {
-        overview: "An application that allows users to upload a PDF document, processes and embeds its content, and enables a chat-based Q&A interface to query the document's knowledge base using a large language model.",
+        overview: "An AI-powered coding assistant that provides real-time code suggestions, explanations, and debugging help. Built with React and powered by the Gemini API to help developers write better code faster.",
         features: [
-          "Real-time Answer  AI Coding Assistant",
-          " Gen AI ",
-          "Codeing Assistant",
-          "Gemini API Integration",
+          "Real-time AI code suggestions",
+          "Code explanation and debugging help",
+          "Gemini API integration for intelligent responses",
+          "Syntax highlighting and code formatting",
           "Responsive Design with Tailwind CSS"
-           
-          
         ],
         techStack: {
           frontend: ["React", "Context API", "Tailwind CSS","Gemini API"],
