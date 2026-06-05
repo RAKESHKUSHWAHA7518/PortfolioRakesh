@@ -1,536 +1,396 @@
-// import React, { useState,Suspense } from 'react';
-// import { motion, AnimatePresence } from 'framer-motion';
-// import { Code2, Palette, Database, Download, ExternalLink, Briefcase, ArrowRight, X } from 'lucide-react';
-// import { Background3D } from './Background3D';
-// import { Canvas } from '@react-three/fiber';
-// export const Hero = () => {
-//   const [showJobModal, setShowJobModal] = useState(false);
-
-//   const downloadResume = () => {
-//     // This would be replaced with your actual resume URL
-//     const resumeUrl = 'https://drive.google.com/file/d/1IwfE1M8QKRtD_4CC5Fi-st8Lp1FnfD_1/view?usp=sharing';
-//     window.open(resumeUrl, '_blank');
-//   };
-
-//   const container = {
-//     hidden: { opacity: 0 },
-//     show: {
-//       opacity: 1,
-//       transition: {
-//         staggerChildren: 0.2,
-//       },
-//     },
-//   };
-
-//   const item = {
-//     hidden: { opacity: 0, y: 20 },
-//     show: { opacity: 1, y: 0 },
-//   };
-
-//   const jobHighlights = [
-//     "Full Stack Development",
-//     "UI/UX Design",
-//     "Team Work",
-//     "Agile Methodology",
-//     "Performance Optimization",
-     
-//   ];
-
-//   return (
-//     <>
-//       {/* <section id="home" className="min-h-screen flex items-center justify-center bg-gradient-to-b from-white to-purple-50 dark:from-gray-900 dark:to-purple-900/20 transition-colors duration-500"> */}
-//       <section className="relative min-h-screen overflow-hidden">
-//       <div className="absolute inset-0 z-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-gray-900 via-purple-900/20 to-gray-900">
-//           <Canvas camera={{ position: [0, 0, 1], fov: 75 }}>
-//             <Suspense fallback={null}>
-//               <Background3D />
-//             </Suspense>
-//           </Canvas>
-//         </div>
-//         <div className="relative z-10 min-h-screen flex items-center justify-center">
-//         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
-//           <motion.div
-//             variants={container}
-//             initial="hidden"
-//             animate="show"
-//             className="text-center"
-//           >
-//             <motion.div
-//               variants={item}
-//               className="mb-6 inline-block"
-//             >
-//               <motion.button
-//                 onClick={() => setShowJobModal(true)}
-//                 whileHover={{ scale: 1.05 }}
-//                 whileTap={{ scale: 0.95 }}
-//                 className="px-4 py-2 rounded-full text-sm font-medium bg-purple-100 dark:bg-purple-900/50 text-purple-600 dark:text-purple-400 flex items-center gap-2 hover:bg-purple-200 dark:hover:bg-purple-900/70 transition-all duration-200"
-//               >
-//                 <Briefcase className="w-4 h-4" />
-//                 <span>Available for Work</span>
-//                 <ArrowRight className="w-4 h-4" />
-//               </motion.button>
-//             </motion.div>
-
-//             <motion.h1
-//               variants={item}
-//               className="text-4xl sm:text-6xl font-bold text-gray-900 dark:text-white mb-6 transition-colors duration-200"
-//             >
-//               Full Stack Developer
-//               <span className="block text-transparent bg-clip-text bg-gradient-to-r from-purple-600 to-blue-500 mt-2 animate-gradient">
-//                 & UI/UX Designer
-//               </span>
-//             </motion.h1>
-
-//             <motion.p
-//               variants={item}
-//               className="text-xl text-white dark:text-gray-300 mb-8 max-w-2xl mx-auto"
-//             >
-//               Transforming ideas into exceptional digital experiences with clean code and pixel-perfect design.
-//               6 months of expertise in building scalable web applications.
-//             </motion.p>
-
-//             <motion.div
-//               variants={item}
-//               className="flex flex-wrap justify-center gap-4 mb-12"
-//             >
-//               <motion.button
-//                 onClick={downloadResume}
-//                 whileHover={{ scale: 1.05 }}
-//                 whileTap={{ scale: 0.95 }}
-//                 className="px-8 py-3 bg-purple-600 dark:bg-purple-500 text-white rounded-lg font-medium hover:bg-purple-700 dark:hover:bg-purple-600 transition-all duration-200 flex items-center space-x-2 shadow-lg hover:shadow-xl"
-//               >
-//                 <Download className="w-5 h-5" />
-//                 <span>Download Resume</span>
-//               </motion.button>
-              
-//               <motion.a
-//                 href="#contact"
-//                 whileHover={{ scale: 1.05 }}
-//                 whileTap={{ scale: 0.95 }}
-//                 className="px-8 py-3 border-2 border-purple-600 dark:border-purple-500 text-purple-600 dark:text-purple-400 rounded-lg font-medium hover:bg-purple-50 dark:hover:bg-purple-900/30 transition-all duration-200 flex items-center space-x-2"
-//               >
-//                 <ExternalLink className="w-5 h-5" />
-//                 <span>Let's Talk</span>
-//               </motion.a>
-//             </motion.div>
-
-//             <motion.div
-//               variants={container}
-//               initial="hidden"
-//               animate="show"
-//               className="grid grid-cols-1 md:grid-cols-3 gap-6"
-//             >
-//               <SkillCard
-//                 icon={<Code2 className="w-8 h-8" />}
-//                 title="Frontend Development"
-//                 description="React.js, TypeScript, Next.js"
-//                 delay={0.2}
-//               />
-//               <SkillCard
-//                 icon={<Palette className="w-8 h-8" />}
-//                 title="UI/UX Design"
-//                 description="Figma, User Research, Prototyping"
-//                 delay={0.4}
-//               />
-//               <SkillCard
-//                 icon={<Database className="w-8 h-8" />}
-//                 title="Backend Development"
-//                 description="Node.js, PostgreSQL, REST APIs"
-//                 delay={0.6}
-//               />
-//             </motion.div>
-//           </motion.div>
-//         </div>
-//         </div>
-//       </section>
-
-//       <AnimatePresence>
-//         {showJobModal && (
-//           <motion.div
-//             initial={{ opacity: 0 }}
-//             animate={{ opacity: 1 }}
-//             exit={{ opacity: 0 }}
-//             className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex  items-center justify-center p-4"
-//             onClick={() => setShowJobModal(false)}
-//           >
-//             <motion.div
-//               initial={{ scale: 0.9, opacity: 0 }}
-//               animate={{ scale: 1, opacity: 1 }}
-//               exit={{ scale: 0.9, opacity: 0 }}
-//               className="bg-white dark:bg-gray-800 rounded-xl p-6 max-w-lg w-full shadow-xl"
-//               onClick={e => e.stopPropagation()}
-//             >
-//               <div className="flex justify-between items-start mb-4">
-//                 <div>
-//                   <h3 className="text-2xl font-bold text-black dark:text-white">Looking for New Opportunities</h3>
-//                   <p className="text-gray-600 dark:text-gray-400 mt-1">Currently available for full-time positions</p>
-//                 </div>
-//                 <button
-//                   onClick={() => setShowJobModal(false)}
-//                   className="text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200"
-//                 >
-//                   <X className="w-6 h-6" />
-//                 </button>
-//               </div>
-
-//               <div className="space-y-4">
-//                 <div>
-//                   <h4 className="font-semibold text-gray-900 dark:text-white mb-2">Key Expertise</h4>
-//                   <div className="flex flex-wrap gap-2">
-//                     {jobHighlights.map((highlight, index) => (
-//                       <motion.span
-//                         key={index}
-//                         initial={{ opacity: 0, scale: 0.8 }}
-//                         animate={{ opacity: 1, scale: 1 }}
-//                         transition={{ delay: index * 0.1 }}
-//                         className="px-3 py-1 bg-purple-100 dark:bg-purple-900/50 text-purple-600 dark:text-purple-400 rounded-full text-sm"
-//                       >
-//                         {highlight}
-//                       </motion.span>
-//                     ))}
-//                   </div>
-//                 </div>
-
-//                 <div>
-//                   <h4 className="font-semibold text-gray-900 dark:text-white mb-2">Preferred Roles</h4>
-//                   <ul className="list-disc list-inside text-gray-600 dark:text-gray-300 space-y-1">
-//                     <li> Full Stack Developer</li>
-                   
-//                     <li>Frontend  Developer</li>
-//                     <li> Backend Developer</li>
-//                     <li> Web Developer</li>
-//                     <li> Bot Developer</li>
-//                   </ul>
-//                 </div>
-
-//                 <div>
-//                   <h4 className="font-semibold text-gray-900 dark:text-white mb-2">Availability</h4>
-//                   <p className="text-gray-600 dark:text-gray-300">Available for immediate start</p>
-//                   <p className="text-gray-600 dark:text-gray-300">Open to remote, hybrid, or on-site positions</p>
-//                 </div>
-
-//                 <div className="flex gap-4 mt-6">
-//                   <motion.button
-//                     whileHover={{ scale: 1.05 }}
-//                     whileTap={{ scale: 0.95 }}
-//                     onClick={downloadResume}
-//                     className="flex-1 px-4 py-2 bg-purple-600 text-white rounded-lg font-medium hover:bg-purple-700 transition-colors duration-200"
-//                   >
-//                     Download Resume
-//                   </motion.button>
-//                   <motion.a
-//                     whileHover={{ scale: 1.05 }}
-//                     whileTap={{ scale: 0.95 }}
-//                     href="#contact"
-//                     onClick={() => setShowJobModal(false)}
-//                     className="flex-1 px-4 py-2 border-2 border-purple-600 text-purple-600 rounded-lg font-medium hover:bg-purple-50 transition-colors duration-200 text-center"
-//                   >
-//                     Contact Me
-//                   </motion.a>
-//                 </div>
-//               </div>
-//             </motion.div>
-//           </motion.div>
-//         )}
-//       </AnimatePresence>
-//     </>
-//   );
-// };
-
-// const SkillCard = ({ icon, title, description, delay }: { 
-//   icon: React.ReactNode; 
-//   title: string; 
-//   description: string;
-//   delay: number;
-// }) => (
-//   <motion.div
-//     variants={{
-//       hidden: { opacity: 0, y: 20 },
-//       show: { 
-//         opacity: 1, 
-//         y: 0,
-//         transition: {
-//           delay
-//         }
-//       }
-//     }}
-//     whileHover={{ scale: 1.05, y: -5 }}
-//     className="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform group cursor-pointer"
-//   >
-//     <div className="text-purple-600 dark:text-purple-400 mb-4 transition-colors duration-200 group-hover:scale-110 transform transition-transform">
-//       {icon}
-//     </div>
-//     <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-2 transition-colors duration-200">
-//       {title}
-//     </h3>
-//     <p className="text-gray-600 dark:text-gray-300 transition-colors duration-200">
-//       {description}
-//     </p>
-//   </motion.div>
-// );
-
- import React, { useState, Suspense } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import React, { useState, useRef, useEffect } from 'react';
 import { Code2, Database, Download, Briefcase, ArrowRight, X, Bot, Cloud } from 'lucide-react';
-import { Background3D } from './Background3D';
-import { Canvas } from '@react-three/fiber';
+import { MagneticButton } from './MagneticButton';
+import { SplitText } from './SplitText';
+import { useGSAP } from '../hooks/useGSAP';
+import gsap from 'gsap';
 
-export const Hero = () => {
+export const Hero: React.FC = () => {
   const [showJobModal, setShowJobModal] = useState(false);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const avatarRef = useRef<HTMLImageElement>(null);
+  const typewriterRef = useRef<HTMLSpanElement>(null);
 
   const downloadResume = () => {
     const resumeUrl = 'https://drive.google.com/file/d/1IwfE1M8QKRtD_4CC5Fi-st8Lp1FnfD_1/view?usp=sharing';
     window.open(resumeUrl, '_blank');
   };
 
-  const container = {
-    hidden: { opacity: 0 },
-    show: { opacity: 1, transition: { staggerChildren: 0.2 } },
-  };
-
-  const item = {
-    hidden: { opacity: 0, y: 20 },
-    show: { opacity: 1, y: 0 },
-  };
+  // Roles to cycle through for Typewriter effect
+  const roles = [
+    'AI Software Developer',
+    'Full Stack Engineer',
+    'Voice Agent Builder',
+    'Multi-Agent System Researcher',
+  ];
 
   const jobHighlights = [
-    "Full Stack Development",
-    "AI Voice Agents",
-    "LLM Integration",
-    "Agile Methodology",
-    "Performance Optimization",
+    'Full Stack Development',
+    'AI Voice Agents',
+    'LLM Integration',
+    'Agile Methodology',
+    'Performance Optimization',
   ];
+
+  // Typewriter implementation
+  useEffect(() => {
+    let activeIndex = 0;
+    let charIndex = 0;
+    let isDeleting = false;
+    let typingSpeed = 100;
+    let timer: NodeJS.Timeout;
+
+    const handleType = () => {
+      const currentRole = roles[activeIndex];
+      if (!typewriterRef.current) return;
+
+      if (isDeleting) {
+        typewriterRef.current.textContent = currentRole.substring(0, charIndex - 1);
+        charIndex--;
+        typingSpeed = 50;
+      } else {
+        typewriterRef.current.textContent = currentRole.substring(0, charIndex + 1);
+        charIndex++;
+        typingSpeed = 120;
+      }
+
+      if (!isDeleting && charIndex === currentRole.length) {
+        isDeleting = true;
+        typingSpeed = 1500; // Pause at end of word
+      } else if (isDeleting && charIndex === 0) {
+        isDeleting = false;
+        activeIndex = (activeIndex + 1) % roles.length;
+        typingSpeed = 500; // Pause before typing next word
+      }
+
+      timer = setTimeout(handleType, typingSpeed);
+    };
+
+    timer = setTimeout(handleType, 1000);
+    return () => clearTimeout(timer);
+  }, []);
+
+  useGSAP(() => {
+    // Entrance animations for text and content elements
+    const tl = gsap.timeline();
+
+    tl.fromTo('.hero-avatar-container',
+      { scale: 0.5, autoAlpha: 0, rotation: -15 },
+      {
+        scale: 1,
+        autoAlpha: 1,
+        rotation: 0,
+        duration: 1.2,
+        ease: 'elastic.out(1, 0.75)',
+      }
+    )
+      .fromTo(
+        '.hero-title-char',
+        { y: 40, autoAlpha: 0 },
+        {
+          y: 0,
+          autoAlpha: 1,
+          stagger: 0.03,
+          duration: 0.8,
+          ease: 'back.out(1.7)',
+        },
+        '-=0.6'
+      )
+      .fromTo(
+        '.hero-subtitle',
+        { y: 20, autoAlpha: 0 },
+        {
+          y: 0,
+          autoAlpha: 1,
+          duration: 0.6,
+          ease: 'power3.out',
+        },
+        '-=0.4'
+      )
+      .fromTo(
+        '.hero-cta',
+        { y: 20, autoAlpha: 0 },
+        {
+          y: 0,
+          autoAlpha: 1,
+          stagger: 0.1,
+          duration: 0.6,
+          ease: 'power3.out',
+        },
+        '-=0.4'
+      )
+      .fromTo(
+        '.hero-badge',
+        { scale: 0, autoAlpha: 0 },
+        {
+          scale: 1,
+          autoAlpha: 1,
+          duration: 0.5,
+          ease: 'back.out(1.5)',
+        },
+        '-=0.4'
+      )
+      .fromTo(
+        '.hero-desc',
+        { y: 20, autoAlpha: 0 },
+        {
+          y: 0,
+          autoAlpha: 1,
+          stagger: 0.1,
+          duration: 0.6,
+          ease: 'power3.out',
+        },
+        '-=0.3'
+      )
+      .fromTo(
+        '.hero-skill-card',
+        { y: 30, autoAlpha: 0 },
+        {
+          y: 0,
+          autoAlpha: 1,
+          stagger: 0.15,
+          duration: 0.8,
+          ease: 'power3.out',
+        },
+        '-=0.5'
+      );
+
+    // Parallax mouse movements for decorative floating circles
+    const handleMouseMove = (e: MouseEvent) => {
+      const { clientX, clientY } = e;
+      const xOffset1 = (clientX - window.innerWidth / 2) * 0.03;
+      const yOffset1 = (clientY - window.innerHeight / 2) * 0.03;
+      const xOffset2 = (clientX - window.innerWidth / 2) * -0.02;
+      const yOffset2 = (clientY - window.innerHeight / 2) * -0.02;
+
+      gsap.to('.float-blob-1', { x: xOffset1, y: yOffset1, duration: 0.6, ease: 'power2.out' });
+      gsap.to('.float-blob-2', { x: xOffset2, y: yOffset2, duration: 0.8, ease: 'power2.out' });
+    };
+
+    window.addEventListener('mousemove', handleMouseMove);
+    return () => window.removeEventListener('mousemove', handleMouseMove);
+  }, []);
+
+  // Animate modal open/close
+  useGSAP(() => {
+    if (showJobModal) {
+      gsap.fromTo(
+        '.modal-backdrop',
+        { opacity: 0 },
+        { opacity: 1, duration: 0.3, ease: 'power2.out' }
+      );
+      gsap.fromTo(
+        '.modal-content',
+        { scale: 0.9, y: 20 },
+        { scale: 1, y: 0, duration: 0.4, ease: 'back.out(1.5)' }
+      );
+    }
+  }, [showJobModal]);
 
   return (
     <>
-      <section id="home" className="relative min-h-screen overflow-hidden">
-        <div className="absolute inset-0 z-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-gray-900 via-purple-900/20 to-gray-900">
-          <Canvas camera={{ position: [0, 0, 1], fov: 75 }}>
-            <Suspense fallback={null}>
-              <Background3D />
-            </Suspense>
-          </Canvas>
-        </div>
+      <section
+        id="home"
+        ref={containerRef}
+        className="relative min-h-screen flex items-center justify-center pt-24 pb-16 overflow-hidden bg-slate-50 dark:bg-slate-950 transition-colors duration-300"
+      >
+        {/* Floating gradient background blobs */}
+        <div className="absolute top-1/4 left-1/4 w-[350px] h-[350px] rounded-full bg-indigo-500/10 dark:bg-indigo-500/5 blur-[80px] float-blob-1 pointer-events-none" />
+        <div className="absolute bottom-1/4 right-1/4 w-[400px] h-[400px] rounded-full bg-purple-500/10 dark:bg-purple-500/5 blur-[100px] float-blob-2 pointer-events-none" />
 
-        <div className="relative z-10 min-h-screen flex items-center justify-center">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
-            <motion.div
-              variants={container}
-              initial="hidden"
-              animate="show"
-              className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center"
-            >
-              {/* Left Side - Name, Photo, Resume */}
-              <motion.div variants={item} className="text-center md:text-left">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+            {/* Left side details */}
+            <div className="lg:col-span-5 text-center lg:text-left flex flex-col items-center lg:items-start">
+              <div className="hero-avatar-container relative mb-6 p-1.5 rounded-full bg-gradient-to-tr from-indigo-500 via-purple-500 to-pink-500 shadow-xl">
                 <img
+                  ref={avatarRef}
                   src="https://avatars.githubusercontent.com/u/RAKESHKUSHWAHA7518"
                   alt="Rakesh Kushwaha"
                   onError={(e) => {
-                    (e.target as HTMLImageElement).src = 'https://ui-avatars.com/api/?name=Rakesh+Kushwaha&background=7c3aed&color=fff&size=160';
+                    (e.target as HTMLImageElement).src = 'https://ui-avatars.com/api/?name=Rakesh+Kushwaha&background=6366f1&color=fff&size=160';
                   }}
-                  className="w-40 h-40 rounded-full mx-auto md:mx-0 mb-6 border-4 border-purple-500 shadow-lg object-cover"
+                  className="w-36 h-36 rounded-full object-cover border-4 border-slate-50 dark:border-slate-950"
                 />
-                <h2 className="text-3xl font-bold text-white mb-1">
-                  Rakesh Kushwaha
-                </h2>
-                <p className="text-lg text-purple-400 font-medium mb-2">
-                  Software Developer
-                </p>
-                <p className="text-sm text-gray-400 mb-6">
-                  Full Stack · AI / Voice Agent Engineer
-                </p>
-                <div className="flex flex-wrap gap-3 justify-center md:justify-start">
-                  <motion.button
-                    onClick={downloadResume}
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.95 }}
-                    className="px-6 py-3 bg-purple-600 text-white rounded-lg font-medium hover:bg-purple-700 transition-all duration-200 flex items-center space-x-2"
-                  >
-                    <Download className="w-5 h-5" />
-                    <span>Download Resume</span>
-                  </motion.button>
-                  <motion.a
-                    href="#contact"
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.95 }}
-                    className="px-6 py-3 border-2 border-purple-500 text-purple-400 rounded-lg font-medium hover:bg-purple-900/30 transition-all duration-200 flex items-center space-x-2"
+                <div className="absolute -bottom-1 -right-1 flex h-6 w-6 items-center justify-center rounded-full bg-green-500 ring-4 ring-slate-50 dark:ring-slate-950">
+                  <span className="h-3 w-3 animate-ping rounded-full bg-white opacity-75" />
+                </div>
+              </div>
+
+              <h1 className="text-4xl sm:text-5xl font-extrabold tracking-tight mb-2">
+                <SplitText text="Rakesh Kushwaha" charClassName="hero-title-char" />
+              </h1>
+
+              <div className="hero-subtitle text-lg sm:text-xl font-semibold text-indigo-600 dark:text-indigo-400 mb-2 h-8 flex items-center">
+                <span ref={typewriterRef}></span>
+                <span className="inline-block w-[3px] h-[1.2em] bg-indigo-600 dark:bg-indigo-400 ml-1 animate-pulse" />
+              </div>
+
+              <p className="hero-desc text-slate-600 dark:text-slate-400 max-w-md mb-8 text-sm sm:text-base leading-relaxed">
+                Transforming complex ideas into polished web interfaces and production-ready Multi-Agent systems. Based in India.
+              </p>
+
+              <div className="hero-cta flex flex-wrap gap-4 justify-center lg:justify-start">
+                <MagneticButton
+                  onClick={downloadResume}
+                  className="px-6 py-3 bg-gradient-to-r from-indigo-500 to-purple-600 text-white rounded-xl font-medium shadow-md shadow-indigo-500/20 hover:shadow-indigo-500/35 hover:opacity-95 flex items-center space-x-2 transition-all duration-200"
+                >
+                  <Download className="w-4 h-4" />
+                  <span>Download Resume</span>
+                </MagneticButton>
+
+                <a href="#contact">
+                  <MagneticButton
+                    className="px-6 py-3 border border-slate-300 dark:border-slate-800 text-slate-700 dark:text-slate-300 rounded-xl font-medium hover:bg-slate-100 dark:hover:bg-slate-900 transition-all duration-200"
                   >
                     <span>Let's Talk</span>
-                  </motion.a>
-                </div>
-              </motion.div>
+                  </MagneticButton>
+                </a>
+              </div>
+            </div>
 
-              {/* Right Side */}
-              <motion.div variants={container} className="text-center md:text-left">
-                <motion.button
+            {/* Right side stats and cards */}
+            <div className="lg:col-span-7 flex flex-col justify-center">
+              <div className="flex justify-center lg:justify-start mb-6">
+                <button
                   onClick={() => setShowJobModal(true)}
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                  className="px-4 py-2 rounded-full text-sm font-medium bg-purple-100 dark:bg-purple-900/50 text-purple-600 dark:text-purple-400 flex items-center gap-2 hover:bg-purple-200 dark:hover:bg-purple-900/70 transition-all duration-200 mx-auto md:mx-0 mb-4"
+                  className="hero-badge px-4 py-2 rounded-full text-xs font-semibold bg-indigo-100 dark:bg-indigo-950/60 text-indigo-700 dark:text-indigo-300 flex items-center gap-2 border border-indigo-200/50 dark:border-indigo-900/50 hover:bg-indigo-200 dark:hover:bg-indigo-900/80 transition-all duration-200"
                 >
-                  <Briefcase className="w-4 h-4" />
-                  <span>Available for Work</span>
-                  <ArrowRight className="w-4 h-4" />
-                </motion.button>
+                  <Briefcase className="w-3.5 h-3.5" />
+                  <span>Available for Full-time Roles</span>
+                  <ArrowRight className="w-3.5 h-3.5" />
+                </button>
+              </div>
 
-                <motion.p
-                  variants={item}
-                  className="text-xl text-white dark:text-gray-300 mb-8 max-w-xl"
-                >
-                  Building full-stack web apps and AI-powered voice agents — from React frontends
-                  to LLM-driven conversational systems. Currently at Mindcraft Labs.
-                </motion.p>
+              <p className="hero-desc text-lg sm:text-xl text-slate-700 dark:text-slate-300 mb-8 text-center lg:text-left leading-relaxed">
+                Building modern web apps & multi-agent AI systems — from responsive frontends to complex LLM workflows. Currently pushing boundaries at <span className="font-semibold text-indigo-500 dark:text-indigo-400">Mindcraft Labs</span>.
+              </p>
 
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                  <SkillCard
-                    icon={<Code2 className="w-8 h-8" />}
-                    title="Frontend Development"
-                    description="React.js, Next.js, TypeScript, Tailwind CSS"
-                    delay={0.2}
-                  />
-                  <SkillCard
-                    icon={<Database className="w-8 h-8" />}
-                    title="Backend Development"
-                    description="Node.js, MongoDB, Express.js, REST APIs"
-                    delay={0.4}
-                  />
-                  <SkillCard
-                    icon={<Bot className="w-8 h-8" />}
-                    title="AI & Voice Agents"
-                    description="OpenAI, RAG, Gemini, Retell AI, Vapi.ai, ElevenLabs, Voiceflow"
-                    delay={0.6}
-                  />
-                  <SkillCard
-                    icon={<Cloud className="w-8 h-8" />}
-                    title="Cloud & DevOps"
-                    description="AWS Lambda, EC2, S3, Cognito, Firebase, Docker"
-                    delay={0.8}
-                  />
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 w-full">
+                <div className="hero-skill-card bg-white/50 dark:bg-slate-900/50 p-6 rounded-2xl border border-slate-200/50 dark:border-slate-800/50 backdrop-blur-md">
+                  <div className="p-3 bg-indigo-500/10 rounded-xl text-indigo-500 dark:text-indigo-400 w-fit mb-4">
+                    <Code2 className="w-6 h-6" />
+                  </div>
+                  <h3 className="text-lg font-bold mb-2">Frontend Stack</h3>
+                  <p className="text-sm text-slate-600 dark:text-slate-400">React.js, Next.js, TypeScript, Tailwind CSS, GSAP</p>
                 </div>
-              </motion.div>
-            </motion.div>
+
+                <div className="hero-skill-card bg-white/50 dark:bg-slate-900/50 p-6 rounded-2xl border border-slate-200/50 dark:border-slate-800/50 backdrop-blur-md">
+                  <div className="p-3 bg-purple-500/10 rounded-xl text-purple-500 dark:text-purple-400 w-fit mb-4">
+                    <Database className="w-6 h-6" />
+                  </div>
+                  <h3 className="text-lg font-bold mb-2">Backend & Database</h3>
+                  <p className="text-sm text-slate-600 dark:text-slate-400">Node.js, Express.js, MongoDB, REST APIs, Webhooks</p>
+                </div>
+
+                <div className="hero-skill-card bg-white/50 dark:bg-slate-900/50 p-6 rounded-2xl border border-slate-200/50 dark:border-slate-800/50 backdrop-blur-md">
+                  <div className="p-3 bg-pink-500/10 rounded-xl text-pink-500 dark:text-pink-400 w-fit mb-4">
+                    <Bot className="w-6 h-6" />
+                  </div>
+                  <h3 className="text-lg font-bold mb-2">AI Agents & LLMs</h3>
+                  <p className="text-sm text-slate-600 dark:text-slate-400">Multi-agent systems, Retell AI, Vapi, ElevenLabs, OpenAI, Gemini</p>
+                </div>
+
+                <div className="hero-skill-card bg-white/50 dark:bg-slate-900/50 p-6 rounded-2xl border border-slate-200/50 dark:border-slate-800/50 backdrop-blur-md">
+                  <div className="p-3 bg-sky-500/10 rounded-xl text-sky-500 dark:text-sky-400 w-fit mb-4">
+                    <Cloud className="w-6 h-6" />
+                  </div>
+                  <h3 className="text-lg font-bold mb-2">Cloud & Deployment</h3>
+                  <p className="text-sm text-slate-600 dark:text-slate-400">AWS (Lambda, EC2, S3, Cognito), Firebase, Docker, Git</p>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </section>
 
-      <AnimatePresence>
-        {showJobModal && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4"
+      {/* Available for work modal */}
+      {showJobModal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+          {/* Backdrop */}
+          <div
             onClick={() => setShowJobModal(false)}
-          >
-            <motion.div
-              initial={{ scale: 0.9, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              exit={{ scale: 0.9, opacity: 0 }}
-              className="bg-white dark:bg-gray-800 rounded-xl p-6 max-w-lg w-full shadow-xl"
-              onClick={e => e.stopPropagation()}
-            >
-              <div className="flex justify-between items-start mb-4">
-                <div>
-                  <h3 className="text-2xl font-bold text-gray-900 dark:text-white">Looking for New Opportunities</h3>
-                  <p className="text-gray-600 dark:text-gray-400 mt-1">Available for full-time positions</p>
+            className="modal-backdrop absolute inset-0 bg-slate-950/40 dark:bg-slate-950/70 backdrop-blur-sm"
+          />
+
+          {/* Modal Container */}
+          <div className="modal-content relative bg-white dark:bg-slate-900 w-full max-w-lg rounded-3xl p-6 sm:p-8 shadow-2xl border border-slate-200 dark:border-slate-800 z-10">
+            <div className="flex justify-between items-start mb-6">
+              <div>
+                <h3 className="text-2xl font-bold">Open to Work</h3>
+                <p className="text-sm text-slate-500 dark:text-slate-400 mt-1">Available for new opportunities</p>
+              </div>
+              <button
+                onClick={() => setShowJobModal(false)}
+                className="p-1.5 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 transition-colors"
+              >
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+
+            <div className="space-y-6">
+              <div>
+                <h4 className="text-sm font-semibold text-slate-900 dark:text-slate-100 mb-3">Key Expertise</h4>
+                <div className="flex flex-wrap gap-2">
+                  {jobHighlights.map((highlight, index) => (
+                    <span
+                      key={index}
+                      className="px-3 py-1.5 bg-indigo-50 dark:bg-indigo-950/40 text-indigo-700 dark:text-indigo-300 border border-indigo-100/50 dark:border-indigo-900/50 rounded-full text-xs font-medium"
+                    >
+                      {highlight}
+                    </span>
+                  ))}
                 </div>
+              </div>
+
+              <div>
+                <h4 className="text-sm font-semibold text-slate-900 dark:text-slate-100 mb-2">Preferred Roles</h4>
+                <ul className="grid grid-cols-2 gap-2 text-sm text-slate-600 dark:text-slate-300">
+                  <li className="flex items-center gap-1.5">
+                    <span className="w-1.5 h-1.5 rounded-full bg-indigo-500" />
+                    AI Software Developer
+                  </li>
+                  <li className="flex items-center gap-1.5">
+                    <span className="w-1.5 h-1.5 rounded-full bg-indigo-500" />
+                    Full Stack Developer
+                  </li>
+                  <li className="flex items-center gap-1.5">
+                    <span className="w-1.5 h-1.5 rounded-full bg-indigo-500" />
+                    Voice Agent Engineer
+                  </li>
+                  <li className="flex items-center gap-1.5">
+                    <span className="w-1.5 h-1.5 rounded-full bg-indigo-500" />
+                    Conversational AI Developer
+                  </li>
+                </ul>
+              </div>
+
+              <div>
+                <h4 className="text-sm font-semibold text-slate-900 dark:text-slate-100 mb-1">Availability</h4>
+                <p className="text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
+                  Ready to join immediately. Open to remote contracts or on-site positions in India.
+                </p>
+              </div>
+
+              <div className="flex gap-4 pt-4 border-t border-slate-100 dark:border-slate-800">
                 <button
-                  onClick={() => setShowJobModal(false)}
-                  className="text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200"
+                  onClick={downloadResume}
+                  className="flex-1 py-3 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl text-sm font-semibold transition-colors duration-200"
                 >
-                  <X className="w-6 h-6" />
+                  Download Resume
                 </button>
+                <a
+                  href="#contact"
+                  onClick={() => setShowJobModal(false)}
+                  className="flex-1 py-3 border border-slate-300 dark:border-slate-800 hover:bg-slate-50 dark:hover:bg-slate-800 text-slate-700 dark:text-slate-300 rounded-xl text-sm font-semibold text-center transition-colors duration-200"
+                >
+                  Contact Me
+                </a>
               </div>
-
-              <div className="space-y-4">
-                <div>
-                  <h4 className="font-semibold text-gray-900 dark:text-white mb-2">Key Expertise</h4>
-                  <div className="flex flex-wrap gap-2">
-                    {jobHighlights.map((highlight, index) => (
-                      <motion.span
-                        key={index}
-                        initial={{ opacity: 0, scale: 0.8 }}
-                        animate={{ opacity: 1, scale: 1 }}
-                        transition={{ delay: index * 0.1 }}
-                        className="px-3 py-1 bg-purple-100 dark:bg-purple-900/50 text-purple-600 dark:text-purple-400 rounded-full text-sm"
-                      >
-                        {highlight}
-                      </motion.span>
-                    ))}
-                  </div>
-                </div>
-
-                <div>
-                  <h4 className="font-semibold text-gray-900 dark:text-white mb-2">Preferred Roles</h4>
-                  <ul className="list-disc list-inside text-gray-600 dark:text-gray-300 space-y-1">
-                    <li>AI Software Developer</li>
-                    <li>Voice Agent Developer</li>
-                    <li>Full Stack Developer</li>
-                    <li>Frontend Developer</li>
-                    <li>Conversational AI Engineer</li>
-                  </ul>
-                </div>
-
-                <div>
-                  <h4 className="font-semibold text-gray-900 dark:text-white mb-2">Availability</h4>
-                  <p className="text-gray-600 dark:text-gray-300">Available for immediate start</p>
-                  <p className="text-gray-600 dark:text-gray-300">Open to remote, hybrid, or on-site positions</p>
-                </div>
-
-                <div className="flex gap-4 mt-6">
-                  <motion.button
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.95 }}
-                    onClick={downloadResume}
-                    className="flex-1 px-4 py-2 bg-purple-600 text-white rounded-lg font-medium hover:bg-purple-700 transition-colors duration-200"
-                  >
-                    Download Resume
-                  </motion.button>
-                  <motion.a
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.95 }}
-                    href="#contact"
-                    onClick={() => setShowJobModal(false)}
-                    className="flex-1 px-4 py-2 border-2 border-purple-600 text-purple-600 rounded-lg font-medium hover:bg-purple-50 transition-colors duration-200 text-center"
-                  >
-                    Contact Me
-                  </motion.a>
-                </div>
-              </div>
-            </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+            </div>
+          </div>
+        </div>
+      )}
     </>
   );
 };
-
-const SkillCard = ({ icon, title, description, delay }: {
-  icon: React.ReactNode;
-  title: string;
-  description: string;
-  delay: number;
-}) => (
-  <motion.div
-    variants={{
-      hidden: { opacity: 0, y: 20 },
-      show: {
-        opacity: 1,
-        y: 0,
-        transition: { delay },
-      },
-    }}
-    whileHover={{ scale: 1.05, y: -5 }}
-    className="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 group cursor-pointer"
-  >
-    <div className="text-purple-600 dark:text-purple-400 mb-4 group-hover:scale-110 transition-transform">
-      {icon}
-    </div>
-    <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-2">
-      {title}
-    </h3>
-    <p className="text-gray-600 dark:text-gray-300">
-      {description}
-    </p>
-  </motion.div>
-);

@@ -1,464 +1,254 @@
- 
+import React, { useRef } from 'react';
+import { Briefcase, Calendar } from 'lucide-react';
+import { useGSAP } from '../hooks/useGSAP';
+import { SplitText } from './SplitText';
+import gsap from 'gsap';
 
-
-// import React, { useEffect, useState } from "react";
-// import { motion } from "framer-motion";
-// import { useInView } from "react-intersection-observer";
-// import { Briefcase, Calendar } from "lucide-react";
-
-// export const Experience = () => {
-//   const [ref, inView] = useInView({ threshold: 0.1 });
-
-//   const experiences = [
-//       {
-//       title: "AI Software Developer  ",
-//       company: "Mindcraft Labs",
-//       period: "Jun 2025 - Present",
-//       description:
-//         "Design, develop, and deploy end-to-end AI solutions, including AI chatbots, callers, and data analytics tools.",
-//       skills: ["React", "TypeScript", "Next.js", "Redux", "Prompt engineering", "Firebase", "Telegram Bot"],
-//     },
-//     {
-//       title: "Augmented Developer Intern",
-//       company: "Mindcraft Labs",
-//       period: "Jan 2025 - May 2025",
-//       description:
-//         "Design, develop, and deploy end-to-end AI solutions, including AI chatbots, callers, and data analytics tools.",
-//       skills: ["React", "TypeScript", "Next.js", "Redux", "Prompt engineering", "Firebase", "Telegram Bot"],
-//     },
-//     {
-//       title: "Frontend Developer",
-//       company: "BookNow",
-//       period: "Oct 2024 - Jan 2025",
-//       description:
-//         "Developed and maintained Frontend applications using React and improved application performance by 40%. Also worked on an admin dashboard and ticket booking application for movies.",
-//       skills: ["React", "JavaScript", "Tailwind CSS", "Shadcn", "AWS S3", "Google Map"],
-//     },
-//     {
-//       title: "Web Developer",
-//       company: "Jagruti Rehabilitation Centre",
-//       period: "Oct 2024 - Dec 2024",
-//       description:
-//         "Developed and maintained frontend applications using React and Node for HMS (Labs, Pharmacy, OPD, Account, Doctor), focusing on accessibility and user experience.",
-//       skills: ["Shadcn", "React", "Node", "Tailwind CSS", "Express.js", "Google Translate", "Google Speech API"],
-//     },
-//     {
-//       title: "Full Stack Developer",
-//       company: "CCA Techno Private Limited",
-//       period: "Jun 2024 - Sep 2024",
-//       description:
-//         "Worked on HMS (Labs, Pharmacy, OPD, Account, Doctor) using React and Node, with a focus on UI accessibility and smooth user experience.",
-//       skills: ["Shadcn", "React", "Node", "Tailwind CSS", "Express.js", "Google Translate", "Google Speech API"],
-//     },
-//   ];
-
-//   return (
-//     <section id="experience" className="py-20 bg-gray-100 dark:bg-gray-900 transition-colors duration-200">
-//       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-//         <motion.div
-//           ref={ref}
-//           initial={{ opacity: 0, y: 20 }}
-//           animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-//           transition={{ duration: 0.6 }}
-//           className="text-center mb-16"
-//         >
-//           <h2 className="text-4xl font-bold text-gray-900 dark:text-white mb-4">Professional Experience</h2>
-//           <p className="text-xl text-gray-600 dark:text-gray-400">My journey in tech</p>
-//         </motion.div>
-
-//         <div className="space-y-8">
-//           {experiences.map((exp, index) => (
-//             <ExperienceCard key={index} experience={exp} index={index} />
-//           ))}
-//         </div>
-//       </div>
-//     </section>
-//   );
-// };
-
-// const ExperienceCard = ({ experience, index }: { experience: any; index: number }) => {
-//   const [ref, inView] = useInView({ threshold: 0.1 });
-//   const [angle, setAngle] = useState(0);
-
-//   useEffect(() => {
-//     const interval = setInterval(() => {
-//       setAngle((prev) => (prev + 1) % 360);
-//     }, 50);
-//     return () => clearInterval(interval);
-//   }, []);
-
-//   const getBorderGradient = (
-//     startColor = '#8B5CF6',
-//     endColor = '#EC4899'
-//   ) => {
-//     return `linear-gradient(${angle}deg, ${startColor}, ${endColor}, ${startColor})`;
-//   };
-
-//   return (
-//     <motion.div
-//       ref={ref}
-//       initial={{ opacity: 0, x: index % 2 === 0 ? -50 : 50 }}
-//       animate={inView ? { opacity: 1, x: 0 } : { opacity: 0, x: index % 2 === 0 ? -50 : 50 }}
-//       transition={{ duration: 0.6, delay: index * 0.2 }}
-//       className="relative p-0.5 rounded-xl overflow-hidden"
-//       style={{ background: getBorderGradient(), backgroundSize: "400% 400%" }}
-//     >
-//       <div className="bg-white dark:bg-gray-800 rounded-xl p-6">
-//         <div className="flex items-start gap-4">
-//           <div className="p-3 bg-purple-100 dark:bg-purple-900 rounded-lg">
-//             <Briefcase className="w-6 h-6 text-purple-600 dark:text-purple-400" />
-//           </div>
-//           <div className="flex-1">
-//             <h3 className="text-xl font-semibold text-gray-900 dark:text-white">{experience.title}</h3>
-//             <p className="text-purple-600 dark:text-purple-400 font-medium">{experience.company}</p>
-//             <div className="flex items-center gap-2 text-gray-600 dark:text-gray-400 mt-1">
-//               <Calendar className="w-4 h-4" />
-//               <span>{experience.period}</span>
-//             </div>
-//             <p className="mt-4 text-gray-600 dark:text-gray-300">{experience.description}</p>
-//             <div className="flex flex-wrap gap-2 mt-4">
-//               {experience.skills.map((skill: string, i: number) => (
-//                 <span
-//                   key={i}
-//                   className="px-3 py-1 bg-purple-100 dark:bg-purple-900 text-purple-600 dark:text-purple-400 rounded-full text-sm"
-//                 >
-//                   {skill}
-//                 </span>
-//               ))}
-//             </div>
-//           </div>
-//         </div>
-//       </div>
-//     </motion.div>
-//   );
-// };
-
-
-// import React, { useEffect, useState } from "react";
-// import { motion } from "framer-motion";
-// import { useInView } from "react-intersection-observer";
-// import { Briefcase, Calendar, ArrowDown } from "lucide-react";
-
-// export const Experience = () => {
-//   const [ref, inView] = useInView({ threshold: 0.1 });
-
-//   const experiences = [
-    // {
-    //   title: "AI Software Developer",
-    //   company: "Mindcraft Labs",
-    //   period: "Jun 2025 - Present",
-    //   description:
-    //       "Developing scalable full-stack solutions using React.js, Next.js, Node.js, MongoDB, Express.js, and Firebase Creating AI-powered agents using tools like Voiceflow, ElevenLabs, Retell AI, and Vapi.ai Integrating conversational logic, voice synthesis, and API-driven workflows Collaborating with cross-functional teams to bring human-like interaction to digital products",
-   
-    //   skills: ["React", "TypeScript", "Next.js", "Redux", "Prompt engineering", "Firebase", "Telegram Bot"],
-    // },
-//     {
-//       title: "Augmented Developer Intern",
-//       company: "Mindcraft Labs",
-//       period: "Jan 2025 - May 2025",
-//       description:
-//         "Design, develop, and deploy end-to-end AI solutions, including AI chatbots, callers, and data analytics tools.",
-//       skills: ["React", "TypeScript", "Next.js", "Redux", "Prompt engineering", "Firebase", "Telegram Bot"],
-//     },
-//     {
-//       title: "Frontend Developer",
-//       company: "BookNow",
-//       period: "Oct 2024 - Jan 2025",
-//       description:
-//         "Developed and maintained Frontend applications using React and improved application performance by 40%. Also worked on an admin dashboard and ticket booking application for movies.",
-//       skills: ["React", "JavaScript", "Tailwind CSS", "Shadcn", "AWS S3", "Google Map"],
-//     },
-//     {
-//       title: "Web Developer",
-//       company: "Jagruti Rehabilitation Centre",
-//       period: "Oct 2024 - Dec 2024",
-//       description:
-//         "Developed and maintained frontend applications using React and Node for HMS (Labs, Pharmacy, OPD, Account, Doctor), focusing on accessibility and user experience.",
-//       skills: ["Shadcn", "React", "Node", "Tailwind CSS", "Express.js", "Google Translate", "Google Speech API"],
-//     },
-//     {
-//       title: "Full Stack Developer",
-//       company: "CCA Techno Private Limited",
-//       period: "Jun 2024 - Sep 2024",
-//       description:
-//         "Worked on HMS (Labs, Pharmacy, OPD, Account, Doctor) using React and Node, with a focus on UI accessibility and smooth user experience.",
-//       skills: ["Shadcn", "React", "Node", "Tailwind CSS", "Express.js", "Google Translate", "Google Speech API"],
-//     },
-//   ];
-
-//   // Group experiences by company
-//   const groupedExperiences = experiences.reduce((acc, exp) => {
-//     const existingCompany = acc.find(item => item.company === exp.company);
-//     if (existingCompany) {
-//       existingCompany.roles.push(exp);
-//     } else {
-//       acc.push({
-//         company: exp.company,
-//         roles: [exp]
-//       });
-//     }
-//     return acc;
-//   }, []);
-
-//   return (
-//     <section id="experience" className="py-20 bg-gray-100 dark:bg-gray-900 transition-colors duration-200">
-//       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-//         <motion.div
-//           ref={ref}
-//           initial={{ opacity: 0, y: 20 }}
-//           animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-//           transition={{ duration: 0.6 }}
-//           className="text-center mb-16"
-//         >
-//           <h2 className="text-4xl font-bold text-gray-900 dark:text-white mb-4">Professional Experience</h2>
-//           <p className="text-xl text-gray-600 dark:text-gray-400">My journey in tech</p>
-//         </motion.div>
-
-//         <div className="space-y-8">
-//           {groupedExperiences.map((companyExp, index) => (
-//             <ExperienceCard key={index} companyExperience={companyExp} index={index} />
-//           ))}
-//         </div>
-//       </div>
-//     </section>
-//   );
-// };
-
-// const ExperienceCard = ({ companyExperience, index }) => {
-//   const [ref, inView] = useInView({ threshold: 0.1 });
-//   const [angle, setAngle] = useState(0);
-
-//   useEffect(() => {
-//     const interval = setInterval(() => {
-//       setAngle((prev) => (prev + 1) % 360);
-//     }, 50);
-//     return () => clearInterval(interval);
-//   }, []);
-
-//   const getBorderGradient = (
-//     startColor = '#8B5CF6',
-//     endColor = '#EC4899'
-//   ) => {
-//     return `linear-gradient(${angle}deg, ${startColor}, ${endColor}, ${startColor})`;
-//   };
-
-//   const { company, roles } = companyExperience;
-//   const isMultipleRoles = roles.length > 1;
-
-//   return (
-//     <motion.div
-//       ref={ref}
-//       initial={{ opacity: 0, x: index % 2 === 0 ? -50 : 50 }}
-//       animate={inView ? { opacity: 1, x: 0 } : { opacity: 0, x: index % 2 === 0 ? -50 : 50 }}
-//       transition={{ duration: 0.6, delay: index * 0.2 }}
-//       className="relative p-0.5 rounded-xl overflow-hidden"
-//       style={{ background: getBorderGradient(), backgroundSize: "400% 400%" }}
-//     >
-//       <div className="bg-white dark:bg-gray-800 rounded-xl p-6">
-//         <div className="flex items-start gap-4">
-//           <div className="p-3 bg-purple-100 dark:bg-purple-900 rounded-lg">
-//             <Briefcase className="w-6 h-6 text-purple-600 dark:text-purple-400" />
-//           </div>
-//           <div className="flex-1">
-//             <h3 className="text-xl font-semibold text-purple-600 dark:text-purple-400 mb-2">{company}</h3>
-            
-//             {isMultipleRoles ? (
-//               <div className="space-y-6">
-//                 {roles.map((role, roleIndex) => (
-//                   <div key={roleIndex} className="relative">
-//                     <div className="flex items-start gap-4">
-//                       <div className="flex flex-col items-center">
-//                         <div className="w-3 h-3 bg-purple-600 dark:bg-purple-400 rounded-full"></div>
-//                         {roleIndex < roles.length - 1 && (
-//                           <div className="w-0.5 h-16 bg-purple-300 dark:bg-purple-600 mt-2"></div>
-//                         )}
-//                       </div>
-//                       <div className="flex-1">
-//                         <h4 className="text-lg font-semibold text-gray-900 dark:text-white">{role.title}</h4>
-//                         <div className="flex items-center gap-2 text-gray-600 dark:text-gray-400 mt-1">
-//                           <Calendar className="w-4 h-4" />
-//                           <span>{role.period}</span>
-//                         </div>
-//                         <p className="mt-3 text-gray-600 dark:text-gray-300">{role.description}</p>
-//                         <div className="flex flex-wrap gap-2 mt-3">
-//                           {role.skills.map((skill, i) => (
-//                             <span
-//                               key={i}
-//                               className="px-3 py-1 bg-purple-100 dark:bg-purple-900 text-purple-600 dark:text-purple-400 rounded-full text-sm"
-//                             >
-//                               {skill}
-//                             </span>
-//                           ))}
-//                         </div>
-//                       </div>
-//                     </div>
-//                   </div>
-//                 ))}
-//               </div>
-//             ) : (
-//               <div>
-//                 <h4 className="text-lg font-semibold text-gray-900 dark:text-white">{roles[0].title}</h4>
-//                 <div className="flex items-center gap-2 text-gray-600 dark:text-gray-400 mt-1">
-//                   <Calendar className="w-4 h-4" />
-//                   <span>{roles[0].period}</span>
-//                 </div>
-//                 <p className="mt-4 text-gray-600 dark:text-gray-300">{roles[0].description}</p>
-//                 <div className="flex flex-wrap gap-2 mt-4">
-//                   {roles[0].skills.map((skill, i) => (
-//                     <span
-//                       key={i}
-//                       className="px-3 py-1 bg-purple-100 dark:bg-purple-900 text-purple-600 dark:text-purple-400 rounded-full text-sm"
-//                     >
-//                       {skill}
-//                     </span>
-//                   ))}
-//                 </div>
-//               </div>
-//             )}
-//           </div>
-//         </div>
-//       </div>
-//     </motion.div>
-//   );
-// };
-
-import React, { useEffect, useState } from "react";
-import { motion } from "framer-motion";
-import { useInView } from "react-intersection-observer";
-import { Briefcase, Calendar } from "lucide-react";
-
-export const Experience = () => {
-  const [ref, inView] = useInView({ threshold: 0.1 });
+export const Experience: React.FC = () => {
+  const sectionRef = useRef<HTMLDivElement>(null);
+  const lineRef = useRef<HTMLDivElement>(null);
 
   const experiences = [
     {
-      title: "AI Software Developer (Intern → Full-time)",
-      company: "Mindcraft Labs",
-      period: "Feb 2025 – Present",
+      title: 'AI Software Developer (Intern → Full-time)',
+      company: 'Mindcraft Labs',
+      period: 'Feb 2025 – Present',
       description: [
-        "Pioneered AI Voice Agent integration using ElevenLabs, Retell, and Vapi APIs, achieving a 20% improvement in voice accuracy and enhanced human-like conversational experiences.",
-        "Built and maintained scalable full-stack solutions using React.js, Next.js, Node.js, MongoDB, Express.js, and Firebase.",
-        "Developed NextViseAI, integrating AWS Comprehend Medical within a Dockerized Python worker to automate clinical NER tasks and oncology biomarker processing.",
-        "Designed a secure 'magic link' onboarding flow leveraging AWS Serverless Application Model (SAM) for streamlined user authentication.",
-        "Collaborated with cross-functional teams to design, implement, and optimize API-driven workflows for voice AI products.",
+        'Pioneered AI Voice Agent integration using ElevenLabs, Retell, and Vapi APIs, achieving a 20% improvement in voice accuracy and enhanced human-like conversational experiences.',
+        'Built and maintained scalable full-stack solutions using React.js, Next.js, Node.js, MongoDB, Express.js, and Firebase.',
+        'Developed NextViseAI, integrating AWS Comprehend Medical within a Dockerized Python worker to automate clinical NER tasks and oncology biomarker processing.',
+        'Designed a secure "magic link" onboarding flow leveraging AWS Serverless Application Model (SAM) for streamlined user authentication.',
+        'Collaborated with cross-functional teams to design, implement, and optimize API-driven workflows for voice AI products.',
       ],
-      skills: ["React", "Next.js", "TypeScript", "Node.js", "MongoDB", "Firebase", "Retell AI", "Vapi.ai", "ElevenLabs", "AWS Lambda", "AWS SAM", "Docker", "Prompt Engineering"],
+      skills: ['React', 'Next.js', 'TypeScript', 'Node.js', 'MongoDB', 'Firebase', 'Retell AI', 'Vapi.ai', 'ElevenLabs', 'AWS Lambda', 'AWS SAM', 'Docker', 'Prompt Engineering'],
     },
     {
-      title: "Frontend Developer Intern",
-      company: "BookNow",
-      period: "Oct 2024 – Mar 2025",
+      title: 'Frontend Developer Intern',
+      company: 'BookNow',
+      period: 'Oct 2024 – Mar 2025',
       description: [
-        "Created two key panels: the Movie Ticket Booking panel and the Admin panel for uploading movies, incorporating payment integration for seamless transactions.",
-        "Achieved a 40% reduction in page load time, significantly enhancing website performance and user experience.",
+        'Created two key panels: the Movie Ticket Booking panel and the Admin panel for uploading movies, incorporating payment integration for seamless transactions.',
+        'Achieved a 40% reduction in page load time, significantly enhancing website performance and user experience.',
       ],
-      skills: ["React", "JavaScript", "Tailwind CSS", "Shadcn/ui", "AWS S3", "Google Maps API"],
+      skills: ['React', 'JavaScript', 'Tailwind CSS', 'Shadcn/ui', 'AWS S3', 'Google Maps API'],
     },
     {
-      title: "Full Stack Developer Intern",
-      company: "CCA-Techno Pvt. Ltd",
-      period: "Jun 2024 – Sep 2024",
+      title: 'Full Stack Developer Intern',
+      company: 'CCA-Techno Pvt. Ltd',
+      period: 'Jun 2024 – Sep 2024',
       description: [
-        "Designed UI/UX, developed, and maintained healthcare software (HMS) for hospitals.",
-        "Worked on both Frontend (React.js) and Backend (Node.js), handling five modules: Account, HMS, Lab, Pharmacy, and Admin.",
+        'Designed UI/UX, developed, and maintained healthcare software (HMS) for hospitals.',
+        'Worked on both Frontend (React.js) and Backend (Node.js), handling five modules: Account, HMS, Lab, Pharmacy, and Admin.',
       ],
-      skills: ["React", "Node.js", "Express.js", "Tailwind CSS", "Shadcn/ui", "Google Translate API", "Google Speech API"],
+      skills: ['React', 'Node.js', 'Express.js', 'Tailwind CSS', 'Shadcn/ui', 'Google Translate API', 'Google Speech API'],
     },
     {
-      title: "Founder",
-      company: "Rkcoder.tech",
-      period: "May 2023 – May 2024",
+      title: 'Founder',
+      company: 'Rkcoder.tech',
+      period: 'May 2023 – May 2024',
       description: [
-        "Founded Rkcoder.tech, a platform for sharing coding tutorials, projects, and tech articles.",
-        "Grew the platform to 10k monthly views within 5 months through consistent content creation.",
+        'Founded Rkcoder.tech, a platform for sharing coding tutorials, projects, and tech articles.',
+        'Grew the platform to 10k monthly views within 5 months through consistent content creation.',
       ],
-      skills: ["Content Creation", "Web Development", "SEO", "Community Building"],
+      skills: ['Content Creation', 'Web Development', 'SEO', 'Community Building'],
     },
   ];
 
-  return (
-    <section id="experience" className="py-20 bg-gray-100 dark:bg-gray-900 transition-colors duration-200">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <motion.div
-          ref={ref}
-          initial={{ opacity: 0, y: 20 }}
-          animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-          transition={{ duration: 0.6 }}
-          className="text-center mb-16"
-        >
-          <h2 className="text-4xl font-bold text-gray-900 dark:text-white mb-4">Professional Experience</h2>
-          <p className="text-xl text-gray-600 dark:text-gray-400">My journey in tech</p>
-        </motion.div>
+  useGSAP(() => {
+    // Title SplitText animation
+    gsap.fromTo('.exp-title-char',
+      { y: 30, autoAlpha: 0 },
+      {
+        y: 0,
+        autoAlpha: 1,
+        stagger: 0.04,
+        duration: 0.6,
+        ease: 'back.out(1.7)',
+        scrollTrigger: {
+          trigger: '.exp-header',
+          start: 'top 85%',
+        },
+      }
+    );
 
-        <div className="space-y-8">
-          {experiences.map((exp, index) => (
-            <ExperienceCard key={index} experience={exp} index={index} />
-          ))}
+    gsap.fromTo('.exp-header-desc',
+      { y: 20, autoAlpha: 0 },
+      {
+        y: 0,
+        autoAlpha: 1,
+        duration: 0.8,
+        ease: 'power3.out',
+        scrollTrigger: {
+          trigger: '.exp-header',
+          start: 'top 85%',
+        },
+      }
+    );
+
+    // Vertical line drawing progress on scroll
+    gsap.fromTo(
+      lineRef.current,
+      { scaleY: 0 },
+      {
+        scaleY: 1,
+        transformOrigin: 'top',
+        ease: 'none',
+        scrollTrigger: {
+          trigger: '.exp-timeline',
+          start: 'top 70%',
+          end: 'bottom 70%',
+          scrub: true,
+        },
+      }
+    );
+
+    // Cards and dots stagger slide-ins
+    const timelineRows = gsap.utils.toArray('.timeline-item');
+    timelineRows.forEach((item: any, idx) => {
+      const cards = item.querySelectorAll('.timeline-card');
+      const dot = item.querySelector('.timeline-dot');
+      const isEven = idx % 2 === 0;
+
+      gsap.fromTo(cards,
+        {
+          x: (i, target) => {
+            const isLeft = target.closest('.md\\:flex');
+            return isLeft ? -50 : 50;
+          },
+          autoAlpha: 0
+        },
+        {
+          x: 0,
+          autoAlpha: 1,
+          duration: 0.8,
+          ease: 'power3.out',
+          scrollTrigger: {
+            trigger: item,
+            start: 'top 80%',
+          },
+        }
+      );
+
+      gsap.fromTo(dot,
+        { scale: 0, autoAlpha: 0 },
+        {
+          scale: 1,
+          autoAlpha: 1,
+          duration: 0.6,
+          ease: 'back.out(2)',
+          scrollTrigger: {
+            trigger: item,
+            start: 'top 80%',
+          },
+        }
+      );
+    });
+  }, []);
+
+  return (
+    <section
+      id="experience"
+      ref={sectionRef}
+      className="py-24 bg-slate-50 dark:bg-slate-950 transition-colors duration-300 overflow-hidden"
+    >
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        {/* Section Header */}
+        <div className="exp-header text-center mb-20">
+          <h2 className="text-3xl sm:text-4xl font-extrabold tracking-tight mb-4 text-slate-900 dark:text-slate-50">
+            <SplitText text="Professional Experience" charClassName="exp-title-char" />
+          </h2>
+          <div className="h-1.5 w-20 bg-indigo-500 rounded-full mx-auto mb-6 exp-header-desc" />
+          <p className="text-lg text-slate-600 dark:text-slate-400 exp-header-desc">My engineering journey in tech</p>
+        </div>
+
+        {/* Timeline Container */}
+        <div className="exp-timeline relative max-w-4xl mx-auto">
+          {/* Vertical progress line */}
+          <div
+            ref={lineRef}
+            className="absolute left-4 md:left-1/2 top-4 bottom-4 w-0.5 bg-slate-200 dark:bg-slate-800 -translate-x-1/2 z-0"
+          />
+
+          <div className="space-y-16">
+            {experiences.map((exp, idx) => {
+              const isEven = idx % 2 === 0;
+              return (
+                <div
+                  key={idx}
+                  className="timeline-item relative flex flex-col md:flex-row items-stretch z-10"
+                >
+                  {/* Left Column (Desktop) */}
+                  <div className={`hidden md:flex flex-1 items-center ${isEven ? 'justify-end pr-12 text-right' : ''}`}>
+                    {isEven && (
+                      <div className="timeline-card max-w-md bg-white dark:bg-slate-900 p-6 rounded-2xl border border-slate-200/50 dark:border-slate-800/50 shadow-sm">
+                        <span className="inline-block px-3 py-1 bg-indigo-100 dark:bg-indigo-950/40 text-indigo-700 dark:text-indigo-300 rounded-full text-xs font-semibold mb-3">
+                          {exp.period}
+                        </span>
+                        <h3 className="text-xl font-bold text-slate-900 dark:text-slate-50">{exp.title}</h3>
+                        <p className="text-sm font-semibold text-slate-500 dark:text-slate-400 mb-4">{exp.company}</p>
+                        <ul className="space-y-2 text-sm text-slate-600 dark:text-slate-400 text-left">
+                          {exp.description.map((pt, pIdx) => (
+                            <li key={pIdx} className="flex items-start gap-2">
+                              <span className="text-indigo-500 mt-1 flex-shrink-0">•</span>
+                              <span>{pt}</span>
+                            </li>
+                          ))}
+                        </ul>
+                        <div className="flex flex-wrap gap-1.5 mt-5 justify-start">
+                          {exp.skills.map((skill, sIdx) => (
+                            <span
+                              key={sIdx}
+                              className="px-2 py-1 bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 rounded-lg text-xs font-medium"
+                            >
+                              {skill}
+                            </span>
+                          ))}
+                        </div>
+                      </div>
+                    )}
+                  </div>
+
+                  {/* Dot */}
+                  <div className="absolute left-4 md:left-1/2 -translate-x-1/2 flex items-center justify-center">
+                    <div className="timeline-dot w-6 h-6 rounded-full bg-white dark:bg-slate-950 border-4 border-indigo-500 shadow-md z-20 flex items-center justify-center">
+                      <span className="w-1.5 h-1.5 rounded-full bg-indigo-500 animate-ping" />
+                    </div>
+                  </div>
+
+                  {/* Right Column / Mobile Layout */}
+                  <div className={`flex-1 pl-12 md:pl-12 flex items-center ${!isEven ? 'justify-start md:pl-12' : 'md:pl-0'}`}>
+                    <div className={`timeline-card max-w-md bg-white dark:bg-slate-900 p-6 rounded-2xl border border-slate-200/50 dark:border-slate-800/50 shadow-sm w-full ${isEven ? 'md:hidden' : ''}`}>
+                      <span className="inline-block px-3 py-1 bg-indigo-100 dark:bg-indigo-950/40 text-indigo-700 dark:text-indigo-300 rounded-full text-xs font-semibold mb-3">
+                        {exp.period}
+                      </span>
+                      <h3 className="text-xl font-bold text-slate-900 dark:text-slate-50">{exp.title}</h3>
+                      <p className="text-sm font-semibold text-slate-500 dark:text-slate-400 mb-4">{exp.company}</p>
+                      <ul className="space-y-2 text-sm text-slate-600 dark:text-slate-400">
+                        {exp.description.map((pt, pIdx) => (
+                          <li key={pIdx} className="flex items-start gap-2">
+                            <span className="text-indigo-500 mt-1 flex-shrink-0">•</span>
+                            <span>{pt}</span>
+                          </li>
+                        ))}
+                      </ul>
+                      <div className="flex flex-wrap gap-1.5 mt-5">
+                        {exp.skills.map((skill, sIdx) => (
+                          <span
+                            key={sIdx}
+                            className="px-2 py-1 bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 rounded-lg text-xs font-medium"
+                          >
+                            {skill}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
         </div>
       </div>
     </section>
-  );
-};
-
-const ExperienceCard = ({ experience, index }: { experience: any; index: number }) => {
-  const [ref, inView] = useInView({ threshold: 0.1 });
-  const [angle, setAngle] = useState(0);
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setAngle((prev) => (prev + 1) % 360);
-    }, 50);
-    return () => clearInterval(interval);
-  }, []);
-
-  const getBorderGradient = (startColor = '#8B5CF6', endColor = '#EC4899') => {
-    return `linear-gradient(${angle}deg, ${startColor}, ${endColor}, ${startColor})`;
-  };
-
-  return (
-    <motion.div
-      ref={ref}
-      initial={{ opacity: 0, x: index % 2 === 0 ? -50 : 50 }}
-      animate={inView ? { opacity: 1, x: 0 } : { opacity: 0, x: index % 2 === 0 ? -50 : 50 }}
-      transition={{ duration: 0.6, delay: index * 0.1 }}
-      className="relative p-0.5 rounded-xl overflow-hidden"
-      style={{ background: getBorderGradient(), backgroundSize: "400% 400%" }}
-    >
-      <div className="bg-white dark:bg-gray-800 rounded-xl p-6">
-        <div className="flex items-start gap-4">
-          <div className="p-3 bg-purple-100 dark:bg-purple-900 rounded-lg flex-shrink-0">
-            <Briefcase className="w-6 h-6 text-purple-600 dark:text-purple-400" />
-          </div>
-          <div className="flex-1">
-            <div className="flex flex-wrap items-start justify-between gap-2 mb-1">
-              <h3 className="text-xl font-semibold text-gray-900 dark:text-white">{experience.title}</h3>
-            </div>
-            <p className="text-purple-600 dark:text-purple-400 font-medium">{experience.company}</p>
-            <div className="flex items-center gap-2 text-gray-600 dark:text-gray-400 mt-1 mb-4">
-              <Calendar className="w-4 h-4" />
-              <span>{experience.period}</span>
-            </div>
-            <ul className="space-y-2 mb-4">
-              {experience.description.map((point: string, i: number) => (
-                <li key={i} className="flex items-start gap-2 text-gray-600 dark:text-gray-300">
-                  <span className="text-purple-500 mt-1 flex-shrink-0">•</span>
-                  <span>{point}</span>
-                </li>
-              ))}
-            </ul>
-            <div className="flex flex-wrap gap-2">
-              {experience.skills.map((skill: string, i: number) => (
-                <span
-                  key={i}
-                  className="px-3 py-1 bg-purple-100 dark:bg-purple-900 text-purple-600 dark:text-purple-400 rounded-full text-sm"
-                >
-                  {skill}
-                </span>
-              ))}
-            </div>
-          </div>
-        </div>
-      </div>
-    </motion.div>
   );
 };

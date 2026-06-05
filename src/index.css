@@ -1,3 +1,172 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer base {
+  :root {
+    --font-sans: 'Inter', sans-serif;
+    --font-display: 'Space Grotesk', sans-serif;
+    
+    --bg-primary: 250 250 248; /* #FAFAF8 */
+    --bg-secondary: 243 244 246; /* Slate 100 */
+    --bg-glass: 255 255 255;
+    --text-primary: 15 23 42; /* Slate 900 */
+    --text-secondary: 71 85 105; /* Slate 600 */
+    --accent: 79 70 229; /* Indigo 600 */
+    --accent-glow: 124 58 237; /* Violet 600 */
+    --border: 226 232 240; /* Slate 200 */
+  }
+
+  .dark {
+    --bg-primary: 9 9 17; /* Slate 950 variant */
+    --bg-secondary: 17 24 39; /* Slate 900 */
+    --bg-glass: 15 23 42;
+    --text-primary: 248 250 252; /* Slate 50 */
+    --text-secondary: 148 163 184; /* Slate 400 */
+    --accent: 129 140 248; /* Indigo 400 */
+    --accent-glow: 167 139 250; /* Violet 400 */
+    --border: 30 41 59; /* Slate 800 */
+  }
+
+  body {
+    font-family: var(--font-sans);
+    background-color: rgb(var(--bg-primary));
+    color: rgb(var(--text-primary));
+    overflow-x: hidden;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-display);
+    font-weight: 700;
+  }
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: rgb(var(--bg-primary));
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(var(--accent), 0.3);
+  border-radius: 9999px;
+  border: 2px solid rgb(var(--bg-primary));
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(var(--accent), 0.6);
+}
+
+/* Smooth Scrolling styling */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Hide default cursor on devices with fine pointers */
+@media (hover: hover) and (pointer: fine) {
+  html, body, a, button, select, input, textarea, [role="button"], .interactive-hover {
+    cursor: none !important;
+  }
+}
+
+/* Custom Cursor Styles */
+.custom-cursor-dot {
+  width: 8px;
+  height: 8px;
+  background-color: rgb(var(--accent));
+  border-radius: 50%;
+  position: fixed;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  z-index: 9999;
+  transition: width 0.2s, height 0.2s, background-color 0.2s;
+}
+
+.custom-cursor-outline {
+  width: 40px;
+  height: 40px;
+  border: 1.5px solid #ffffff;
+  border-radius: 50%;
+  position: fixed;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  z-index: 9998;
+  mix-blend-mode: difference;
+  transition: width 0.3s, height 0.3s, border-color 0.3s, background-color 0.3s;
+}
+
+/* Cursor Hover states classes triggered by JS */
+.cursor-hover .custom-cursor-dot {
+  width: 12px;
+  height: 12px;
+  background-color: rgb(var(--accent-glow));
+}
+
+.cursor-hover .custom-cursor-outline {
+  width: 60px;
+  height: 60px;
+  border-color: #ffffff;
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+/* Custom Glassmorphism Utilities */
+.glass-panel {
+  background: rgba(var(--bg-glass), 0.7);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(var(--border), 0.5);
+}
+
+.glass-panel-heavy {
+  background: rgba(var(--bg-glass), 0.85);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(var(--border), 0.8);
+}
+
+/* Glow Border & Gradient Cards */
+@property --gradient-angle {
+  syntax: "<angle>";
+  initial-value: 0deg;
+  inherits: false;
+}
+
+.glow-card {
+  position: relative;
+  background: rgba(var(--bg-glass), 0.8);
+  border-radius: 1rem;
+}
+
+.glow-card::before,
+.glow-card::after {
+  content: "";
+  position: absolute;
+  inset: -2px;
+  z-index: -1;
+  background: conic-gradient(
+    from var(--gradient-angle),
+    rgb(var(--accent)),
+    rgb(var(--accent-glow)),
+    #3b82f6,
+    rgb(var(--accent))
+  );
+  border-radius: 1.05rem;
+  animation: spin-gradient 4s linear infinite;
+  opacity: 0.15;
+  transition: opacity 0.3s ease;
+}
+
+.glow-card:hover::before,
+.glow-card:hover::after {
+  opacity: 0.8;
+  filter: blur(8px);
+}
+
+@keyframes spin-gradient {
+  0% {
+    --gradient-angle: 0deg;
+  }
+  100% {
+    --gradient-angle: 360deg;
+  }
+}

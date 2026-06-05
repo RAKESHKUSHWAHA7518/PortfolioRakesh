@@ -9,11 +9,15 @@ import { Projects } from './components/Projects';
 import { Certificates } from './components/Certificates';
 import { Contact } from './components/Contact';
 import { Footer } from './components/Footer';
+import { CustomCursor } from './components/CustomCursor';
+import { ScrollProgress } from './components/ScrollProgress';
 
 function App() {
   return (
     <ThemeProvider>
-      <div className="min-h-screen bg-white dark:bg-gray-900 overflow-x-hidden transition-colors overflow-hidden duration-200">
+      <div className="min-h-screen bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100 overflow-x-hidden transition-colors duration-300">
+        <ScrollProgress />
+        <CustomCursor />
         <Header />
         <main>
           <Hero />

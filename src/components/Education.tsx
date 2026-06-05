@@ -1,247 +1,127 @@
-// import React, { useEffect, useState } from 'react';
-// import { motion } from 'framer-motion';
-// import { useInView } from 'react-intersection-observer';
-// import { GraduationCap, Calendar } from 'lucide-react';
-
-// export const Education = () => {
-//   const [ref, inView] = useInView({
-//     triggerOnce: false,
-//     threshold: 0.1,
-//   });
-
-//   const education = [
-   
-//     {
-//       degree: "Bachelor of    Technology",
-//       institution: "Rajkiya Engineering College, Banda",
-//       period: "2021 - 2025",
-//       description: "Major in Computer Science with focus on Web Development,MERN Stack and UI/UX Design.",
-//       achievements: [ "7.3 CGPA", "2+ Internship "]
-//     } ,
-//     {
-//       degree: " 12th PCM",
-//       institution: "Lala jangilal inter collage",
-//       period: "2019 - 2021",
-//       description: "Specialized in  PCM  ",
-//       achievements: ["74.6",]
-//     },
-//   ];
-
-//   return (
-//     <section id="education" className="py-20 bg-gray-50 dark:bg-gray-800 transition-colors duration-200">
-//       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-//         <motion.div
-//           ref={ref}
-//           initial={{ opacity: 0, y: 20 }}
-//           animate={inView ? { opacity: 1, y: 0 } : {}}
-//           transition={{ duration: 0.6 }}
-//           className="text-center mb-16"
-//         >
-//           <h2 className="text-4xl font-bold text-gray-900 dark:text-white mb-4">Education</h2>
-//           <p className="text-xl text-gray-600 dark:text-gray-400">Academic Background</p>
-//         </motion.div>
-
-//         <div className="space-y-8">
-//           {education.map((edu, index) => (
-//             <EducationCard key={index} education={edu} index={index} />
-//           ))}
-//         </div>
-//       </div>
-//     </section>
-//   );
-// };
-
-// const EducationCard = ({ education, index }: { education: any; index: number }) => {
-//   const [ref, inView] = useInView({
-//     triggerOnce: false,
-//     threshold: 0.1,
-//   });
-//   // const [angle, setAngle] = useState(0);
-
-//   // useEffect(() => {
-//   //   const interval = setInterval(() => {
-//   //     setAngle((prev) => (prev + 1) % 360);
-//   //   }, 50);
-//   //   return () => clearInterval(interval);
-//   // }, []);
-
-//   // const getBorderGradient = (startColor = "#8B5CF6", endColor = "#EC4899") => {
-//   //   return `linear-gradient(${angle}deg, ${startColor}, ${endColor}, ${startColor})`;
-//   // };
-
-//   return (
-//     <motion.div
-//       ref={ref}
-//       initial={{ opacity: 0, x: index % 2 === 0 ? -50 : 50 }}
-//       animate={inView ? { opacity: 1, x: 0 } : {}}
-//       transition={{ duration: 0.6, delay: index * 0.2 }}
-//       className="bg-white dark:bg-gray-900 rounded-xl shadow-lg p-6 transition-colors duration-200"
-//       // className="relative p-0.5 rounded-xl overflow-hidden"
-
-//       // style={{
-//       //   background: getBorderGradient("#3B82F6", "#10B981"),
-//       //   backgroundSize: "400% 400%",
-//       // }}
-//     >
-//       <div className="flex items-start gap-4">
-//         <div className="p-3 bg-purple-100 dark:bg-purple-900 rounded-lg">
-//           <GraduationCap className="w-6 h-6 text-purple-600 dark:text-purple-400" />
-//         </div>
-//         <div className="flex-1">
-//           <h3 className="text-xl font-semibold text-gray-900 dark:text-white">{education.degree}</h3>
-//           <p className="text-purple-600 dark:text-purple-400 font-medium">{education.institution}</p>
-//           <div className="flex items-center gap-2 text-gray-600 dark:text-gray-400 mt-1">
-//             <Calendar className="w-4 h-4" />
-//             <span>{education.period}</span>
-//           </div>
-//           <p className="mt-4 text-gray-600 dark:text-gray-300">{education.description}</p>
-//           <div className="flex flex-wrap gap-2 mt-4">
-//             {education.achievements.map((achievement: string, i: number) => (
-//               <span
-//                 key={i}
-//                 className="px-3 py-1 bg-purple-100 dark:bg-purple-900 text-purple-600 dark:text-purple-400 rounded-full text-sm"
-//               >
-//                 {achievement}
-//               </span>
-//             ))}
-//           </div>
-//         </div>
-//       </div>
-//     </motion.div>
-//   );
-// };
-
-
-import React, { useEffect, useState } from 'react';
-import { motion } from 'framer-motion';
-import { useInView } from 'react-intersection-observer';
+import React from 'react';
 import { GraduationCap, Calendar } from 'lucide-react';
+import { useGSAP } from '../hooks/useGSAP';
+import { TiltCard } from './TiltCard';
+import { SplitText } from './SplitText';
+import gsap from 'gsap';
 
-export const Education = () => {
-  const [ref, inView] = useInView({
-    triggerOnce: false,
-    threshold: 0.1,
-  });
-
+export const Education: React.FC = () => {
   const education = [
     {
-      degree: "Bachelor of Technology",
-      institution: "Rajkiya Engineering College, Banda",
-      period: "2021 - 2025",
-      description:
-        "Major in Computer Science with a focus on Web Development, MERN Stack, and UI/UX Design.",
-      achievements: ["7.4 CGPA", "2+ Internships"],
+      degree: 'Bachelor of Technology',
+      institution: 'Rajkiya Engineering College, Banda',
+      period: '2021 - 2025',
+      description: 'Major in Computer Science with a focus on Web Development, MERN Stack, and UI/UX Design.',
+      achievements: ['7.4 CGPA', '2+ Internships'],
     },
     {
-      degree: "12th PCM",
-      institution: "Lala Jangilal Inter College",
-      period: "2019 - 2021",
-      description: "Specialized in Physics, Chemistry, and Mathematics.",
-      achievements: ["74.6%"],
+      degree: '12th PCM',
+      institution: 'Lala Jangilal Inter College',
+      period: '2019 - 2021',
+      description: 'Specialized in Physics, Chemistry, and Mathematics.',
+      achievements: ['74.6%'],
     },
   ];
+
+  useGSAP(() => {
+    // Title SplitText animation
+    gsap.fromTo('.edu-title-char',
+      { y: 30, autoAlpha: 0 },
+      {
+        y: 0,
+        autoAlpha: 1,
+        stagger: 0.05,
+        duration: 0.6,
+        ease: 'back.out(1.7)',
+        scrollTrigger: {
+          trigger: '.edu-header',
+          start: 'top 85%',
+        },
+      }
+    );
+
+    gsap.fromTo('.edu-header-desc',
+      { y: 20, autoAlpha: 0 },
+      {
+        y: 0,
+        autoAlpha: 1,
+        duration: 0.8,
+        ease: 'power3.out',
+        scrollTrigger: {
+          trigger: '.edu-header',
+          start: 'top 85%',
+        },
+      }
+    );
+
+    // Staggered slide in for cards
+    gsap.fromTo('.edu-card',
+      { y: 35, autoAlpha: 0 },
+      {
+        y: 0,
+        autoAlpha: 1,
+        stagger: 0.2,
+        duration: 0.8,
+        ease: 'power3.out',
+        scrollTrigger: {
+          trigger: '.edu-list-container',
+          start: 'top 80%',
+        },
+      }
+    );
+  }, []);
 
   return (
     <section
       id="education"
-      className="py-20 bg-gray-100 dark:bg-gray-800 transition-colors duration-200"
+      className="py-24 bg-slate-100 dark:bg-slate-900/40 border-y border-slate-200/50 dark:border-slate-800/50 transition-colors duration-300"
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <motion.div
-          ref={ref}
-          initial={{ opacity: 0, y: 20 }}
-          animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6 }}
-          className="text-center mb-16"
-        >
-          <h2 className="text-4xl font-bold text-gray-900 dark:text-white mb-4">
-            Education
+        {/* Section Header */}
+        <div className="edu-header text-center mb-16">
+          <h2 className="text-3xl sm:text-4xl font-extrabold tracking-tight mb-4 text-slate-900 dark:text-slate-50">
+            <SplitText text="Education" charClassName="edu-title-char" />
           </h2>
-          <p className="text-xl text-gray-600 dark:text-gray-400">
-            Academic Background
-          </p>
-        </motion.div>
+          <div className="h-1.5 w-20 bg-indigo-500 rounded-full mx-auto mb-6 edu-header-desc" />
+          <p className="text-lg text-slate-600 dark:text-slate-400 edu-header-desc">Academic Background</p>
+        </div>
 
-        <div className="space-y-8">
+        {/* Education List Container */}
+        <div className="edu-list-container space-y-8 max-w-4xl mx-auto">
           {education.map((edu, index) => (
-            <EducationCard key={index} education={edu} index={index} />
+            <TiltCard key={index} className="edu-card w-full">
+              <div className="glow-card p-6 bg-white dark:bg-slate-900 border border-slate-200/50 dark:border-slate-800/50 rounded-2xl shadow-sm flex flex-col sm:flex-row gap-5 items-start">
+                <div className="p-3.5 bg-indigo-500/10 rounded-xl text-indigo-500 dark:text-indigo-400 flex-shrink-0">
+                  <GraduationCap className="w-6 h-6" />
+                </div>
+                <div className="flex-1">
+                  <div className="flex flex-wrap justify-between items-start gap-2 mb-2">
+                    <div>
+                      <h3 className="text-xl font-bold text-slate-900 dark:text-slate-50">{edu.degree}</h3>
+                      <p className="text-sm font-semibold text-indigo-500 dark:text-indigo-400">{edu.institution}</p>
+                    </div>
+                    <div className="flex items-center gap-1.5 text-xs font-semibold text-slate-500 dark:text-slate-400 bg-slate-100 dark:bg-slate-800/50 px-2.5 py-1.5 rounded-lg border border-slate-200/30 dark:border-slate-700/30">
+                      <Calendar className="w-3.5 h-3.5" />
+                      <span>{edu.period}</span>
+                    </div>
+                  </div>
+                  <p className="text-slate-600 dark:text-slate-400 text-sm leading-relaxed mb-4">{edu.description}</p>
+                  <div className="flex flex-wrap gap-2">
+                    {edu.achievements.map((achievement, i) => (
+                      <span
+                        key={i}
+                        className="px-2.5 py-1.5 bg-indigo-50 dark:bg-indigo-950/40 text-indigo-700 dark:text-indigo-300 border border-indigo-100/50 dark:border-indigo-900/50 rounded-lg text-xs font-semibold"
+                      >
+                        {achievement}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </TiltCard>
           ))}
         </div>
       </div>
     </section>
-  );
-};
-
-const EducationCard = ({
-  education,
-  index,
-}: {
-  education: any;
-  index: number;
-}) => {
-  const [ref, inView] = useInView({
-    triggerOnce: false,
-    threshold: 0.1,
-  });
-
-  const [angle, setAngle] = useState(0);
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setAngle((prev) => (prev + 1) % 360);
-    }, 50);
-    return () => clearInterval(interval);
-  }, []);
-
-  const getBorderGradient = (
-    startColor = '#3B82F6',
-    endColor = '#10B981'
-  ) => {
-    return `linear-gradient(${angle}deg, ${startColor}, ${endColor}, ${startColor})`;
-  };
-
-  return (
-    <motion.div
-      ref={ref}
-      initial={{ opacity: 0, x: index % 2 === 0 ? -50 : 50 }}
-      animate={inView ? { opacity: 1, x: 0 } : {}}
-      transition={{ duration: 0.6, delay: index * 0.2 }}
-      className="relative p-0.5 rounded-xl overflow-hidden"
-      style={{
-        background: getBorderGradient(),
-        backgroundSize: '400% 400%',
-      }}
-    >
-      <div className="bg-white dark:bg-gray-900 rounded-xl p-6 transition-colors duration-200 flex items-start gap-4">
-        <div className="p-3 bg-purple-100 dark:bg-purple-900 rounded-lg">
-          <GraduationCap className="w-6 h-6 text-purple-600 dark:text-purple-400" />
-        </div>
-        <div className="flex-1">
-          <h3 className="text-xl font-semibold text-gray-900 dark:text-white">
-            {education.degree}
-          </h3>
-          <p className="text-purple-600 dark:text-purple-400 font-medium">
-            {education.institution}
-          </p>
-          <div className="flex items-center gap-2 text-gray-600 dark:text-gray-400 mt-1">
-            <Calendar className="w-4 h-4" />
-            <span>{education.period}</span>
-          </div>
-          <p className="mt-4 text-gray-600 dark:text-gray-300">
-            {education.description}
-          </p>
-          <div className="flex flex-wrap gap-2 mt-4">
-            {education.achievements.map((achievement: string, i: number) => (
-              <span
-                key={i}
-                className="px-3 py-1 bg-purple-100 dark:bg-purple-900 text-purple-600 dark:text-purple-400 rounded-full text-sm"
-              >
-                {achievement}
-              </span>
-            ))}
-          </div>
-        </div>
-      </div>
-    </motion.div>
   );
 };
