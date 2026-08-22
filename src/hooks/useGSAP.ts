@@ -12,8 +12,8 @@ const useIsomorphicLayoutEffect = typeof window !== 'undefined' ? useLayoutEffec
 
 export const useGSAP = (
   effect: (context: gsap.Context) => void,
-  dependencies: any[] = [],
-  scope?: React.RefObject<any>
+  dependencies: React.DependencyList = [],
+  scope?: React.RefObject<HTMLElement>
 ) => {
   useIsomorphicLayoutEffect(() => {
     const ctx = gsap.context(effect, scope);

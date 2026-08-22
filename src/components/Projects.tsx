@@ -1,5 +1,5 @@
 import React, { useState, useRef } from 'react';
-import { ExternalLink, Github, Code2, Layout, Database, ChevronDown, Bot } from 'lucide-react';
+import { ExternalLink, Github, ChevronDown, Code, Database, Server, Layers, CheckCircle2 } from 'lucide-react';
 import { useGSAP } from '../hooks/useGSAP';
 import { TiltCard } from './TiltCard';
 import { SplitText } from './SplitText';
@@ -11,17 +11,18 @@ export const Projects: React.FC = () => {
   const projects = [
     {
       title: 'Agentic AI Multi-Agent Research',
-      description: 'Advanced orchestration framework research enabling autonomous, multi-agent task execution and planning.',
-      image: 'https://images.unsplash.com/photo-1677442136019-21780efad99a?w=600&auto=format&fit=crop&q=60',
+      description: 'Advanced orchestration framework enabling autonomous, multi-agent task execution and planning.',
+      image: 'https://images.unsplash.com/photo-1677442136019-21780efad99a?w=800&auto=format&fit=crop&q=80',
       tags: ['LangChain', 'CrewAI', 'Python', 'LLM Chains', 'VectorDB', 'FastAPI'],
       github: 'https://github.com/RAKESHKUSHWAHA7518',
       demo: 'https://github.com/RAKESHKUSHWAHA7518',
       featured: true,
-      badge: '🔬 Research / In Development',
+      badge: 'Research / In Development',
+      category: 'AI Research',
       details: {
         overview: 'Researching and prototyping an autonomous multi-agent framework. The system orchestrates specialized AI agents (e.g., Code Researcher, Tester, Coordinator) executing complex planning, reflection, and debugging cycles. Built to model distributed cognitive tasks locally.',
         features: [
-          'Goal-oriented hierarchal planning and task delegation',
+          'Goal-oriented hierarchical planning and task delegation',
           'Intra-agent messaging loops and conflict resolution',
           'Self-correction and error reflecting loops',
           'Vector database search (RAG) for localized contextual memories',
@@ -37,10 +38,11 @@ export const Projects: React.FC = () => {
     {
       title: 'NextViseAI',
       description: 'AI-powered clinical NER tool for oncology biomarker processing using AWS Comprehend Medical',
-      image: 'https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=600&auto=format&fit=crop&q=60',
+      image: 'https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=800&auto=format&fit=crop&q=80',
       tags: ['Python', 'AWS Comprehend Medical', 'Docker', 'Node.js', 'React', 'Firebase'],
       github: 'https://github.com/RAKESHKUSHWAHA7518',
       demo: 'https://github.com/RAKESHKUSHWAHA7518',
+      category: 'Healthcare AI',
       details: {
         overview: 'Developed NextViseAI at Mindcraft Labs — integrating AWS Comprehend Medical within a Dockerized Python worker to automate clinical Named Entity Recognition (NER) tasks and oncology biomarker processing. Also designed a secure "magic link" onboarding flow using AWS Serverless Application Model (SAM).',
         features: [
@@ -60,10 +62,11 @@ export const Projects: React.FC = () => {
     {
       title: 'SkillSwap',
       description: 'Full-stack platform to exchange skills mutually without monetary transactions',
-      image: 'https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=600&auto=format&fit=crop&q=60',
+      image: 'https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=800&auto=format&fit=crop&q=80',
       tags: ['React', 'Node.js', 'MongoDB', 'Tailwind CSS', 'Express.js'],
       github: 'https://github.com/RAKESHKUSHWAHA7518',
       demo: 'https://github.com/RAKESHKUSHWAHA7518',
+      category: 'Full Stack',
       details: {
         overview: 'Developed SkillSwap, a full-stack web application that connects users to exchange skills mutually without monetary transactions (e.g., Python for Graphic Design). Features skill-matching cards, gamification with credits and badges, and a clean responsive UI.',
         features: [
@@ -87,6 +90,7 @@ export const Projects: React.FC = () => {
       tags: ['React', 'Node.js', 'MongoDB', 'Redux', 'Express.js', 'GitHub'],
       github: 'https://github.com/RAKESHKUSHWAHA7518/E-com-Full-Stack-Project',
       demo: 'https://e-com-full-stack-project-9jpg.vercel.app',
+      category: 'E-Commerce',
       details: {
         overview: 'A full-stack e-commerce solution built with modern technologies. An E-commerce platform with 3 panels: User, Admin, and Superadmin. Users can browse, add to cart, and purchase while admins manage products and inventory. Built with role-based access control.',
         features: [
@@ -105,11 +109,12 @@ export const Projects: React.FC = () => {
     },
     {
       title: 'AskMyDoc',
-      description: 'Real-time Answer according to your Documents',
+      description: 'RAG-powered document Q&A system using Gemini API and Vector DB',
       image: 'https://iili.io/Fhtlf2V.png',
       tags: ['React', 'Firebase', 'Tailwind CSS', 'Gemini API'],
       github: 'https://github.com/RAKESHKUSHWAHA7518/Rag-application-with-VectorDB',
       demo: 'https://askmydoc-ten.vercel.app/',
+      category: 'RAG Application',
       details: {
         overview: "An application that allows users to upload a PDF document, processes and embeds its content, and enables a chat-based Q&A interface to query the document's knowledge base using a large language model.",
         features: [
@@ -133,6 +138,7 @@ export const Projects: React.FC = () => {
       tags: ['React', 'Firebase', 'Tailwind CSS', 'Gemini API'],
       github: 'https://github.com/RAKESHKUSHWAHA7518/coding-assistant',
       demo: 'https://coding-assistant-seven.vercel.app/',
+      category: 'Developer Tools',
       details: {
         overview: 'An AI-powered coding assistant that provides real-time code suggestions, explanations, and debugging help. Built with React and powered by the Gemini API to help developers write better code faster.',
         features: [
@@ -149,12 +155,13 @@ export const Projects: React.FC = () => {
       },
     },
     {
-      title: 'Food Application',
-      description: 'Real-time collaborative Cart management system Swiggy clone',
+      title: 'Food Application (Swiggy Clone)',
+      description: 'Real-time collaborative Cart management system using live Swiggy APIs',
       image: 'https://i.postimg.cc/9fWNmy6z/Food-Application.png',
       tags: ['React', 'Redux', 'Tailwind CSS', 'Swiggy API'],
       github: 'https://github.com/RAKESHKUSHWAHA7518/swigy-project',
       demo: 'https://vocal-kataifi-155663.netlify.app/',
+      category: 'Food Tech',
       details: {
         overview: 'Designed a Swiggy-like application using React.js. Features restaurant displays, menu rendering with live Swiggy APIs (handling CORS requests), and custom Redux cart updates.',
         features: [
@@ -172,75 +179,64 @@ export const Projects: React.FC = () => {
   ];
 
   useGSAP(() => {
-    // Title SplitText animation
-    gsap.fromTo('.proj-title-char',
-      { y: 30, autoAlpha: 0 },
-      {
-        y: 0,
-        autoAlpha: 1,
-        stagger: 0.04,
-        duration: 0.6,
-        ease: 'back.out(1.7)',
-        scrollTrigger: {
-          trigger: '.proj-header',
-          start: 'top 85%',
-        },
-      }
-    );
+    const ctx = gsap.context(() => {
+      gsap.fromTo('.proj-title .char',
+        { y: '100%', opacity: 0 },
+        { y: '0%', opacity: 1, stagger: 0.03, duration: 0.8, ease: 'expo.out',
+          scrollTrigger: { trigger: '.proj-header', start: 'top 85%' }
+        }
+      );
 
-    gsap.fromTo('.proj-header-desc',
-      { y: 20, autoAlpha: 0 },
-      {
-        y: 0,
-        autoAlpha: 1,
-        duration: 0.8,
-        ease: 'power3.out',
-        scrollTrigger: {
-          trigger: '.proj-header',
-          start: 'top 85%',
-        },
-      }
-    );
+      gsap.fromTo('.proj-header .divider, .proj-header .desc',
+        { y: 20, opacity: 0 },
+        { y: 0, opacity: 1, stagger: 0.1, duration: 0.7, ease: 'power3.out',
+          scrollTrigger: { trigger: '.proj-header', start: 'top 85%' }
+        }
+      );
 
-    // Cards staggered entry
-    gsap.fromTo('.proj-card',
-      { y: 40, autoAlpha: 0 },
-      {
-        y: 0,
-        autoAlpha: 1,
-        stagger: 0.15,
-        duration: 0.8,
-        ease: 'power3.out',
-        scrollTrigger: {
-          trigger: '.proj-grid',
-          start: 'top 80%',
-        },
-      }
-    );
+      gsap.fromTo('.proj-card',
+        { y: 40, opacity: 0 },
+        {
+          y: 0,
+          opacity: 1,
+          stagger: 0.1,
+          duration: 0.8,
+          ease: 'expo.out',
+          scrollTrigger: {
+            trigger: '.proj-grid',
+            start: 'top 80%',
+          },
+        }
+      );
+    }, containerRef);
+
+    return () => ctx.revert();
   }, []);
 
   return (
     <section
       id="projects"
       ref={containerRef}
-      className="py-24 bg-slate-50 dark:bg-slate-950 transition-colors duration-300"
+      className="relative py-24 lg:py-32 bg-[rgb(var(--bg-secondary))] border-y border-[rgba(var(--border-primary),0.3)] overflow-hidden"
+      aria-label="Projects"
     >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Section Header */}
-        <div className="proj-header text-center mb-16">
-          <h2 className="text-3xl sm:text-4xl font-extrabold tracking-tight mb-4 text-slate-900 dark:text-slate-50">
-            <SplitText text="Featured Projects" charClassName="proj-title-char" />
+      <div className="absolute inset-0 gradient-mesh pointer-events-none opacity-50" />
+      
+      <div className="section-container relative z-10">
+        <div className="proj-header text-center mb-16 lg:mb-20">
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[rgba(var(--accent-tertiary),0.1)] border border-[rgba(var(--accent-tertiary),0.2)] text-[rgb(var(--accent-tertiary))] text-xs font-semibold uppercase tracking-widest mb-6">
+            <span>// Projects</span>
+          </div>
+          <h2 className="proj-title section-title mb-4">
+            <SplitText text="Featured Projects" charClassName="char" />
           </h2>
-          <div className="h-1.5 w-20 bg-indigo-500 rounded-full mx-auto mb-6 exp-header-desc proj-header-desc" />
-          <p className="text-lg text-slate-600 dark:text-slate-400 proj-header-desc">
-            Showcasing my expertise in full-stack development and Agentic AI
-          </p>
+          <div className="divider section-divider" />
+          <p className="section-description desc">Showcasing expertise in full-stack development and Agentic AI</p>
         </div>
 
-        {/* Projects Grid */}
-        <div className="proj-grid grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="proj-grid grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
           {projects.map((project, index) => (
-            <ProjectCard key={index} project={project} />
+            <ProjectCard key={index} project={project} index={index} />
           ))}
         </div>
       </div>
@@ -248,9 +244,10 @@ export const Projects: React.FC = () => {
   );
 };
 
-const ProjectCard: React.FC<{ project: any }> = ({ project }) => {
+const ProjectCard: React.FC<{ project: { title: string; description: string; image: string; tags: string[]; github: string; demo: string; featured?: boolean; badge?: string; category: string; details: { overview: string; features: string[]; techStack: { frontend: string[]; backend: string[]; deployment: string[] } } } }> = ({ project }) => {
   const [isExpanded, setIsExpanded] = useState(false);
   const detailsRef = useRef<HTMLDivElement>(null);
+  const cardRef = useRef<HTMLDivElement>(null);
 
   const toggleDetails = () => {
     setIsExpanded(!isExpanded);
@@ -259,7 +256,7 @@ const ProjectCard: React.FC<{ project: any }> = ({ project }) => {
         gsap.fromTo(
           detailsRef.current,
           { height: 0, opacity: 0 },
-          { height: 'auto', opacity: 1, duration: 0.4, ease: 'power3.out' }
+          { height: 'auto', opacity: 1, duration: 0.5, ease: 'power3.out' }
         );
       } else {
         gsap.to(detailsRef.current, { height: 0, opacity: 0, duration: 0.3, ease: 'power3.in' });
@@ -268,65 +265,76 @@ const ProjectCard: React.FC<{ project: any }> = ({ project }) => {
   };
 
   return (
-    <TiltCard className="proj-card h-full">
-      <div className="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200/60 dark:border-slate-800/60 shadow-sm overflow-hidden flex flex-col h-full group hover:shadow-md transition-shadow">
-        {/* Card Image */}
-        <div className="relative h-48 overflow-hidden">
+    <TiltCard className="proj-card h-full" maxRotation={8}>
+      <div 
+        ref={cardRef}
+        className="surface h-full flex flex-col rounded-2xl overflow-hidden group relative animated-gradient-border"
+      >
+        <div className="relative h-52 md:h-56 overflow-hidden">
           <img
             src={project.image}
             alt={project.title}
-            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+            className="w-full h-full object-cover group-hover:scale-[1.03] transition-transform duration-700 ease-out"
+            loading="lazy"
           />
-          {project.badge && (
-            <span className="absolute top-3 left-3 bg-indigo-600/90 backdrop-blur-md text-white text-[10px] font-bold tracking-wide uppercase px-2.5 py-1 rounded-full shadow-lg">
-              {project.badge}
+          <div className="absolute inset-0 bg-gradient-to-t from-[rgb(var(--bg-primary))] via-transparent to-transparent opacity-60 group-hover:opacity-80 transition-opacity duration-300" />
+          
+          <div className="absolute top-4 left-4 right-4 flex justify-between items-start">
+            <span className="px-3 py-1.5 bg-[rgba(var(--bg-primary),0.9)] backdrop-blur-sm text-[rgb(var(--text-primary))] border border-[rgba(var(--border-primary),0.3)] rounded-full text-[10px] font-bold tracking-widest uppercase">
+              {project.category}
             </span>
-          )}
+            {project.badge && (
+              <span className="px-3 py-1.5 bg-[rgba(var(--accent-tertiary),0.9)] backdrop-blur-sm text-white border border-[rgba(var(--accent-tertiary),0.3)] rounded-full text-[10px] font-bold tracking-widest uppercase">
+                {project.badge}
+              </span>
+            )}
+          </div>
         </div>
 
-        {/* Content */}
-        <div className="p-6 flex-grow flex flex-col">
-          <h3 className="text-xl font-bold mb-2 text-slate-900 dark:text-slate-50">{project.title}</h3>
-          <p className="text-slate-600 dark:text-slate-400 text-sm leading-relaxed mb-4 flex-grow">
-            {project.description}
-          </p>
+        <div className="p-6 flex-1 flex flex-col">
+          <h3 className="text-xl font-bold text-[rgb(var(--text-primary))] mb-3 group-hover:text-[rgb(var(--accent-primary))] transition-colors duration-300">{project.title}</h3>
+          <p className="text-[rgb(var(--text-secondary))] text-sm leading-relaxed mb-5 flex-1">{project.description}</p>
 
-          <div className="flex flex-wrap gap-1.5 mb-5">
+          <div className="flex flex-wrap gap-2 mb-5">
             {project.tags.map((tag: string, i: number) => (
               <span
                 key={i}
-                className="px-2 py-1 bg-slate-100 dark:bg-slate-800/80 text-slate-700 dark:text-slate-300 rounded-lg text-xs font-semibold"
+                className="px-2.5 py-1 bg-[rgba(var(--border-primary),0.4)] text-[rgb(var(--text-secondary))] rounded-lg text-xs font-semibold hover:text-[rgb(var(--accent-primary))] hover:bg-[rgba(var(--accent-primary),0.1)] hover:border-[rgba(var(--accent-primary),0.2)] border transition-all duration-200"
               >
                 {tag}
               </span>
             ))}
           </div>
 
-          {/* Details Toggle */}
           <button
             onClick={toggleDetails}
-            className="w-full flex items-center justify-between text-indigo-500 hover:text-indigo-600 dark:hover:text-indigo-400 text-xs font-bold uppercase tracking-wider mb-4 border-t border-slate-100 dark:border-slate-800 pt-4"
+            className="w-full flex items-center justify-between text-[rgb(var(--accent-primary))] hover:text-[rgb(var(--accent-secondary))] text-xs font-bold uppercase tracking-wider mb-4 border-t border-[rgba(var(--border-primary),0.3)] pt-4 transition-colors duration-200"
           >
             <span>{isExpanded ? 'Hide Details' : 'View Details'}</span>
             <ChevronDown className={`w-4 h-4 transform transition-transform duration-300 ${isExpanded ? 'rotate-180' : ''}`} />
           </button>
 
-          {/* Collapsible details wrapper */}
           <div ref={detailsRef} className="h-0 opacity-0 overflow-hidden">
-            <div className="space-y-4 pb-4">
+            <div className="space-y-5 pb-4">
               <div>
-                <h4 className="text-xs font-bold uppercase tracking-wider text-slate-400 mb-1.5">Overview</h4>
-                <p className="text-xs text-slate-600 dark:text-slate-450 leading-relaxed">
+                <h4 className="text-xs font-bold uppercase tracking-wider text-[rgb(var(--text-muted))] mb-2 flex items-center gap-2">
+                  <Layers className="w-3.5 h-3.5" style={{ color: 'rgb(var(--accent-primary))' }} />
+                  Overview
+                </h4>
+                <p className="text-xs text-[rgb(var(--text-secondary))] leading-relaxed">
                   {project.details.overview}
                 </p>
               </div>
 
               <div>
-                <h4 className="text-xs font-bold uppercase tracking-wider text-slate-400 mb-1.5">Key Features</h4>
-                <ul className="space-y-1 text-xs text-slate-600 dark:text-slate-450">
+                <h4 className="text-xs font-bold uppercase tracking-wider text-[rgb(var(--text-muted))] mb-2 flex items-center gap-2">
+                  <CheckCircle2 className="w-3.5 h-3.5" style={{ color: 'rgb(var(--accent-primary))' }} />
+                  Key Features
+                </h4>
+                <ul className="space-y-1.5 text-xs text-[rgb(var(--text-secondary))]">
                   {project.details.features.map((feature: string, i: number) => (
-                    <li key={i} className="flex items-start gap-1.5">
-                      <span className="text-indigo-500 mt-1 flex-shrink-0">•</span>
+                    <li key={i} className="flex items-start gap-2">
+                      <span className="text-[rgb(var(--accent-primary))] mt-0.5 flex-shrink-0">•</span>
                       <span>{feature}</span>
                     </li>
                   ))}
@@ -334,34 +342,34 @@ const ProjectCard: React.FC<{ project: any }> = ({ project }) => {
               </div>
 
               <div>
-                <h4 className="text-xs font-bold uppercase tracking-wider text-slate-400 mb-2">Tech Stack</h4>
-                <div className="space-y-1.5">
-                  <TechStackRow icon={<Layout className="w-3.5 h-3.5" />} title="Frontend" items={project.details.techStack.frontend} />
-                  <TechStackRow icon={<Database className="w-3.5 h-3.5" />} title="Backend" items={project.details.techStack.backend} />
+                <h4 className="text-xs font-bold uppercase tracking-wider text-[rgb(var(--text-muted))] mb-3">Tech Stack</h4>
+                <div className="space-y-2">
+                  <TechStackRow icon={<Code className="w-3.5 h-3.5" />} title="Frontend" items={project.details.techStack.frontend} />
+                  <TechStackRow icon={<Server className="w-3.5 h-3.5" />} title="Backend" items={project.details.techStack.backend} />
+                  <TechStackRow icon={<Database className="w-3.5 h-3.5" />} title="Deployment" items={project.details.techStack.deployment} />
                 </div>
               </div>
             </div>
           </div>
 
-          {/* External Links */}
-          <div className="flex space-x-4 pt-4 border-t border-slate-100 dark:border-slate-800">
+          <div className="flex gap-3 pt-4 border-t border-[rgba(var(--border-primary),0.3)]">
             <a
               href={project.github}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center text-xs font-bold text-slate-600 dark:text-slate-400 hover:text-indigo-500 dark:hover:text-indigo-400 transition-colors"
+              className="flex-1 flex items-center justify-center gap-2 px-4 py-2.5 bg-[rgba(var(--border-primary),0.3)] hover:bg-[rgba(var(--accent-primary),0.1)] hover:border-[rgba(var(--accent-primary),0.3)] border text-[rgb(var(--text-secondary))] hover:text-[rgb(var(--accent-primary))] rounded-xl text-xs font-semibold transition-all duration-200"
             >
-              <Github className="w-4 h-4 mr-1.5" />
-              Code
+              <Github className="w-4 h-4" />
+              <span>Code</span>
             </a>
             <a
               href={project.demo}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center text-xs font-bold text-slate-600 dark:text-slate-400 hover:text-indigo-500 dark:hover:text-indigo-400 transition-colors"
+              className="flex-1 flex items-center justify-center gap-2 px-4 py-2.5 bg-gradient-to-r from-[rgb(var(--accent-primary))] to-[rgb(var(--accent-secondary))] hover:opacity-90 text-[rgb(var(--text-inverse))] rounded-xl text-xs font-semibold transition-all duration-200"
             >
-              <ExternalLink className="w-4 h-4 mr-1.5" />
-              Live Demo
+              <ExternalLink className="w-4 h-4" />
+              <span>Live Demo</span>
             </a>
           </div>
         </div>
@@ -371,9 +379,9 @@ const ProjectCard: React.FC<{ project: any }> = ({ project }) => {
 };
 
 const TechStackRow = ({ icon, title, items }: { icon: React.ReactNode; title: string; items: string[] }) => (
-  <div className="flex items-center gap-1.5 text-xs text-slate-650 dark:text-slate-400">
-    <span className="text-indigo-500">{icon}</span>
-    <span className="font-semibold">{title}:</span>
+  <div className="flex items-center gap-2 text-xs text-[rgb(var(--text-secondary))]">
+    <span className="text-[rgb(var(--accent-primary))]">{icon}</span>
+    <span className="font-semibold text-[rgb(var(--text-primary))]">{title}:</span>
     <span>{items.join(', ')}</span>
   </div>
 );

@@ -4,14 +4,12 @@ import gsap from 'gsap';
 interface MagneticButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   children: React.ReactNode;
   className?: string;
-  range?: number; // How far the effect reaches
   strength?: number; // How strongly the button pulls (0 to 1)
 }
 
 export const MagneticButton: React.FC<MagneticButtonProps> = ({
   children,
   className = '',
-  range = 40,
   strength = 0.35,
   ...props
 }) => {

@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { Github, Linkedin, Mail, Menu, Sun, Moon, X } from 'lucide-react';
+import { Github, Linkedin, Mail, Menu, Sun, Moon, X, Code2 } from 'lucide-react';
 import { useTheme } from '../context/ThemeContext';
 import { MagneticButton } from './MagneticButton';
 import { useGSAP } from '../hooks/useGSAP';
@@ -25,11 +25,9 @@ export const Header: React.FC = () => {
     { id: 'experience', label: 'Experience' },
     { id: 'education', label: 'Education' },
     { id: 'projects', label: 'Projects' },
-    { id: 'certificates', label: 'Certificates' },
     { id: 'contact', label: 'Contact' },
   ];
 
-  // Reset mobile menu on screen resize to desktop width
   useEffect(() => {
     const handleResize = () => {
       if (window.innerWidth >= 768) {
@@ -41,23 +39,21 @@ export const Header: React.FC = () => {
   }, []);
 
   useGSAP(() => {
-    // Header entry animation
     gsap.fromTo(headerRef.current,
-      { y: -80, autoAlpha: 0 },
+      { y: -100, opacity: 0 },
       {
         y: 0,
-        autoAlpha: 1,
+        opacity: 1,
         duration: 1,
         ease: 'power4.out',
       }
     );
 
-    // Animate navigation items and action buttons
     gsap.fromTo('.nav-link, .header-action-btn',
-      { y: -20, autoAlpha: 0 },
+      { y: -20, opacity: 0 },
       {
         y: 0,
-        autoAlpha: 1,
+        opacity: 1,
         stagger: 0.05,
         duration: 0.8,
         ease: 'power3.out',
@@ -65,7 +61,6 @@ export const Header: React.FC = () => {
       }
     );
 
-    // Scroll trigger for scrolled background & shadow class toggling
     ScrollTrigger.create({
       trigger: 'body',
       start: '100 top',
@@ -74,7 +69,6 @@ export const Header: React.FC = () => {
       },
     });
 
-    // Scroll trigger for tracking active sections
     navItems.forEach((item) => {
       const section = document.getElementById(item.id);
       if (!section) return;
@@ -92,7 +86,6 @@ export const Header: React.FC = () => {
     });
   }, []);
 
-  // Animate mobile menu open/close
   useGSAP(() => {
     if (isMobileMenuOpen && mobileMenuRef.current) {
       gsap.fromTo(
@@ -115,106 +108,119 @@ export const Header: React.FC = () => {
       ref={headerRef}
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
         isScrolled
-          ? 'bg-white/90 dark:bg-slate-950/90 backdrop-blur-md shadow-md border-b border-slate-200/50 dark:border-slate-800/50 py-3'
-          : 'bg-transparent py-5'
+          ? 'bg-[rgba(var(--bg-glass),0.9)] backdrop-blur-md shadow-lg border-b border-[rgba(var(--border-primary),0.5)] py-3'
+          : 'bg-transparent py-4'
       }`}
     >
-      <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-center h-16">
-          {/* Logo */}
+      <nav className="section-container">
+        <div className="flex justify-between items-center h-16 lg:h-18">
           <div className="flex-shrink-0">
-            <a href="#home" className="text-2xl font-bold bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 bg-clip-text text-transparent hover:opacity-80 transition-opacity">
-              RK
+            <a href="#home" className="flex items-center gap-2" aria-label="Rakesh Kushwaha - Home">
+              <div className="w-10 h-10 rounded-xl flex items-center justify-center relative overflow-hidden bg-gradient-to-br from-[rgb(var(--accent-primary))] to-[rgb(var(--accent-secondary))]">
+                <Code2 className="w-5 h-5 text-[rgb(var(--text-inverse))]" />
+                <div className="absolute inset-0 bg-gradient-to-br from-[rgb(var(--accent-tertiary))] to-transparent opacity-20" />
+              </div>
+              <span className="text-xl lg:text-2xl font-extrabold bg-gradient-to-r from-[rgb(var(--text-primary))] to-[rgb(var(--accent-primary))] bg-clip-text text-transparent">
+                RK
+              </span>
             </a>
           </div>
 
-          {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center space-x-8">
+          <div className="hidden md:flex items-center space-x-1 lg:space-x-2">
             {navItems.map((item) => (
               <a
                 key={item.id}
                 href={`#${item.id}`}
-                className={`nav-link text-sm font-medium transition-colors relative py-1.5 ${
+                className={`nav-link relative px-3 py-2.5 rounded-lg text-sm font-medium transition-all duration-200 ${
                   activeSection === item.id
-                    ? 'text-indigo-600 dark:text-indigo-400 font-semibold'
-                    : 'text-slate-600 dark:text-slate-300 hover:text-indigo-500 dark:hover:text-indigo-400'
+                    ? 'text-[rgb(var(--accent-primary))] bg-[rgba(var(--accent-primary),0.1)]'
+                    : 'text-[rgb(var(--text-secondary))] hover:text-[rgb(var(--text-primary))] hover:bg-[rgba(var(--border-primary),0.3)]'
                 }`}
               >
                 {item.label}
                 {activeSection === item.id && (
-                  <span className="absolute bottom-0 left-0 right-0 h-[2px] bg-indigo-500 dark:bg-indigo-400 rounded-full" />
+                  <span className="absolute bottom-0 left-1/2 -translate-x-1/2 w-1.5 h-1.5 rounded-full" style={{ backgroundColor: 'rgb(var(--accent-primary))' }} />
                 )}
               </a>
             ))}
           </div>
 
-          {/* Actions (Toggle Theme, Social Links) */}
-          <div className="hidden md:flex items-center space-x-4">
+          <div className="hidden md:flex items-center space-x-2">
             <MagneticButton
               onClick={toggleTheme}
-              className="header-action-btn p-2.5 rounded-xl border border-slate-200 dark:border-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-900 transition-colors"
+              className="header-action-btn p-2.5 rounded-xl border border-[rgba(var(--border-primary),0.4)] text-[rgb(var(--text-secondary))] hover:bg-[rgba(var(--accent-primary),0.1)] hover:border-[rgba(var(--accent-primary),0.3)] hover:text-[rgb(var(--accent-primary))] transition-all duration-200"
               aria-label={theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}
+              range={30}
+              strength={0.25}
             >
               {theme === 'dark' ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
             </MagneticButton>
 
             <MagneticButton
               onClick={() => window.open('https://github.com/RAKESHKUSHWAHA7518', '_blank')}
-              className="header-action-btn p-2.5 rounded-xl border border-slate-200 dark:border-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-900 transition-colors"
+              className="header-action-btn p-2.5 rounded-xl border border-[rgba(var(--border-primary),0.4)] text-[rgb(var(--text-secondary))] hover:bg-[rgba(var(--accent-primary),0.1)] hover:border-[rgba(var(--accent-primary),0.3)] hover:text-[rgb(var(--accent-primary))] transition-all duration-200"
+              range={30}
+              strength={0.25}
             >
               <Github className="w-5 h-5" />
             </MagneticButton>
 
             <MagneticButton
               onClick={() => window.open('https://www.linkedin.com/in/rakesh-kushwaha-666726212/', '_blank')}
-              className="header-action-btn p-2.5 rounded-xl border border-slate-200 dark:border-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-900 transition-colors"
+              className="header-action-btn p-2.5 rounded-xl border border-[rgba(var(--border-primary),0.4)] text-[rgb(var(--text-secondary))] hover:bg-[rgba(var(--accent-secondary),0.1)] hover:border-[rgba(var(--accent-secondary),0.3)] hover:text-[rgb(var(--accent-secondary))] transition-all duration-200"
+              range={30}
+              strength={0.25}
             >
               <Linkedin className="w-5 h-5" />
             </MagneticButton>
 
             <MagneticButton
               onClick={() => window.open('mailto:rk7518329420@gmail.com', '_blank')}
-              className="header-action-btn p-2.5 rounded-xl border border-slate-200 dark:border-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-900 transition-colors"
+              className="header-action-btn p-2.5 rounded-xl border border-[rgba(var(--border-primary),0.4)] text-[rgb(var(--text-secondary))] hover:bg-[rgba(var(--accent-tertiary),0.1)] hover:border-[rgba(var(--accent-tertiary),0.3)] hover:text-[rgb(var(--accent-tertiary))] transition-all duration-200"
+              range={30}
+              strength={0.25}
             >
               <Mail className="w-5 h-5" />
             </MagneticButton>
           </div>
 
-          {/* Mobile Menu Controls */}
           <div className="md:hidden flex items-center space-x-2">
-            <button
+            <MagneticButton
               onClick={toggleTheme}
-              className="header-action-btn p-2.5 rounded-xl border border-slate-200 dark:border-slate-800 text-slate-600 dark:text-slate-300"
+              className="header-action-btn p-2.5 rounded-xl border border-[rgba(var(--border-primary),0.4)] text-[rgb(var(--text-secondary))]"
               aria-label="Toggle Theme"
+              range={30}
+              strength={0.25}
             >
               {theme === 'dark' ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
-            </button>
-            <button
+            </MagneticButton>
+            <MagneticButton
               onClick={toggleMobileMenu}
-              className="header-action-btn p-2.5 rounded-xl border border-slate-200 dark:border-slate-800 text-slate-600 dark:text-slate-300"
+              className="header-action-btn p-2.5 rounded-xl border border-[rgba(var(--border-primary),0.4)] text-[rgb(var(--text-secondary))]"
               aria-label="Toggle Mobile Menu"
+              range={30}
+              strength={0.25}
             >
               {isMobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
-            </button>
+            </MagneticButton>
           </div>
         </div>
 
-        {/* Mobile Dropdown Menu */}
         {isMobileMenuOpen && (
           <div
             ref={mobileMenuRef}
-            className="md:hidden glass-panel rounded-2xl mt-2 overflow-hidden px-4 py-6 shadow-xl"
+            className="md:hidden glass-panel-strong rounded-2xl mt-3 overflow-hidden px-4 py-6 shadow-xl border border-[rgba(var(--border-primary),0.6)]"
           >
-            <div className="flex flex-col space-y-4">
+            <div className="flex flex-col space-y-2">
               {navItems.map((item) => (
                 <a
                   key={item.id}
                   href={`#${item.id}`}
                   onClick={toggleMobileMenu}
-                  className={`mobile-nav-link text-center text-lg font-medium py-2 rounded-xl transition-colors ${
+                  className={`mobile-nav-link px-4 py-3 rounded-xl text-base font-medium transition-all duration-200 ${
                     activeSection === item.id
-                      ? 'text-indigo-600 dark:text-indigo-400 bg-indigo-50/50 dark:bg-indigo-950/20 font-semibold'
-                      : 'text-slate-700 dark:text-slate-200 hover:bg-slate-100/50 dark:hover:bg-slate-900/50'
+                      ? 'text-[rgb(var(--accent-primary))] bg-[rgba(var(--accent-primary),0.15)] font-semibold'
+                      : 'text-[rgb(var(--text-secondary))] hover:text-[rgb(var(--text-primary))] hover:bg-[rgba(var(--border-primary),0.3)]'
                   }`}
                 >
                   {item.label}
@@ -222,16 +228,31 @@ export const Header: React.FC = () => {
               ))}
             </div>
 
-            <div className="flex justify-center space-x-6 mt-8 pt-6 border-t border-slate-100 dark:border-slate-900">
-              <a href="https://github.com/RAKESHKUSHWAHA7518" target="_blank" rel="noreferrer" className="text-slate-600 dark:text-slate-400 hover:text-indigo-500">
+            <div className="flex justify-center space-x-5 mt-6 pt-6 border-t border-[rgba(var(--border-primary),0.3)]">
+              <MagneticButton
+                onClick={() => window.open('https://github.com/RAKESHKUSHWAHA7518', '_blank')}
+                className="p-2.5 rounded-xl text-[rgb(var(--text-secondary))] hover:text-[rgb(var(--accent-primary))] transition-colors"
+                range={30}
+                strength={0.25}
+              >
                 <Github className="w-6 h-6" />
-              </a>
-              <a href="https://www.linkedin.com/in/rakesh-kushwaha-666726212/" target="_blank" rel="noreferrer" className="text-slate-600 dark:text-slate-400 hover:text-indigo-500">
+              </MagneticButton>
+              <MagneticButton
+                onClick={() => window.open('https://www.linkedin.com/in/rakesh-kushwaha-666726212/', '_blank')}
+                className="p-2.5 rounded-xl text-[rgb(var(--text-secondary))] hover:text-[rgb(var(--accent-secondary))] transition-colors"
+                range={30}
+                strength={0.25}
+              >
                 <Linkedin className="w-6 h-6" />
-              </a>
-              <a href="mailto:rk7518329420@gmail.com" className="text-slate-600 dark:text-slate-400 hover:text-indigo-500">
+              </MagneticButton>
+              <MagneticButton
+                onClick={() => window.open('mailto:rk7518329420@gmail.com', '_blank')}
+                className="p-2.5 rounded-xl text-[rgb(var(--text-secondary))] hover:text-[rgb(var(--accent-tertiary))] transition-colors"
+                range={30}
+                strength={0.25}
+              >
                 <Mail className="w-6 h-6" />
-              </a>
+              </MagneticButton>
             </div>
           </div>
         )}

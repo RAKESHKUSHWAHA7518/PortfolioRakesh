@@ -1,31 +1,37 @@
 <!doctype html>
-<html lang="en" class="scroll-smooth">
+<html lang="en" class="scroll-smooth dark">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#0a0a0e" media="(prefers-color-scheme: dark)" />
+    <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)" />
     
-    <!-- Primary SEO Meta Tags -->
-    <title>Rakesh Kushwaha | Full Stack Developer & AI Engineer</title>
-    <meta name="title" content="Rakesh Kushwaha | Full Stack Developer & AI Engineer" />
+    <title>Rakesh Kushwaha | AI Software Developer & Full Stack Engineer</title>
+    <meta name="title" content="Rakesh Kushwaha | AI Software Developer & Full Stack Engineer" />
     <meta name="description" content="Portfolio of Rakesh Kushwaha - AI Software Developer & Full Stack Engineer specializing in agentic AI, multi-agent systems, voice agents, and modern web applications." />
+    <meta name="keywords" content="AI Developer, Full Stack Engineer, Multi-Agent Systems, Voice Agents, React, Node.js, TypeScript, Python, AWS" />
     
-    <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website" />
-    <meta property="og:title" content="Rakesh Kushwaha | Full Stack Developer & AI Engineer" />
-    <meta property="og:description" content="Portfolio of Rakesh Kushwaha - AI Software Developer & Full Stack Engineer specializing in agentic AI, multi-agent systems, voice agents, and modern web applications." />
-
-    <!-- Twitter -->
-    <meta property="twitter:card" content="summary_large_image" />
-    <meta property="twitter:title" content="Rakesh Kushwaha | Full Stack Developer & AI Engineer" />
-    <meta property="twitter:description" content="Portfolio of Rakesh Kushwaha - AI Software Developer & Full Stack Engineer specializing in agentic AI, multi-agent systems, voice agents, and modern web applications." />
-
-    <!-- Google Fonts -->
+    <meta property="og:title" content="Rakesh Kushwaha | AI Software Developer & Full Stack Engineer" />
+    <meta property="og:description" content="Building autonomous AI agents and scalable full-stack applications. Specializing in multi-agent systems, voice AI, and modern web development." />
+    <meta property="og:image" content="/og-image.png" />
+    <meta property="og:url" content="https://rakeshkushwaha.dev" />
+    <meta property="og:site_name" content="Rakesh Kushwaha" />
+    
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Rakesh Kushwaha | AI Software Developer & Full Stack Engineer" />
+    <meta name="twitter:description" content="Building autonomous AI agents and scalable full-stack applications." />
+    <meta name="twitter:image" content="/og-image.png" />
+    
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+    
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/site.webmanifest" />
   </head>
-  <body class="bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100 antialiased selection:bg-indigo-500/30 selection:text-indigo-900 dark:selection:text-indigo-100">
+  <body class="bg-[rgb(var(--bg-primary))] text-[rgb(var(--text-primary))] antialiased selection:bg-[rgba(var(--accent-primary),0.3)] selection:text-[rgb(var(--text-primary))]">
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
   </body>
