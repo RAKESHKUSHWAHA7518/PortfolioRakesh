@@ -1,6 +1,5 @@
 import React from 'react';
 import { Github, Linkedin, Twitter, Mail, Code2, ArrowRight, Phone, MapPin } from 'lucide-react';
-import { MagneticButton } from './MagneticButton';
 import { useGSAP } from '../hooks/useGSAP';
 import gsap from 'gsap';
 
@@ -65,18 +64,17 @@ export const Footer: React.FC = () => {
             </p>
             <div className="flex space-x-3">
               {socialLinks.map((link, index) => (
-                <MagneticButton
+                <button
                   key={index}
                   onClick={() => window.open(link.href, '_blank')}
-                  className="p-3 rounded-xl border border-[rgba(var(--border-primary),0.4)] text-[rgb(var(--text-secondary))] hover:bg-[rgba(var(--accent-primary),0.1)] hover:border-[rgba(var(--accent-primary),0.3)] hover:text-[rgb(var(--accent-primary))] transition-all duration-300"
+                  className="p-3 rounded-xl border border-[rgba(var(--border-primary),0.4)] text-[rgb(var(--text-secondary))] hover:bg-[rgba(var(--accent-primary),0.1)] hover:border-[rgba(var(--accent-primary),0.3)] hover:text-[rgb(var(--accent-primary))] transition-all duration-300 touch-interactive"
                   aria-label={link.label}
-                  range={35}
-                  strength={0.3}
+                  style={{ touchAction: 'manipulation' }}
                 >
                   <span className="relative" style={{ color: link.color }}>
                     {link.icon}
                   </span>
-                </MagneticButton>
+                </button>
               ))}
             </div>
           </div>

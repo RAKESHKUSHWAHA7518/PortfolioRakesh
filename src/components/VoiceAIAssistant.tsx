@@ -40,10 +40,20 @@ export const VoiceAIAssistant: React.FC = () => {
   const [showSessionCards, setShowSessionCards] = useState(true);
   const [conversationStarted, setConversationStarted] = useState(false);
   const [showKnowledge, setShowKnowledge] = useState(false);
+  const [isTouchDevice, setIsTouchDevice] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const recognitionRef = useRef<SpeechRecognition | null>(null);
   const synthRef = useRef<SpeechSynthesisUtterance | null>(null);
   const voicesRef = useRef<SpeechSynthesisVoice[]>([]);
+
+  useEffect(() => {
+    const checkTouch = () => {
+      setIsTouchDevice('ontouchstart' in window || navigator.maxTouchPoints > 0);
+    };
+    checkTouch();
+    window.addEventListener('resize', checkTouch);
+    return () => window.removeEventListener('resize', checkTouch);
+  }, []);
 
   const sessionTypes: SessionType[] = [
     {
@@ -350,17 +360,17 @@ export const VoiceAIAssistant: React.FC = () => {
     <>
       <MagneticButton
         onClick={() => setIsOpen(true)}
-        className="fixed bottom-6 right-6 z-50 p-4 rounded-2xl bg-gradient-to-br from-[rgb(var(--accent-primary))] to-[rgb(var(--accent-secondary))] text-[rgb(var(--text-inverse))] shadow-[0_8px_32px_rgba(var(--accent-primary),0.4)] hover:shadow-[0_12px_40px_rgba(var(--accent-primary),0.5)] transition-all duration-300 animate-pulse-slow"
+        className={`fixed bottom-6 right-6 z-50 p-4 sm:p-4 rounded-2xl bg-gradient-to-br from-[rgb(var(--accent-primary))] to-[rgb(var(--accent-secondary))] text-[rgb(var(--text-inverse))] shadow-[0_8px_32px_rgba(var(--accent-primary),0.4)] hover:shadow-[0_12px_40px_rgba(var(--accent-primary),0.5)] transition-all duration-300 animate-pulse-slow ${isTouchDevice ? 'p-5' : ''}`}
         range={60}
         strength={0.35}
         aria-label="Open Voice AI Assistant"
       >
         <div className="flex items-center gap-2">
-          <div className={`relative w-10 h-10 rounded-xl bg-[rgba(255,255,255,0.2)] flex items-center justify-center ${isListening ? 'animate-ping' : isSpeaking ? 'animate-bounce-subtle' : ''}`}>
+          <div className={`relative w-10 h-10 sm:w-12 sm:h-12 rounded-xl bg-[rgba(255,255,255,0.2)] flex items-center justify-center ${isListening ? 'animate-ping' : isSpeaking ? 'animate-bounce-subtle' : ''}`}>
             {isSpeaking ? (
-              <Sparkles className="w-5 h-5 animate-pulse" />
+              <Sparkles className="w-5 h-5 sm:w-6 sm:h-6 animate-pulse" />
             ) : (
-              <Mic className="w-5 h-5" />
+              <Mic className="w-5 h-5 sm:w-6 sm:h-6" />
             )}
             {(isListening || isSpeaking) && (
               <div className="absolute inset-0 rounded-xl bg-[rgb(var(--accent-primary))] opacity-30 animate-ping" />
@@ -379,7 +389,7 @@ export const VoiceAIAssistant: React.FC = () => {
             onClick={closePanel}
           />
           
-          <div className="voice-ai-panel relative surface-elevated w-full max-w-md lg:max-w-lg h-[60vh] lg:h-[70vh] flex flex-col rounded-2xl border border-[rgba(var(--border-primary),0.6)] shadow-[var(--shadow-xl)] overflow-hidden animated-gradient-border">
+          <div className={`voice-ai-panel relative surface-elevated w-full max-w-md lg:max-w-lg flex flex-col rounded-2xl border border-[rgba(var(--border-primary),0.6)] shadow-[var(--shadow-xl)] overflow-hidden animated-gradient-border ${isTouchDevice ? 'h-[90vh] lg:h-[70vh] max-h-[90vh] rounded-t-2xl rounded-b-none' : 'h-[60vh] lg:h-[70vh]'}`}>
             <div className="flex items-center justify-between p-4 lg:p-5 border-b border-[rgba(var(--border-primary),0.4)] bg-gradient-to-r from-[rgba(var(--accent-primary),0.08)] to-[rgba(var(--accent-secondary),0.08)]">
               <div className="flex items-center gap-3">
                 <div className={`p-2.5 rounded-xl bg-[rgba(var(--accent-primary),0.2)] ${isSpeaking ? 'animate-pulse' : ''}`}>
@@ -508,12 +518,12 @@ export const VoiceAIAssistant: React.FC = () => {
             {showSessionCards && (
               <div className="px-4 pb-4 animate-slide-up">
                 <p className="text-xs font-semibold text-[rgb(var(--text-secondary))] text-center mb-4 uppercase tracking-wider">Book a Session</p>
-                <div className="grid grid-cols-3 gap-3">
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
                   {sessionTypes.map((session) => (
                     <button
                       key={session.id}
                       onClick={() => handleSessionSelect(session.id)}
-                      className="session-card group p-4 rounded-xl text-left transition-all duration-300 border-2 relative overflow-hidden hover:-translate-y-1 hover:shadow-xl"
+                      className="session-card group p-4 rounded-xl text-left transition-all duration-300 border-2 relative overflow-hidden hover:-translate-y-1 hover:shadow-xl touch-interactive"
                       style={{ background: session.bg, borderColor: session.border, color: session.textColor }}
                     >
                       <div className="absolute inset-0 bg-gradient-to-br from-transparent via-[rgba(255,255,255,0.08)] to-transparent group-hover:opacity-100 transition-opacity" />
@@ -535,21 +545,19 @@ export const VoiceAIAssistant: React.FC = () => {
 
             <div className="p-4 lg:p-5 border-t border-[rgba(var(--border-primary),0.4)] bg-[rgb(var(--bg-card))]">
               <div className="flex items-end gap-3">
-                <MagneticButton
+                <button
                   onClick={isListening ? handleVoiceStop : handleVoiceStart}
                   disabled={isListening || isSpeaking}
-                  className={`p-3 rounded-xl flex-shrink-0 transition-all duration-300 ${isListening 
+                  className={`p-3 rounded-xl flex-shrink-0 transition-all duration-300 touch-interactive ${isListening 
                     ? 'bg-[rgb(var(--accent-tertiary))] text-[rgb(var(--text-inverse))] animate-pulse shadow-lg' 
                     : isSpeaking
                     ? 'bg-[rgb(var(--accent-secondary))] text-[rgb(var(--text-inverse))] animate-bounce-subtle shadow-lg'
                     : 'bg-[rgb(var(--bg-tertiary))] text-[rgb(var(--text-primary))] border border-[rgba(var(--border-card),0.6)] hover:bg-[rgba(var(--accent-primary),0.15)] hover:text-[rgb(var(--accent-primary))] hover:border-[rgba(var(--accent-primary),0.3)] shadow-md'
                   }`}
-                  range={35}
-                  strength={0.3}
                   aria-label={isListening ? 'Stop listening' : 'Start voice input'}
                 >
                   {isListening ? <MicOff className="w-5 h-5" /> : <Mic className="w-5 h-5" />}
-                </MagneticButton>
+                </button>
                 
                 <div className="flex-1 relative">
                   <input
@@ -558,18 +566,17 @@ export const VoiceAIAssistant: React.FC = () => {
                     onChange={(e) => setInputValue(e.target.value)}
                     onKeyDown={(e) => e.key === 'Enter' && handleSendMessage()}
                     placeholder={isListening ? 'Listening...' : isSpeaking ? 'Assistant speaking...' : 'Ask about Rakesh or book a session...'}
-                    className="input-field w-full pr-12 text-[rgb(var(--text-primary))] placeholder:text-[rgb(var(--text-muted))]"
+                    className="input-field w-full pr-12 text-[rgb(var(--text-primary))] placeholder:text-[rgb(var(--text-muted))] text-base"
                     disabled={isListening || isSpeaking}
+                    style={{ fontSize: '16px' }}
                   />
                   {!isListening && !isSpeaking && inputValue && (
-                    <MagneticButton
+                    <button
                       onClick={handleSendMessage}
-                      className="absolute right-3 top-1/2 -translate-y-1/2 p-2 rounded-xl bg-[rgb(var(--accent-primary))] text-[rgb(var(--text-inverse))] hover:opacity-90 hover:shadow-lg transition-all"
-                      range={25}
-                      strength={0.2}
+                      className="absolute right-3 top-1/2 -translate-y-1/2 p-2 rounded-xl bg-[rgb(var(--accent-primary))] text-[rgb(var(--text-inverse))] hover:opacity-90 hover:shadow-lg transition-all touch-interactive"
                     >
                       <Send className="w-4 h-4" />
-                    </MagneticButton>
+                    </button>
                   )}
                 </div>
               </div>

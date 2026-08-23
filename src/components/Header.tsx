@@ -185,24 +185,22 @@ export const Header: React.FC = () => {
           </div>
 
           <div className="md:hidden flex items-center space-x-2">
-            <MagneticButton
+            <button
               onClick={toggleTheme}
-              className="header-action-btn p-2.5 rounded-xl border border-[rgba(var(--border-primary),0.4)] text-[rgb(var(--text-secondary))]"
+              className="header-action-btn p-2.5 rounded-xl border border-[rgba(var(--border-primary),0.4)] text-[rgb(var(--text-secondary))] hover:bg-[rgba(var(--accent-primary),0.1)] hover:border-[rgba(var(--accent-primary),0.3)] hover:text-[rgb(var(--accent-primary))] transition-all duration-200 touch-interactive"
               aria-label="Toggle Theme"
-              range={30}
-              strength={0.25}
+              style={{ touchAction: 'manipulation' }}
             >
               {theme === 'dark' ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
-            </MagneticButton>
-            <MagneticButton
+            </button>
+            <button
               onClick={toggleMobileMenu}
-              className="header-action-btn p-2.5 rounded-xl border border-[rgba(var(--border-primary),0.4)] text-[rgb(var(--text-secondary))]"
+              className="header-action-btn p-2.5 rounded-xl border border-[rgba(var(--border-primary),0.4)] text-[rgb(var(--text-secondary))] hover:bg-[rgba(var(--accent-primary),0.1)] hover:border-[rgba(var(--accent-primary),0.3)] hover:text-[rgb(var(--accent-primary))] transition-all duration-200 touch-interactive"
               aria-label="Toggle Mobile Menu"
-              range={30}
-              strength={0.25}
+              style={{ touchAction: 'manipulation' }}
             >
               {isMobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
-            </MagneticButton>
+            </button>
           </div>
         </div>
 
@@ -229,30 +227,27 @@ export const Header: React.FC = () => {
             </div>
 
             <div className="flex justify-center space-x-5 mt-6 pt-6 border-t border-[rgba(var(--border-primary),0.3)]">
-              <MagneticButton
+              <button
                 onClick={() => window.open('https://github.com/RAKESHKUSHWAHA7518', '_blank')}
-                className="p-2.5 rounded-xl text-[rgb(var(--text-secondary))] hover:text-[rgb(var(--accent-primary))] transition-colors"
-                range={30}
-                strength={0.25}
+                className="p-2.5 rounded-xl text-[rgb(var(--text-secondary))] hover:text-[rgb(var(--accent-primary))] transition-colors touch-interactive"
+                style={{ touchAction: 'manipulation' }}
               >
                 <Github className="w-6 h-6" />
-              </MagneticButton>
-              <MagneticButton
+              </button>
+              <button
                 onClick={() => window.open('https://www.linkedin.com/in/rakesh-kushwaha-666726212/', '_blank')}
-                className="p-2.5 rounded-xl text-[rgb(var(--text-secondary))] hover:text-[rgb(var(--accent-secondary))] transition-colors"
-                range={30}
-                strength={0.25}
+                className="p-2.5 rounded-xl text-[rgb(var(--text-secondary))] hover:text-[rgb(var(--accent-secondary))] transition-colors touch-interactive"
+                style={{ touchAction: 'manipulation' }}
               >
                 <Linkedin className="w-6 h-6" />
-              </MagneticButton>
-              <MagneticButton
+              </button>
+              <button
                 onClick={() => window.open('mailto:rk7518329420@gmail.com', '_blank')}
-                className="p-2.5 rounded-xl text-[rgb(var(--text-secondary))] hover:text-[rgb(var(--accent-tertiary))] transition-colors"
-                range={30}
-                strength={0.25}
+                className="p-2.5 rounded-xl text-[rgb(var(--text-secondary))] hover:text-[rgb(var(--accent-tertiary))] transition-colors touch-interactive"
+                style={{ touchAction: 'manipulation' }}
               >
                 <Mail className="w-6 h-6" />
-              </MagneticButton>
+              </button>
             </div>
           </div>
         )}

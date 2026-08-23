@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import { Target, Zap, Award, Code2, Database, Bot, Cloud, Users, Briefcase, Globe, Layers } from 'lucide-react';
 import { useGSAP } from '../hooks/useGSAP';
 import { TiltCard } from './TiltCard';
@@ -7,6 +7,16 @@ import gsap from 'gsap';
 
 export const About: React.FC = () => {
   const containerRef = useRef<HTMLDivElement>(null);
+  const [isTouchDevice, setIsTouchDevice] = useState(false);
+
+  useEffect(() => {
+    const checkTouch = () => {
+      setIsTouchDevice('ontouchstart' in window || navigator.maxTouchPoints > 0);
+    };
+    checkTouch();
+    window.addEventListener('resize', checkTouch);
+    return () => window.removeEventListener('resize', checkTouch);
+  }, []);
 
   const stats = [
     { icon: <Briefcase className="w-5 h-5" />, value: 2.5, suffix: '+', label: 'Years Experience' },
@@ -198,15 +208,15 @@ export const About: React.FC = () => {
           <div className="journey-container lg:col-span-7 space-y-6">
             <h3 className="text-2xl font-bold text-[rgb(var(--text-primary))] mb-8">Professional Journey</h3>
             <div className="relative">
-              <div className="absolute left-6 top-0 bottom-0 w-0.5 bg-gradient-to-b from-[rgb(var(--accent-primary))] to-[rgb(var(--accent-secondary))] opacity-30" />
+              <div className="absolute left-4 top-0 bottom-0 w-0.5 bg-gradient-to-b from-[rgb(var(--accent-primary))] to-[rgb(var(--accent-secondary))] opacity-30 sm:left-6" />
               {journey.map((item, index) => (
-                <div key={index} className="journey-item relative pl-16 pb-10 last:pb-0">
-                  <div className="absolute left-0 top-1 w-3 h-3 rounded-full bg-[rgb(var(--bg-primary))] border-3 border-[rgb(var(--accent-primary))] z-10 
+                <div key={index} className="journey-item relative pl-12 pb-10 last:pb-0 sm:pl-16">
+                  <div className="absolute left-0 top-1 w-3 h-3 rounded-full bg-[rgb(var(--bg-primary))] border-3 border-[rgb(var(--accent-primary))] z-10 sm:left-[1.5rem] 
                     {index === 0 ? 'bg-[rgb(var(--accent-primary))]' : 'group-hover:bg-[rgb(var(--accent-primary))] transition-colors'}" />
-                  <div className="surface-elevated p-6 rounded-2xl group">
+                  <div className="surface-elevated p-4 sm:p-6 rounded-2xl group touch-interactive">
                     <div className="flex flex-wrap items-baseline gap-3 mb-3">
                       <span className="text-xs font-mono font-bold text-[rgb(var(--accent-primary))]">{item.year}</span>
-                      <span className="text-2xl font-bold text-[rgb(var(--text-primary))]">{item.title}</span>
+                      <span className="text-xl sm:text-2xl font-bold text-[rgb(var(--text-primary))]">{item.title}</span>
                     </div>
                     <p className="text-sm font-semibold text-[rgb(var(--accent-secondary))] mb-3">{item.company}</p>
                     <p className="text-[rgb(var(--text-secondary))] leading-relaxed">{item.desc}</p>
@@ -245,8 +255,8 @@ export const About: React.FC = () => {
           </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {achievements.map((achievement, index) => (
-              <TiltCard key={index} className="achievement-card h-full max-rotation-8">
-                <div className="surface-elevated p-6 rounded-2xl h-full flex flex-col relative overflow-hidden group">
+              <TiltCard key={index} className="achievement-card h-full max-rotation-8" touchEnabled={!isTouchDevice}>
+                <div className="surface-elevated p-6 rounded-2xl h-full flex flex-col relative overflow-hidden group touch-interactive">
                   <div className="absolute top-0 right-0 w-24 h-24 bg-gradient-to-bl from-transparent via-[rgba(var(--accent-primary),0.05)] to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                   <div className="relative flex items-start gap-4 mb-4">
                     <div className="p-3.5 rounded-xl flex-shrink-0" style={{ background: `${achievement.color}15`, color: achievement.color }}>
@@ -285,7 +295,7 @@ export const About: React.FC = () => {
                     {skill.items.map((item, i) => (
                       <span
                         key={i}
-                        className="skill-tag px-3 py-1.5 rounded-lg text-xs font-semibold transition-all duration-300 group-hover:scale-105"
+                        className="skill-tag px-3 py-1.5 rounded-lg text-xs font-semibold transition-all duration-300 group-hover:scale-105 touch-interactive"
                         style={{ 
                           background: skill.bg, 
                           color: skill.color,

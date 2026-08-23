@@ -1,7 +1,6 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { Mail, Phone, MapPin, Send, Github, Linkedin, Twitter, ArrowRight, CheckCircle2 } from 'lucide-react';
 import { useGSAP } from '../hooks/useGSAP';
-import { MagneticButton } from './MagneticButton';
 import { TiltCard } from './TiltCard';
 import { SplitText } from './SplitText';
 import gsap from 'gsap';
@@ -14,6 +13,16 @@ export const Contact: React.FC = () => {
     message: '',
   });
   const [formStatus, setFormStatus] = useState<'idle' | 'submitting' | 'success' | 'error'>('idle');
+  const [isTouchDevice, setIsTouchDevice] = useState(false);
+
+  useEffect(() => {
+    const checkTouch = () => {
+      setIsTouchDevice('ontouchstart' in window || navigator.maxTouchPoints > 0);
+    };
+    checkTouch();
+    window.addEventListener('resize', checkTouch);
+    return () => window.removeEventListener('resize', checkTouch);
+  }, []);
 
   const formRef = useRef<HTMLFormElement>(null);
   const leftColRef = useRef<HTMLDivElement>(null);
@@ -159,8 +168,8 @@ export const Contact: React.FC = () => {
                   rel="noopener noreferrer"
                   className="block group"
                 >
-                  <TiltCard maxRotation={5}>
-                    <div className="surface p-5 rounded-2xl flex items-center gap-4 group-hover:border-[rgba(var(--border-primary),0.8)] transition-all duration-300 relative overflow-hidden">
+                  <TiltCard maxRotation={5} touchEnabled={!isTouchDevice}>
+                    <div className="surface p-5 rounded-2xl flex items-center gap-4 group-hover:border-[rgba(var(--border-primary),0.8)] transition-all duration-300 relative overflow-hidden touch-interactive">
                       <div className="absolute inset-0 bg-gradient-to-br from-transparent via-[rgba(var(--accent-primary),0.03)] to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                       <div className="relative p-3.5 rounded-xl flex-shrink-0" style={{ background: info.bg, color: info.color }}>
                         {info.icon}
@@ -182,18 +191,17 @@ export const Contact: React.FC = () => {
               <h4 className="text-sm font-semibold uppercase tracking-wider text-[rgb(var(--text-muted))] mb-4">Connect Socially</h4>
               <div className="flex gap-3">
                 {socialLinks.map((link, index) => (
-                  <MagneticButton
+                  <button
                     key={index}
                     onClick={() => window.open(link.href, '_blank')}
-                    className="p-3 rounded-xl border border-[rgba(var(--border-primary),0.4)] text-[rgb(var(--text-secondary))] hover:bg-[rgba(var(--accent-primary),0.1)] hover:border-[rgba(var(--accent-primary),0.3)] hover:text-[rgb(var(--accent-primary))] transition-all duration-300"
+                    className="p-3 rounded-xl border border-[rgba(var(--border-primary),0.4)] text-[rgb(var(--text-secondary))] hover:bg-[rgba(var(--accent-primary),0.1)] hover:border-[rgba(var(--accent-primary),0.3)] hover:text-[rgb(var(--accent-primary))] transition-all duration-300 touch-interactive"
                     aria-label={link.label}
-                    range={40}
-                    strength={0.3}
+                    style={{ touchAction: 'manipulation' }}
                   >
                     <span className="relative" style={{ color: link.color }}>
                       {link.icon}
                     </span>
-                  </MagneticButton>
+                  </button>
                 ))}
               </div>
             </div>
@@ -278,12 +286,10 @@ export const Contact: React.FC = () => {
                 </div>
 
                 <div className="pt-2">
-                  <MagneticButton
+                  <button
                     type="submit"
                     disabled={formStatus === 'submitting'}
-                    className="w-full sm:w-fit px-8 py-3.5 bg-gradient-to-r from-[rgb(var(--accent-primary))] to-[rgb(var(--accent-secondary))] hover:opacity-90 text-[rgb(var(--text-inverse))] rounded-xl text-sm font-bold flex items-center justify-center space-x-2 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
-                    range={50}
-                    strength={0.4}
+                    className="w-full sm:w-fit px-8 py-3.5 bg-gradient-to-r from-[rgb(var(--accent-primary))] to-[rgb(var(--accent-secondary))] hover:opacity-90 text-[rgb(var(--text-inverse))] rounded-xl text-sm font-bold flex items-center justify-center space-x-2 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed touch-interactive"
                   >
                     {formStatus === 'submitting' ? (
                       <>
@@ -304,7 +310,7 @@ export const Contact: React.FC = () => {
                         <span>Send Message</span>
                       </>
                     )}
-                  </MagneticButton>
+                  </button>
                 </div>
 
                 <p className="text-xs text-[rgb(var(--text-muted))] text-center">

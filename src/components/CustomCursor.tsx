@@ -7,9 +7,16 @@ export const CustomCursor: React.FC = () => {
   const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
-    // Hide cursor on touch devices
+    // Detect touch device
     const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
-    if (isTouchDevice) return;
+    
+    // Add/remove class on html element for CSS cursor handling
+    if (isTouchDevice) {
+      document.documentElement.classList.add('touch-device');
+      return;
+    } else {
+      document.documentElement.classList.remove('touch-device');
+    }
 
     setIsVisible(true);
 

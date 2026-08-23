@@ -682,6 +682,21 @@
     perspective: 1000px;
   }
 
+  .touch-interactive {
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .touch-interactive:active {
+    transform: scale(0.98);
+    transition: transform 0.05s ease-out;
+  }
+
+  .touch-interactive:focus-visible {
+    outline: 2px solid rgb(var(--accent-primary));
+    outline-offset: 2px;
+  }
+
   /* Light mode specific utilities */
   .light .text-shadow-subtle {
     text-shadow: 0 1px 2px rgba(255, 255, 255, 0.8);
@@ -693,9 +708,21 @@
 }
 
 @media (hover: hover) and (pointer: fine) {
-  html, body, a, button, select, input, textarea, [role="button"], .interactive-hover {
+  html:not(.touch-device), 
+  body:not(.touch-device), 
+  a:not(.touch-device), 
+  button:not(.touch-device), 
+  select:not(.touch-device), 
+  input:not(.touch-device), 
+  textarea:not(.touch-device), 
+  [role="button"]:not(.touch-device), 
+  .interactive-hover:not(.touch-device) {
     cursor: none !important;
   }
+}
+
+.touch-device * {
+  cursor: auto !important;
 }
 
 .custom-cursor-dot {

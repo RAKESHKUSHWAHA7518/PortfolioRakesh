@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { GraduationCap, Calendar, Star, Code2, Server, Database, ExternalLink } from 'lucide-react';
 import { useGSAP } from '../hooks/useGSAP';
 import { TiltCard } from './TiltCard';
@@ -6,6 +6,17 @@ import { SplitText } from './SplitText';
 import gsap from 'gsap';
 
 export const Education: React.FC = () => {
+  const [isTouchDevice, setIsTouchDevice] = useState(false);
+
+  useEffect(() => {
+    const checkTouch = () => {
+      setIsTouchDevice('ontouchstart' in window || navigator.maxTouchPoints > 0);
+    };
+    checkTouch();
+    window.addEventListener('resize', checkTouch);
+    return () => window.removeEventListener('resize', checkTouch);
+  }, []);
+
   const education = [
     {
       degree: 'Bachelor of Technology',
@@ -147,8 +158,8 @@ export const Education: React.FC = () => {
 
         <div className="edu-list-container space-y-8 max-w-4xl mx-auto mb-20">
           {education.map((edu, index) => (
-            <TiltCard key={index} className="edu-card w-full" maxRotation={6}>
-              <div className="surface-elevated p-6 lg:p-8 rounded-2xl flex flex-col lg:flex-row gap-6 lg:gap-8 items-start relative overflow-hidden group">
+            <TiltCard key={index} className="edu-card w-full" maxRotation={6} touchEnabled={!isTouchDevice}>
+              <div className="surface-elevated p-6 lg:p-8 rounded-2xl flex flex-col lg:flex-row gap-6 lg:gap-8 items-start relative overflow-hidden group touch-interactive">
                 <div className="absolute inset-0 bg-gradient-to-br from-[rgba(var(--accent-primary),0.03)] to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                 <div className="flex-shrink-0 w-14 h-14 rounded-xl flex items-center justify-center relative" style={{ background: 'rgba(var(--accent-primary), 0.15)', color: 'rgb(var(--accent-primary))' }}>
                   <GraduationCap className="w-7 h-7" />
@@ -204,8 +215,8 @@ export const Education: React.FC = () => {
           </div>
           <div className="certs-grid grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {certifications.map((cert, index) => (
-              <TiltCard key={index} className="cert-card h-full" maxRotation={6}>
-                <div className="surface p-6 rounded-2xl h-full flex flex-col justify-between relative overflow-hidden group">
+              <TiltCard key={index} className="cert-card h-full" maxRotation={6} touchEnabled={!isTouchDevice}>
+                <div className="surface p-6 rounded-2xl h-full flex flex-col justify-between relative overflow-hidden group touch-interactive">
                   <div className="absolute inset-0 bg-gradient-to-br from-[rgba(var(--accent-primary),0.03)] to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                   <div>
                     <div className="flex items-start gap-4 mb-4">
@@ -226,7 +237,7 @@ export const Education: React.FC = () => {
                     href={cert.link}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-[rgb(var(--accent-primary))] hover:text-[rgb(var(--accent-secondary))] mt-2 w-fit transition-colors duration-200 group"
+                    className="flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-[rgb(var(--accent-primary))] hover:text-[rgb(var(--accent-secondary))] mt-2 w-fit transition-colors duration-200 group touch-interactive"
                   >
                     <ExternalLink className="w-4 h-4 transition-transform group-hover:translate-x-1" />
                     View Credentials

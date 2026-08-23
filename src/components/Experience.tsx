@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 import { CheckCircle2, Building2, Code2, Rocket, ChevronRight, MapPin, Calendar, Star } from 'lucide-react';
 import { useGSAP } from '../hooks/useGSAP';
 import { SplitText } from './SplitText';
@@ -214,53 +214,23 @@ interface ExperienceCardProps {
 
 const ExperienceCard: React.FC<ExperienceCardProps> = ({ exp, typeIcon: TypeIcon }) => {
   const cardRef = useRef<HTMLDivElement>(null);
+  const [isHovered, setIsHovered] = useState(false);
 
-  React.useEffect(() => {
-    const card = cardRef.current;
-    if (!card) return;
-
-    const handleMouseMove = (e: MouseEvent) => {
-      const rect = card.getBoundingClientRect();
-      const x = (e.clientX - rect.left) / rect.width - 0.5;
-      const y = (e.clientY - rect.top) / rect.height - 0.5;
-
-      gsap.to(card, {
-        rotateY: x * 3,
-        rotateX: -y * 3,
-        transformPerspective: 1000,
-        ease: 'power2.out',
-        duration: 0.3,
-      });
-    };
-
-    const handleMouseLeave = () => {
-      gsap.to(card, {
-        rotateY: 0,
-        rotateX: 0,
-        transformPerspective: 1000,
-        ease: 'power2.out',
-        duration: 0.5,
-      });
-    };
-
-    card.addEventListener('mousemove', handleMouseMove);
-    card.addEventListener('mouseleave', handleMouseLeave);
-    return () => {
-      card.removeEventListener('mousemove', handleMouseMove);
-      card.removeEventListener('mouseleave', handleMouseLeave);
-    };
-  }, []);
+  const handleMouseEnter = () => setIsHovered(true);
+  const handleMouseLeave = () => setIsHovered(false);
 
   return (
     <div
       ref={cardRef}
       className="exp-card group relative"
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
     >
-      <div className="surface-elevated rounded-2xl overflow-hidden relative h-full transition-all duration-500 hover:shadow-[var(--shadow-xl)] animated-gradient-border perspective-1000 preserve-3d"
-           style={{ transformStyle: 'preserve-3d' }}>
-        <div className="absolute inset-0 bg-gradient-to-br from-transparent via-[rgba(var(--accent-primary),0.02)] to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
+      <div className="surface-elevated rounded-2xl overflow-hidden relative h-full transition-all duration-500 animated-gradient-border touch-interactive"
+           style={{ boxShadow: isHovered ? 'var(--shadow-xl)' : 'var(--shadow-lg)' }}>
+        <div className="absolute inset-0 bg-gradient-to-br from-transparent via-[rgba(var(--accent-primary),0.02)] to-transparent opacity-0 transition-opacity duration-700" style={{ opacity: isHovered ? 1 : 0 }} />
         
-        <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-[rgb(var(--accent-primary))] to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+        <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-[rgb(var(--accent-primary))] to-transparent opacity-0 transition-opacity duration-500" style={{ opacity: isHovered ? 1 : 0 }} />
         
         <div className="relative p-6 lg:p-7 space-y-5">
           <div className="flex items-start justify-between gap-4">
@@ -298,9 +268,9 @@ const ExperienceCard: React.FC<ExperienceCardProps> = ({ exp, typeIcon: TypeIcon
             </div>
           </div>
 
-          <div className="grid grid-cols-3 gap-3 pt-2 border-t border-[rgba(var(--border-primary),0.3)]">
+          <div className="grid grid-cols-2 lg:grid-cols-3 gap-3 pt-2 border-t border-[rgba(var(--border-primary),0.3)]">
             {exp.metrics.map((metric, i) => (
-              <div key={i} className="exp-metric text-center p-3 rounded-xl relative overflow-hidden" style={{ background: exp.bg, border: `1px solid ${exp.border}` }}>
+              <div key={i} className="exp-metric text-center p-3 rounded-xl relative overflow-hidden touch-interactive" style={{ background: exp.bg, border: `1px solid ${exp.border}` }}>
                 <div className="text-2xl lg:text-3xl font-extrabold" style={{ color: exp.color }}>{metric.value}</div>
                 <div className="text-xs font-medium text-[rgb(var(--text-secondary))] mt-0.5">{metric.label}</div>
                 <div className="absolute inset-0 bg-gradient-to-br from-transparent via-[rgba(255,255,255,0.05)] to-transparent" />
@@ -324,7 +294,7 @@ const ExperienceCard: React.FC<ExperienceCardProps> = ({ exp, typeIcon: TypeIcon
             </div>
             <div className="flex flex-wrap gap-2">
               {exp.highlights.map((h, i) => (
-                <span key={i} className="px-3 py-1.5 rounded-full text-xs font-medium transition-all duration-300 hover:scale-[1.02]" style={{ background: exp.bg, color: exp.color, border: `1px solid ${exp.border}` }}>
+                <span key={i} className="px-3 py-1.5 rounded-full text-xs font-medium transition-all duration-300 touch-interactive" style={{ background: exp.bg, color: exp.color, border: `1px solid ${exp.border}` }}>
                   {h}
                 </span>
               ))}
@@ -340,7 +310,7 @@ const ExperienceCard: React.FC<ExperienceCardProps> = ({ exp, typeIcon: TypeIcon
               {exp.skills.map((skill, sIdx) => (
                 <span
                   key={sIdx}
-                  className="px-2.5 py-1 rounded-lg text-xs font-medium transition-all duration-200 hover:scale-[1.02]"
+                  className="px-2.5 py-1 rounded-lg text-xs font-medium transition-all duration-200 touch-interactive"
                   style={{ background: 'rgba(var(--border-primary),0.3)', color: 'rgb(var(--text-secondary))', border: '1px solid rgba(var(--border-primary),0.3)' }}
                 >
                   {skill}

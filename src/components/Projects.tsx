@@ -1,5 +1,5 @@
-import React, { useState, useRef } from 'react';
-import { ExternalLink, Github, ChevronDown, Code, Database, Server, Layers, CheckCircle2 } from 'lucide-react';
+import React, { useState, useRef, useEffect, useCallback } from 'react';
+import { ExternalLink, Github, ChevronDown, Code, Database, Server, Layers, CheckCircle2, ChevronLeft, ChevronRight } from 'lucide-react';
 import { useGSAP } from '../hooks/useGSAP';
 import { TiltCard } from './TiltCard';
 import { SplitText } from './SplitText';
@@ -7,6 +7,9 @@ import gsap from 'gsap';
 
 export const Projects: React.FC = () => {
   const containerRef = useRef<HTMLDivElement>(null);
+  const [isTouchDevice, setIsTouchDevice] = useState(false);
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const carouselRef = useRef<HTMLDivElement>(null);
 
   const projects = [
     {
@@ -178,6 +181,35 @@ export const Projects: React.FC = () => {
     },
   ];
 
+  useEffect(() => {
+    const checkTouch = () => {
+      setIsTouchDevice('ontouchstart' in window || navigator.maxTouchPoints > 0);
+    };
+    checkTouch();
+    window.addEventListener('resize', checkTouch);
+    return () => window.removeEventListener('resize', checkTouch);
+  }, []);
+
+  const goToSlide = useCallback((index: number) => {
+    setCurrentIndex(index);
+    if (carouselRef.current) {
+      const cardWidth = carouselRef.current.querySelector('.proj-card')?.clientWidth || 0;
+      const gap = 24; // gap-6 = 24px
+      carouselRef.current.scrollTo({
+        left: index * (cardWidth + gap),
+        behavior: 'smooth',
+      });
+    }
+  }, []);
+
+  const goToPrev = useCallback(() => {
+    setCurrentIndex(prev => Math.max(0, prev - 1));
+  }, []);
+
+  const goToNext = useCallback(() => {
+    setCurrentIndex(prev => Math.min(projects.length - 1, prev + 1));
+  }, [projects.length]);
+
   useGSAP(() => {
     const ctx = gsap.context(() => {
       gsap.fromTo('.proj-title .char',
@@ -234,17 +266,88 @@ export const Projects: React.FC = () => {
           <p className="section-description desc">Showcasing expertise in full-stack development and Agentic AI</p>
         </div>
 
-        <div className="proj-grid grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
-          {projects.map((project, index) => (
-            <ProjectCard key={index} project={project} index={index} />
-          ))}
-        </div>
+        {isTouchDevice ? (
+          <div className="relative">
+            <div 
+              ref={carouselRef}
+              className="proj-carousel flex gap-6 overflow-x-auto scroll-snap-x p-2 -ml-2 -mr-2 pb-4"
+              style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
+            >
+              <div className="flex gap-6" style={{ minWidth: '100%' }}>
+                {projects.map((project, index) => (
+                  <ProjectCard key={index} project={project} index={index} isMobile={true} />
+                ))}
+              </div>
+            </div>
+            <div className="flex justify-center gap-2 mt-6">
+              {projects.map((_, index) => (
+                <button
+                  key={index}
+                  onClick={() => goToSlide(index)}
+                  className={`w-2 h-2 rounded-full transition-all duration-300 ${
+                    index === currentIndex
+                      ? 'bg-[rgb(var(--accent-primary))] w-6'
+                      : 'bg-[rgba(var(--border-primary),0.5)] hover:bg-[rgba(var(--accent-primary),0.5)]'
+                  }`}
+                  aria-label={`Go to project ${index + 1}`}
+                />
+              ))}
+            </div>
+            <div className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-3 lg:hidden z-10">
+              <button
+                onClick={goToPrev}
+                disabled={currentIndex === 0}
+                className="p-2 rounded-full bg-[rgba(var(--bg-primary),0.8)] backdrop-blur-sm border border-[rgba(var(--border-primary),0.4)] text-[rgb(var(--text-secondary))] hover:text-[rgb(var(--accent-primary))] disabled:opacity-30 disabled:pointer-events-none transition-colors"
+                aria-label="Previous project"
+              >
+                <ChevronLeft className="w-5 h-5" />
+              </button>
+            </div>
+            <div className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-3 lg:hidden z-10">
+              <button
+                onClick={goToNext}
+                disabled={currentIndex === projects.length - 1}
+                className="p-2 rounded-full bg-[rgba(var(--bg-primary),0.8)] backdrop-blur-sm border border-[rgba(var(--border-primary),0.4)] text-[rgb(var(--text-secondary))] hover:text-[rgb(var(--accent-primary))] disabled:opacity-30 disabled:pointer-events-none transition-colors"
+                aria-label="Next project"
+              >
+                <ChevronRight className="w-5 h-5" />
+              </button>
+            </div>
+          </div>
+        ) : (
+          <div className="proj-grid grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
+            {projects.map((project, index) => (
+              <ProjectCard key={index} project={project} index={index} isMobile={false} />
+            ))}
+          </div>
+        )}
       </div>
     </section>
   );
 };
 
-const ProjectCard: React.FC<{ project: { title: string; description: string; image: string; tags: string[]; github: string; demo: string; featured?: boolean; badge?: string; category: string; details: { overview: string; features: string[]; techStack: { frontend: string[]; backend: string[]; deployment: string[] } } } }> = ({ project }) => {
+interface ProjectCardProps {
+  project: {
+    title: string;
+    description: string;
+    image: string;
+    tags: string[];
+    github: string;
+    demo: string;
+    featured?: boolean;
+    badge?: string;
+    category: string;
+    details: {
+      overview: string;
+      features: string[];
+      techStack: { frontend: string[]; backend: string[]; deployment: string[] };
+    };
+  };
+  index: number;
+  isMobile?: boolean;
+}
+
+const ProjectCard: React.FC<ProjectCardProps> = ({ project, isMobile = false }) => {
   const [isExpanded, setIsExpanded] = useState(false);
   const detailsRef = useRef<HTMLDivElement>(null);
   const cardRef = useRef<HTMLDivElement>(null);
@@ -264,8 +367,11 @@ const ProjectCard: React.FC<{ project: { title: string; description: string; ima
     }
   };
 
+  const cardWidth = isMobile ? 'w-[calc(100vw-3rem)] sm:w-[calc(100vw-4rem)] lg:w-[calc(100vw/2-3rem)] xl:w-[calc(100vw/3-3rem)]' : 'w-full';
+  const scrollSnap = isMobile ? 'scroll-snap-start' : '';
+
   return (
-    <TiltCard className="proj-card h-full" maxRotation={8}>
+    <TiltCard className={`proj-card h-full ${cardWidth} ${scrollSnap}`} maxRotation={isMobile ? 0 : 8} touchEnabled={isMobile}>
       <div 
         ref={cardRef}
         className="surface h-full flex flex-col rounded-2xl overflow-hidden group relative animated-gradient-border"
@@ -308,7 +414,7 @@ const ProjectCard: React.FC<{ project: { title: string; description: string; ima
 
           <button
             onClick={toggleDetails}
-            className="w-full flex items-center justify-between text-[rgb(var(--accent-primary))] hover:text-[rgb(var(--accent-secondary))] text-xs font-bold uppercase tracking-wider mb-4 border-t border-[rgba(var(--border-primary),0.3)] pt-4 transition-colors duration-200"
+            className="w-full flex items-center justify-between text-[rgb(var(--accent-primary))] hover:text-[rgb(var(--accent-secondary))] text-xs font-bold uppercase tracking-wider mb-4 border-t border-[rgba(var(--border-primary),0.3)] pt-4 transition-colors duration-200 touch-interactive"
           >
             <span>{isExpanded ? 'Hide Details' : 'View Details'}</span>
             <ChevronDown className={`w-4 h-4 transform transition-transform duration-300 ${isExpanded ? 'rotate-180' : ''}`} />
@@ -357,7 +463,7 @@ const ProjectCard: React.FC<{ project: { title: string; description: string; ima
               href={project.github}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex-1 flex items-center justify-center gap-2 px-4 py-2.5 bg-[rgba(var(--border-primary),0.3)] hover:bg-[rgba(var(--accent-primary),0.1)] hover:border-[rgba(var(--accent-primary),0.3)] border text-[rgb(var(--text-secondary))] hover:text-[rgb(var(--accent-primary))] rounded-xl text-xs font-semibold transition-all duration-200"
+              className="flex-1 flex items-center justify-center gap-2 px-4 py-2.5 bg-[rgba(var(--border-primary),0.3)] hover:bg-[rgba(var(--accent-primary),0.1)] hover:border-[rgba(var(--accent-primary),0.3)] border text-[rgb(var(--text-secondary))] hover:text-[rgb(var(--accent-primary))] rounded-xl text-xs font-semibold transition-all duration-200 touch-interactive"
             >
               <Github className="w-4 h-4" />
               <span>Code</span>
@@ -366,7 +472,7 @@ const ProjectCard: React.FC<{ project: { title: string; description: string; ima
               href={project.demo}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex-1 flex items-center justify-center gap-2 px-4 py-2.5 bg-gradient-to-r from-[rgb(var(--accent-primary))] to-[rgb(var(--accent-secondary))] hover:opacity-90 text-[rgb(var(--text-inverse))] rounded-xl text-xs font-semibold transition-all duration-200"
+              className="flex-1 flex items-center justify-center gap-2 px-4 py-2.5 bg-gradient-to-r from-[rgb(var(--accent-primary))] to-[rgb(var(--accent-secondary))] hover:opacity-90 text-[rgb(var(--text-inverse))] rounded-xl text-xs font-semibold transition-all duration-200 touch-interactive"
             >
               <ExternalLink className="w-4 h-4" />
               <span>Live Demo</span>
