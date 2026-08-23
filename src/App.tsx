@@ -10,6 +10,7 @@ import { Contact } from './components/Contact';
 import { Footer } from './components/Footer';
 import { CustomCursor } from './components/CustomCursor';
 import { ScrollProgress } from './components/ScrollProgress';
+import { VoiceAIAssistant } from './components/VoiceAIAssistant';
 
 function App() {
   return (
@@ -27,6 +28,7 @@ function App() {
           <Contact />
         </main>
         <Footer />
+        <VoiceAIAssistant />
       </div>
     </ThemeProvider>
   );
