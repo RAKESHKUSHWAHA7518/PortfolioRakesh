@@ -12,6 +12,8 @@ import { CustomCursor } from './components/CustomCursor';
 import { ScrollProgress } from './components/ScrollProgress';
 import { VoiceAIAssistant } from './components/VoiceAIAssistant';
 
+import { CommandPalette } from './components/CommandPalette';
+
 function App() {
   return (
     <ThemeProvider>
@@ -29,6 +31,8 @@ function App() {
         </main>
         <Footer />
         <VoiceAIAssistant />
+
+        <CommandPalette />
       </div>
     </ThemeProvider>
   );

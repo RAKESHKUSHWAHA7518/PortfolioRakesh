@@ -1,5 +1,5 @@
-import React, { useState, useRef, useEffect, useCallback } from 'react';
-import { ExternalLink, Github, ChevronDown, Code, Database, Server, Layers, CheckCircle2, ChevronLeft, ChevronRight } from 'lucide-react';
+import React, { useState, useRef } from 'react';
+import { ExternalLink, Github, ChevronDown, Code, Database, Server, Layers, CheckCircle2 } from 'lucide-react';
 import { useGSAP } from '../hooks/useGSAP';
 import { TiltCard } from './TiltCard';
 import { SplitText } from './SplitText';
@@ -7,9 +7,6 @@ import gsap from 'gsap';
 
 export const Projects: React.FC = () => {
   const containerRef = useRef<HTMLDivElement>(null);
-  const [isTouchDevice, setIsTouchDevice] = useState(false);
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const carouselRef = useRef<HTMLDivElement>(null);
 
   const projects = [
     {
@@ -181,47 +178,20 @@ export const Projects: React.FC = () => {
     },
   ];
 
-  useEffect(() => {
-    const checkTouch = () => {
-      setIsTouchDevice('ontouchstart' in window || navigator.maxTouchPoints > 0);
-    };
-    checkTouch();
-    window.addEventListener('resize', checkTouch);
-    return () => window.removeEventListener('resize', checkTouch);
-  }, []);
-
-  const goToSlide = useCallback((index: number) => {
-    setCurrentIndex(index);
-    if (carouselRef.current) {
-      const cardWidth = carouselRef.current.querySelector('.proj-card')?.clientWidth || 0;
-      const gap = 24; // gap-6 = 24px
-      carouselRef.current.scrollTo({
-        left: index * (cardWidth + gap),
-        behavior: 'smooth',
-      });
-    }
-  }, []);
-
-  const goToPrev = useCallback(() => {
-    setCurrentIndex(prev => Math.max(0, prev - 1));
-  }, []);
-
-  const goToNext = useCallback(() => {
-    setCurrentIndex(prev => Math.min(projects.length - 1, prev + 1));
-  }, [projects.length]);
-
   useGSAP(() => {
     const ctx = gsap.context(() => {
       gsap.fromTo('.proj-title .char',
         { y: '100%', opacity: 0 },
-        { y: '0%', opacity: 1, stagger: 0.03, duration: 0.8, ease: 'expo.out',
+        {
+          y: '0%', opacity: 1, stagger: 0.03, duration: 0.8, ease: 'expo.out',
           scrollTrigger: { trigger: '.proj-header', start: 'top 85%' }
         }
       );
 
       gsap.fromTo('.proj-header .divider, .proj-header .desc',
         { y: 20, opacity: 0 },
-        { y: 0, opacity: 1, stagger: 0.1, duration: 0.7, ease: 'power3.out',
+        {
+          y: 0, opacity: 1, stagger: 0.1, duration: 0.7, ease: 'power3.out',
           scrollTrigger: { trigger: '.proj-header', start: 'top 85%' }
         }
       );
@@ -253,7 +223,7 @@ export const Projects: React.FC = () => {
       aria-label="Projects"
     >
       <div className="absolute inset-0 gradient-mesh pointer-events-none opacity-50" />
-      
+
       <div className="section-container relative z-10">
         <div className="proj-header text-center mb-16 lg:mb-20">
           <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[rgba(var(--accent-tertiary),0.1)] border border-[rgba(var(--accent-tertiary),0.2)] text-[rgb(var(--accent-tertiary))] text-xs font-semibold uppercase tracking-widest mb-6">
@@ -266,61 +236,11 @@ export const Projects: React.FC = () => {
           <p className="section-description desc">Showcasing expertise in full-stack development and Agentic AI</p>
         </div>
 
-        {isTouchDevice ? (
-          <div className="relative">
-            <div 
-              ref={carouselRef}
-              className="proj-carousel flex gap-6 overflow-x-auto scroll-snap-x p-2 -ml-2 -mr-2 pb-4"
-              style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
-            >
-              <div className="flex gap-6" style={{ minWidth: '100%' }}>
-                {projects.map((project, index) => (
-                  <ProjectCard key={index} project={project} index={index} isMobile={true} />
-                ))}
-              </div>
-            </div>
-            <div className="flex justify-center gap-2 mt-6">
-              {projects.map((_, index) => (
-                <button
-                  key={index}
-                  onClick={() => goToSlide(index)}
-                  className={`w-2 h-2 rounded-full transition-all duration-300 ${
-                    index === currentIndex
-                      ? 'bg-[rgb(var(--accent-primary))] w-6'
-                      : 'bg-[rgba(var(--border-primary),0.5)] hover:bg-[rgba(var(--accent-primary),0.5)]'
-                  }`}
-                  aria-label={`Go to project ${index + 1}`}
-                />
-              ))}
-            </div>
-            <div className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-3 lg:hidden z-10">
-              <button
-                onClick={goToPrev}
-                disabled={currentIndex === 0}
-                className="p-2 rounded-full bg-[rgba(var(--bg-primary),0.8)] backdrop-blur-sm border border-[rgba(var(--border-primary),0.4)] text-[rgb(var(--text-secondary))] hover:text-[rgb(var(--accent-primary))] disabled:opacity-30 disabled:pointer-events-none transition-colors"
-                aria-label="Previous project"
-              >
-                <ChevronLeft className="w-5 h-5" />
-              </button>
-            </div>
-            <div className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-3 lg:hidden z-10">
-              <button
-                onClick={goToNext}
-                disabled={currentIndex === projects.length - 1}
-                className="p-2 rounded-full bg-[rgba(var(--bg-primary),0.8)] backdrop-blur-sm border border-[rgba(var(--border-primary),0.4)] text-[rgb(var(--text-secondary))] hover:text-[rgb(var(--accent-primary))] disabled:opacity-30 disabled:pointer-events-none transition-colors"
-                aria-label="Next project"
-              >
-                <ChevronRight className="w-5 h-5" />
-              </button>
-            </div>
-          </div>
-        ) : (
-          <div className="proj-grid grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
-            {projects.map((project, index) => (
-              <ProjectCard key={index} project={project} index={index} isMobile={false} />
-            ))}
-          </div>
-        )}
+        <div className="proj-grid grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
+          {projects.map((project, index) => (
+            <ProjectCard key={index} project={project} index={index} />
+          ))}
+        </div>
       </div>
     </section>
   );
@@ -344,10 +264,9 @@ interface ProjectCardProps {
     };
   };
   index: number;
-  isMobile?: boolean;
 }
 
-const ProjectCard: React.FC<ProjectCardProps> = ({ project, isMobile = false }) => {
+const ProjectCard: React.FC<ProjectCardProps> = ({ project }) => {
   const [isExpanded, setIsExpanded] = useState(false);
   const detailsRef = useRef<HTMLDivElement>(null);
   const cardRef = useRef<HTMLDivElement>(null);
@@ -367,12 +286,9 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project, isMobile = false }) 
     }
   };
 
-  const cardWidth = isMobile ? 'w-[calc(100vw-3rem)] sm:w-[calc(100vw-4rem)] lg:w-[calc(100vw/2-3rem)] xl:w-[calc(100vw/3-3rem)]' : 'w-full';
-  const scrollSnap = isMobile ? 'scroll-snap-start' : '';
-
   return (
-    <TiltCard className={`proj-card h-full ${cardWidth} ${scrollSnap}`} maxRotation={isMobile ? 0 : 8} touchEnabled={isMobile}>
-      <div 
+    <TiltCard className="proj-card h-full" maxRotation={8}>
+      <div
         ref={cardRef}
         className="surface h-full flex flex-col rounded-2xl overflow-hidden group relative animated-gradient-border"
       >
@@ -383,14 +299,14 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project, isMobile = false }) 
             className="w-full h-full object-cover group-hover:scale-[1.03] transition-transform duration-700 ease-out"
             loading="lazy"
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-[rgb(var(--bg-primary))] via-transparent to-transparent opacity-60 group-hover:opacity-80 transition-opacity duration-300" />
-          
-          <div className="absolute top-4 left-4 right-4 flex justify-between items-start">
-            <span className="px-3 py-1.5 bg-[rgba(var(--bg-primary),0.9)] backdrop-blur-sm text-[rgb(var(--text-primary))] border border-[rgba(var(--border-primary),0.3)] rounded-full text-[10px] font-bold tracking-widest uppercase">
+          <div className="absolute inset-0 bg-gradient-to-t from-[rgb(var(--bg-primary))] via-transparent to-transparent opacity-60 group-hover:opacity-70 transition-opacity duration-300" />
+
+          <div className="absolute top-4 left-4 right-4 flex justify-between items-start z-10">
+            <span className="px-3 py-1.5 bg-[rgba(var(--bg-primary),0.95)] backdrop-blur-sm text-[rgb(var(--text-primary))] border border-[rgba(var(--border-primary),0.3)] rounded-full text-[10px] font-bold tracking-widest uppercase shadow-lg">
               {project.category}
             </span>
             {project.badge && (
-              <span className="px-3 py-1.5 bg-[rgba(var(--accent-tertiary),0.9)] backdrop-blur-sm text-white border border-[rgba(var(--accent-tertiary),0.3)] rounded-full text-[10px] font-bold tracking-widest uppercase">
+              <span className="px-3 py-1.5 bg-[rgba(var(--accent-tertiary),0.95)] backdrop-blur-sm text-white border border-[rgba(var(--accent-tertiary),0.3)] rounded-full text-[10px] font-bold tracking-widest uppercase shadow-lg">
                 {project.badge}
               </span>
             )}

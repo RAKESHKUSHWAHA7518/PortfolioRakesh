@@ -438,11 +438,15 @@ export const Hero: React.FC = () => {
           </div>
         </div>
 
-        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-[rgb(var(--text-muted))] text-xs animate-bounce-subtle">
+        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-3 text-[rgb(var(--text-muted))] text-xs animate-bounce-subtle">
           <span className="uppercase tracking-widest">Scroll to Explore</span>
           <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
           </svg>
+          <kbd className="px-2 py-0.5 text-[10px] font-mono bg-[rgba(var(--border-primary),0.4)] rounded border border-[rgba(var(--border-primary),0.4)] inline-flex items-center gap-1">
+            <span className="text-[rgb(var(--accent-primary))]">⌘K</span>
+            <span>Command Palette</span>
+          </kbd>
         </div>
       </section>
 
