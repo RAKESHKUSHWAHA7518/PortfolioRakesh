@@ -218,17 +218,17 @@ export const VoiceAIAssistant: React.FC = () => {
     let response = '';
     
     if (lowerQuery.includes('who') && (lowerQuery.includes('rakesh') || lowerQuery.includes('you') || lowerQuery.includes('developer'))) {
-      response = `Rakesh Kushwaha is an AI Software Developer at Mindcraft Labs with 2.5+ years experience. He specializes in multi-agent systems, voice AI (Retell, Vapi, ElevenLabs), and full-stack development. He's built 12+ AI agents and 25+ projects.`;
+      response = `Rakesh Kushwaha is an AI Software Developer at Neurodrift INC with 2.5+ years experience. He specializes in multi-agent systems, voice AI (Retell, Vapi, ElevenLabs), and full-stack development. He's built 15+ AI agents and 25+ projects.`;
     } else if (lowerQuery.includes('skill') || lowerQuery.includes('tech') || lowerQuery.includes('stack') || lowerQuery.includes('know')) {
       response = `Rakesh's tech stack: React, Next.js, TypeScript, Node.js, MongoDB, Python, FastAPI, AWS (Lambda, EC2, S3), Docker, Firebase, LangChain, CrewAI, Retell AI, Vapi, ElevenLabs, Redis, ChromaDB.`;
     } else if (lowerQuery.includes('project') || lowerQuery.includes('built') || lowerQuery.includes('work')) {
       response = `Key projects: Agentic AI Multi-Agent Research (LangChain/CrewAI), NextViseAI (AWS Comprehend Medical), SkillSwap (full-stack), ShopNow (e-commerce), AskMyDoc (RAG with Gemini), AI Coding Assistant, Swiggy Clone.`;
     } else if (lowerQuery.includes('experience') || lowerQuery.includes('work') || lowerQuery.includes('job')) {
-      response = `Current: AI Software Developer at Mindcraft Labs (Feb 2025-present). Previous: Frontend Intern at BookNow (40% performance gain), Full Stack Intern at CCA-Techno (healthcare HMS), Founder of Rkcoder.tech (10K+ monthly views).`;
+      response = `Current: AI Software Developer at Neurodrift INC (Mar 2025-present). Previous: AI Software Developer at Mindcraft Labs, Frontend Intern at BookNow (40% performance gain), Full Stack Intern at CCA-Techno (healthcare HMS), Founder of Rkcoder.tech (10K+ monthly views).`;
     } else if (lowerQuery.includes('education') || lowerQuery.includes('degree') || lowerQuery.includes('study')) {
       response = `B.Tech in Computer Science from Rajkiya Engineering College, Banda (2021-2025), 7.4 CGPA. Certifications: Namaste React, Namaste Node.js, Mastering DSA, Complete Web Dev Bootcamp, Complete JavaScript Course.`;
     } else if (lowerQuery.includes('voice') || lowerQuery.includes('agent') || lowerQuery.includes('ai')) {
-      response = `Rakesh builds voice AI agents using Retell AI, Vapi, and ElevenLabs. He achieved 20% voice accuracy improvement at Mindcraft Labs. Currently researching autonomous multi-agent frameworks with LangChain and CrewAI.`;
+      response = `Rakesh builds voice AI agents using Retell AI, Vapi, and ElevenLabs. He achieved 20%+ voice accuracy improvements in production at Mindcraft Labs and Neurodrift INC. Currently researching autonomous multi-agent frameworks with LangChain and CrewAI.`;
     } else if (lowerQuery.includes('contact') || lowerQuery.includes('email') || lowerQuery.includes('reach')) {
       response = `You can reach Rakesh at: rk7518329420@gmail.com, +91 7518329420, or book a session via the buttons below. LinkedIn: linkedin.com/in/rakesh-kushwaha-666726212, GitHub: github.com/RAKESHKUSHWAHA7518.`;
     } else if (lowerQuery.includes('voice option') || lowerQuery.includes('elevenlabs') || lowerQuery.includes('bubble') || lowerQuery.includes('premium voice') || lowerQuery.includes('tts')) {
@@ -442,7 +442,7 @@ export const VoiceAIAssistant: React.FC = () => {
                 <div className="grid grid-cols-2 gap-2 text-xs">
                   {[
                     { label: 'Role', value: 'AI Software Developer' },
-                    { label: 'Company', value: 'Mindcraft Labs' },
+                    { label: 'Company', value: 'Neurodrift INC' },
                     { label: 'Experience', value: '2.5+ years' },
                     { label: 'Specialty', value: 'Voice AI & Multi-Agent' },
                     { label: 'Stack', value: 'React, Node, Python, AWS' },

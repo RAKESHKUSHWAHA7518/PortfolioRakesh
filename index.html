@@ -28,8 +28,17 @@
     <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
     
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
-    <link rel="manifest" href="/site.webmanifest" />
+    <link rel="manifest" href="/manifest.json" />
+    <script>
+      // Unregister any rogue service workers from other projects sharing localhost
+      if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.getRegistrations().then(function(registrations) {
+          for (var r of registrations) {
+            r.unregister();
+          }
+        });
+      }
+    </script>
   </head>
   <body class="bg-[rgb(var(--bg-primary))] text-[rgb(var(--text-primary))] antialiased selection:bg-[rgba(var(--accent-primary),0.3)] selection:text-[rgb(var(--text-primary))]">
     <div id="root"></div>

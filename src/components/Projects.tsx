@@ -62,10 +62,10 @@ export const Projects: React.FC = () => {
     {
       title: 'SkillSwap',
       description: 'Full-stack platform to exchange skills mutually without monetary transactions',
-      image: 'https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=800&auto=format&fit=crop&q=80',
+      image: 'https://i.postimg.cc/RCkq99LP/Screenshot-2026-09-13-150904.png',
       tags: ['React', 'Node.js', 'MongoDB', 'Tailwind CSS', 'Express.js'],
-      github: 'https://github.com/RAKESHKUSHWAHA7518',
-      demo: 'https://github.com/RAKESHKUSHWAHA7518',
+      github: 'https://github.com/RAKESHKUSHWAHA7518/ProjectCom',
+      demo: 'https://skillexchange.fun/',
       category: 'Full Stack',
       details: {
         overview: 'Developed SkillSwap, a full-stack web application that connects users to exchange skills mutually without monetary transactions (e.g., Python for Graphic Design). Features skill-matching cards, gamification with credits and badges, and a clean responsive UI.',

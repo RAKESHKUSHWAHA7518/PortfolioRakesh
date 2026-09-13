@@ -86,10 +86,16 @@ export const About: React.FC = () => {
 
   const journey = [
     {
-      year: '2025',
+      year: '2025 – Present',
+      title: 'AI Software Developer',
+      company: 'Neurodrift INC',
+      desc: 'Architecting autonomous multi-agent systems and real-time voice AI agents using LangChain, CrewAI, Retell, and Vapi with full-stack cloud backends.',
+    },
+    {
+      year: '2024 – 2025',
       title: 'AI Software Developer',
       company: 'Mindcraft Labs',
-      desc: 'Pioneering voice AI agents & multi-agent systems. Built production systems using Retell, Vapi, ElevenLabs. Leading R&D on autonomous agent frameworks.',
+      desc: 'Pioneered voice AI agents & clinical NER (NextViseAI). Integrated ElevenLabs, Retell, and AWS SAM for serverless onboarding workflows.',
     },
     {
       year: '2024',

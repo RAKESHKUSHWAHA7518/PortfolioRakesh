@@ -66,7 +66,7 @@ export const CommandPalette: React.FC = () => {
       description: 'Work history, roles, metrics',
       icon: <Zap className="w-4 h-4" />,
       category: 'navigation',
-      keywords: ['experience', 'work', 'jobs', 'career', 'mindcraft', 'booknow', 'cca'],
+      keywords: ['experience', 'work', 'jobs', 'career', 'neurodrift', 'mindcraft', 'booknow', 'cca'],
       action: () => scrollToSection('experience'),
       shortcut: '⌘3'
     },
