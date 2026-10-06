@@ -3,6 +3,7 @@ import { Target, Zap, Award, Code2, Database, Bot, Cloud, Users, Briefcase, Glob
 import { useGSAP } from '../hooks/useGSAP';
 import { TiltCard } from './TiltCard';
 import { SplitText } from './SplitText';
+import { Terminal } from './Terminal';
 import gsap from 'gsap';
 
 export const About: React.FC = () => {
@@ -212,8 +213,11 @@ export const About: React.FC = () => {
 
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 mb-20">
           <div className="journey-container lg:col-span-7 space-y-6">
-            <h3 className="text-2xl font-bold text-[rgb(var(--text-primary))] mb-8">Professional Journey</h3>
-            <div className="relative">
+            <h3 className="text-2xl font-bold text-[rgb(var(--text-primary))] mb-4">Professional Journey</h3>
+
+            <Terminal />
+
+            <div className="relative mt-8">
               <div className="absolute left-4 top-0 bottom-0 w-0.5 bg-gradient-to-b from-[rgb(var(--accent-primary))] to-[rgb(var(--accent-secondary))] opacity-30 sm:left-6" />
               {journey.map((item, index) => (
                 <div key={index} className="journey-item relative pl-12 pb-10 last:pb-0 sm:pl-16">

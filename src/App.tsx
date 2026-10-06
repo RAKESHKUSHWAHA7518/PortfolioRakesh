@@ -11,6 +11,7 @@ import { Footer } from './components/Footer';
 import { CustomCursor } from './components/CustomCursor';
 import { ScrollProgress } from './components/ScrollProgress';
 import { VoiceAIAssistant } from './components/VoiceAIAssistant';
+import { BackToTop } from './components/BackToTop';
 
 import { CommandPalette } from './components/CommandPalette';
 
@@ -31,6 +32,7 @@ function App() {
         </main>
         <Footer />
         <VoiceAIAssistant />
+        <BackToTop />
 
         <CommandPalette />
       </div>
