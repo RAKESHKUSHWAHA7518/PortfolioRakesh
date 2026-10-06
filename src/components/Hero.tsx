@@ -37,10 +37,10 @@ export const Hero: React.FC = () => {
 
   useEffect(() => {
     const roles = [
-      'AI Software Developer',
+      'Gen AI Developer',
+      'AI Engineer',
       'Full Stack Engineer',
-      'Voice Agent Builder',
-      'Multi-Agent Researcher',
+      'Multi-Agent Architect',
     ];
     
     let activeIndex = 0;
@@ -336,6 +336,29 @@ export const Hero: React.FC = () => {
                 <span className="text-gradient-primary font-semibold">Multi-agent architectures</span> to production-ready voice AI.
               </p>
 
+              <div className="w-full overflow-hidden bg-[rgba(var(--accent-primary),0.05)] border-y border-[rgba(var(--accent-primary),0.1)] py-2 mb-10 -mx-4 sm:mx-0 sm:rounded-xl">
+                <div className="animate-marquee whitespace-nowrap flex items-center gap-8 text-[rgb(var(--accent-primary))] font-mono text-sm tracking-wider">
+                  {[...Array(2)].map((_, i) => (
+                    <span key={i} className="flex gap-8">
+                      <span>AGENTIC AI</span>
+                      <span>•</span>
+                      <span>RAG PIPELINES</span>
+                      <span>•</span>
+                      <span>LARGE LANGUAGE MODELS</span>
+                      <span>•</span>
+                      <span>VECTOR DBs</span>
+                      <span>•</span>
+                      <span>VOICE AI</span>
+                      <span>•</span>
+                      <span>LANGCHAIN</span>
+                      <span>•</span>
+                      <span>CREWAI</span>
+                      <span>•</span>
+                    </span>
+                  ))}
+                </div>
+              </div>
+
               <div className="hero-cta flex flex-col sm:flex-row items-center justify-center gap-4 mb-10 w-full">
                 <MagneticButton
                   onClick={downloadResume}
@@ -492,7 +515,11 @@ export const Hero: React.FC = () => {
                 <ul className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm text-[rgb(var(--text-secondary))]">
                   <li className="flex items-center gap-1.5 p-2 rounded-lg hover:bg-[rgba(var(--accent-primary),0.05)] transition-colors touch-interactive">
                     <span className="w-2 h-2 rounded-full bg-[rgb(var(--accent-primary))]" />
-                    AI Software Developer
+                    Gen AI Developer
+                  </li>
+                  <li className="flex items-center gap-1.5 p-2 rounded-lg hover:bg-[rgba(var(--accent-primary),0.05)] transition-colors touch-interactive">
+                    <span className="w-2 h-2 rounded-full bg-[rgb(var(--accent-primary))]" />
+                    AI Engineer
                   </li>
                   <li className="flex items-center gap-1.5 p-2 rounded-lg hover:bg-[rgba(var(--accent-primary),0.05)] transition-colors touch-interactive">
                     <span className="w-2 h-2 rounded-full bg-[rgb(var(--accent-primary))]" />
@@ -501,10 +528,6 @@ export const Hero: React.FC = () => {
                   <li className="flex items-center gap-1.5 p-2 rounded-lg hover:bg-[rgba(var(--accent-primary),0.05)] transition-colors touch-interactive">
                     <span className="w-2 h-2 rounded-full bg-[rgb(var(--accent-primary))]" />
                     Voice Agent Engineer
-                  </li>
-                  <li className="flex items-center gap-1.5 p-2 rounded-lg hover:bg-[rgba(var(--accent-primary),0.05)] transition-colors touch-interactive">
-                    <span className="w-2 h-2 rounded-full bg-[rgb(var(--accent-primary))]" />
-                    Conversational AI Developer
                   </li>
                 </ul>
               </div>
