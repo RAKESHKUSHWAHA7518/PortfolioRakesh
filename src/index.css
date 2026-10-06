@@ -23,21 +23,21 @@
     --text-inverse: 10 10 14;
     --text-link: 0 212 170;
     
-    --accent-primary: 0 212 170;
-    --accent-secondary: 139 92 246;
-    --accent-tertiary: 255 107 107;
-    --accent-glow: 0 212 170;
+    --accent-primary: 0 255 204;     /* More neon cyan/electric blue feel */
+    --accent-secondary: 168 85 247;  /* Deeper purple/magenta */
+    --accent-tertiary: 59 130 246;   /* Deep electric blue */
+    --accent-glow: 0 255 204;
     
     --border-primary: 35 35 45;
     --border-secondary: 45 45 55;
-    --border-focus: 0 212 170;
+    --border-focus: 0 255 204;
     --border-card: 35 35 45;
     
     --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.3);
     --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.4), 0 2px 4px -2px rgba(0, 0, 0, 0.3);
     --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.4), 0 4px 6px -4px rgba(0, 0, 0, 0.3);
     --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.5), 0 8px 10px -6px rgba(0, 0, 0, 0.3);
-    --shadow-glow: 0 0 40px rgba(0, 212, 170, 0.15), 0 0 80px rgba(139, 92, 246, 0.1);
+    --shadow-glow: 0 0 40px rgba(0, 255, 204, 0.25), 0 0 80px rgba(168, 85, 247, 0.2);
     --shadow-card: 0 4px 20px rgba(0, 0, 0, 0.25);
     --shadow-card-hover: 0 12px 40px rgba(0, 0, 0, 0.35);
     
