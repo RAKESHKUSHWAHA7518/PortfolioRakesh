@@ -7,6 +7,7 @@ import gsap from 'gsap';
 
 export const Projects: React.FC = () => {
   const containerRef = useRef<HTMLDivElement>(null);
+  const [selectedCategory, setSelectedCategory] = useState<string>('All');
 
   const projects = [
     {
@@ -178,6 +179,9 @@ export const Projects: React.FC = () => {
     },
   ];
 
+  const categories = ['All', ...Array.from(new Set(projects.map(p => p.category)))];
+  const filteredProjects = selectedCategory === 'All' ? projects : projects.filter(p => p.category === selectedCategory);
+
   useGSAP(() => {
     const ctx = gsap.context(() => {
       gsap.fromTo('.proj-title .char',
@@ -196,6 +200,7 @@ export const Projects: React.FC = () => {
         }
       );
 
+      // Re-trigger animation when filteredProjects change
       gsap.fromTo('.proj-card',
         { y: 40, opacity: 0 },
         {
@@ -213,7 +218,7 @@ export const Projects: React.FC = () => {
     }, containerRef);
 
     return () => ctx.revert();
-  }, []);
+  }, [filteredProjects]);
 
   return (
     <section
@@ -236,9 +241,25 @@ export const Projects: React.FC = () => {
           <p className="section-description desc">Showcasing expertise in full-stack development and Agentic AI</p>
         </div>
 
+        <div className="flex flex-wrap justify-center gap-3 mb-12 relative z-10">
+          {categories.map((category) => (
+            <button
+              key={category}
+              onClick={() => setSelectedCategory(category)}
+              className={`px-4 py-2 rounded-full text-sm font-semibold transition-all duration-300 touch-interactive border ${
+                selectedCategory === category
+                  ? 'bg-[rgb(var(--accent-primary))] text-[rgb(var(--text-inverse))] border-[rgb(var(--accent-primary))] shadow-md shadow-[rgba(var(--accent-primary),0.2)]'
+                  : 'bg-[rgba(var(--bg-primary),0.8)] text-[rgb(var(--text-secondary))] border-[rgba(var(--border-primary),0.5)] hover:bg-[rgba(var(--accent-primary),0.1)] hover:text-[rgb(var(--accent-primary))] hover:border-[rgba(var(--accent-primary),0.3)]'
+              }`}
+            >
+              {category}
+            </button>
+          ))}
+        </div>
+
         <div className="proj-grid grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
-          {projects.map((project, index) => (
-            <ProjectCard key={index} project={project} index={index} />
+          {filteredProjects.map((project, index) => (
+            <ProjectCard key={project.title} project={project} index={index} />
           ))}
         </div>
       </div>
