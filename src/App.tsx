@@ -1,43 +1,122 @@
-import React from 'react';
+
+import { useEffect, useRef, useState } from 'react';
+import { ArrowDown, ArrowRight, ArrowUpRight, AudioLines, Check, ChevronDown, Code2, Copy, ExternalLink, Github, Headphones, Linkedin, Mail, Menu, Mic, Moon, Pause, Play, RotateCcw, Sun, Volume2, X } from 'lucide-react';
 import { ThemeProvider } from './context/ThemeContext';
-import { Header } from './components/Header';
-import { Hero } from './components/Hero';
-import { About } from './components/About';
-import { Experience } from './components/Experience';
-import { Education } from './components/Education';
-import { Projects } from './components/Projects';
-import { Contact } from './components/Contact';
-import { Footer } from './components/Footer';
-import { CustomCursor } from './components/CustomCursor';
-import { ScrollProgress } from './components/ScrollProgress';
-import { VoiceAIAssistant } from './components/VoiceAIAssistant';
-import { BackToTop } from './components/BackToTop';
+import { useTheme } from './context/theme';
+import { experiences, projects } from './portfolioData';
+import './portfolio.css';
 
-import { CommandPalette } from './components/CommandPalette';
+type Project = typeof projects[number];
+type Story = { title: string; subtitle: string; transcript: string; questions: { label: string; answer: string }[] };
+const email = 'rk7518329420@gmail.com';
+const github = 'https://github.com/RAKESHKUSHWAHA7518';
+const linkedin = 'https://www.linkedin.com/in/rakesh-kushwaha-666726212/';
+const resume = 'https://drive.google.com/file/d/1IwfE1M8QKRtD_4CC5Fi-st8Lp1FnfD_1/view?usp=sharing';
+const intro: Story = {
+  title: 'Meet Rakesh', subtitle: 'Gen AI & Full-Stack Developer',
+  transcript: 'Hi, I’m Rakesh Kushwaha, a Gen AI and full-stack developer. I build end-to-end voice AI experiences, backend systems, AI integrations, and full-stack web products. For a hotel chain, I automate email reading, classification, processing, and tagging. My work brings together conversation workflows, backend APIs, and user interfaces. I work with tools including Deepgram and ElevenLabs, alongside React, TypeScript, Node.js, and Python. Explore my projects to see my work in document question answering, healthcare AI, and full-stack applications.',
+  questions: [
+    { label: 'What do you build?', answer: 'My work covers end-to-end voice AI, backend engineering, AI integrations, and full-stack web products. This includes email automation for a hotel chain.' },
+    { label: 'What is your stack?', answer: 'My voice AI stack includes Deepgram and ElevenLabs. My broader stack includes React, Next.js, TypeScript, Node.js, Python, FastAPI, AWS, and Docker.' },
+    { label: 'How can we connect?', answer: `You can email me at ${email}, or find my GitHub and LinkedIn profiles in the contact section.` },
+  ],
+};
+const storyFor = (project: Project): Story => project.title === 'Hotel Email Automation' ? {
+  title: project.title, subtitle: project.category,
+  transcript: 'For a hotel chain, I built backend and AI integration workflows that read incoming emails, classify them, process them, and apply tags automatically. My work connects email handling with AI-assisted classification and the processing steps that follow. This project demonstrates my experience with backend automation and integrating AI into business workflows.',
+  questions: [
+    { label: 'My contribution', answer: project.details.overview },
+    { label: 'The workflow', answer: 'Read incoming emails, classify them with AI, process them through the workflow, and apply tags automatically.' },
+    { label: 'Implementation details', answer: 'The portfolio currently documents the email reading, classification, processing, and tagging workflow. The exact email platform, model, backend framework, and deployment details have not yet been added.' },
+  ],
+} : ({
+  title: project.title, subtitle: project.category,
+  transcript: `${project.title}. ${project.details.overview} The project includes ${project.details.features.slice(0, 3).join(', ')}. The frontend uses ${project.details.techStack.frontend.join(', ')}. The backend uses ${project.details.techStack.backend.join(', ')}. You can read the technical breakdown on the project card.`,
+  questions: [
+    { label: 'Project overview', answer: project.details.overview },
+    { label: 'Technology choices', answer: `Frontend: ${project.details.techStack.frontend.join(', ')}. Backend: ${project.details.techStack.backend.join(', ')}. Deployment: ${project.details.techStack.deployment.join(', ')}. The specific trade-offs behind these choices are not yet documented in this portfolio.` },
+    { label: 'Key features', answer: project.details.features.join('. ') + '.' },
+  ],
+});
 
-function App() {
-  return (
-    <ThemeProvider>
-      <div className="min-h-screen bg-[rgb(var(--bg-primary))] text-[rgb(var(--text-primary))] overflow-x-hidden transition-colors duration-300">
-        <ScrollProgress />
-        <CustomCursor />
-        <Header />
-        <main>
-          <Hero />
-          <About />
-          <Experience />
-          <Education />
-          <Projects />
-          <Contact />
-        </main>
-        <Footer />
-        <VoiceAIAssistant />
-        <BackToTop />
-
-        <CommandPalette />
-      </div>
-    </ThemeProvider>
-  );
+function StoryPlayer({ story, onClose }: { story: Story; onClose: () => void }) {
+  const [playing, setPlaying] = useState(false);
+  const [progress, setProgress] = useState(0);
+  const [speed, setSpeed] = useState(1);
+  const [answer, setAnswer] = useState(story.transcript);
+  const [error, setError] = useState('');
+  const dialogRef = useRef<HTMLDialogElement>(null);
+  const utteranceRef = useRef<SpeechSynthesisUtterance | null>(null);
+  const supported = 'speechSynthesis' in window;
+  useEffect(() => { const dialog = dialogRef.current; dialog?.showModal(); return () => { window.speechSynthesis?.cancel(); dialog?.close(); }; }, []);
+  const stop = () => { window.speechSynthesis?.cancel(); utteranceRef.current = null; setPlaying(false); };
+  const speak = () => {
+    if (!supported) { setError('Voice playback is unavailable in this browser. The full transcript is below.'); return; }
+    if (playing) { window.speechSynthesis.pause(); setPlaying(false); return; }
+    if (window.speechSynthesis.paused && utteranceRef.current) { window.speechSynthesis.resume(); setPlaying(true); return; }
+    window.speechSynthesis.cancel();
+    const utterance = new SpeechSynthesisUtterance(answer); utterance.lang = 'en-IN'; utterance.rate = speed;
+    const voices = window.speechSynthesis.getVoices();
+    utterance.voice = voices.find(v => v.lang === 'en-IN') ?? voices.find(v => v.lang.startsWith('en')) ?? null;
+    utterance.onboundary = event => setProgress(Math.min(100, event.charIndex / Math.max(answer.length, 1) * 100));
+    utterance.onend = () => { setPlaying(false); setProgress(100); utteranceRef.current = null; };
+    utterance.onerror = event => { setPlaying(false); if (event.error !== 'canceled' && event.error !== 'interrupted') setError('Playback could not start. Try again or read the transcript.'); };
+    utteranceRef.current = utterance; setError(''); setProgress(0); setPlaying(true); window.speechSynthesis.speak(utterance);
+  };
+  const chooseAnswer = (text: string) => { stop(); setAnswer(text); setProgress(0); setError(''); };
+  return <dialog ref={dialogRef} className="story-dialog" aria-labelledby="story-title" onCancel={onClose} onClick={event => { if (event.target === event.currentTarget) onClose(); }}>
+    <div className="story-content"><button className="icon-button story-close" aria-label="Close voice walkthrough" onClick={onClose}><X size={20} /></button><span className="eyebrow"><Headphones size={14} /> PROJECT WALKTHROUGH</span><h2 id="story-title">{story.title}</h2><p className="muted">{story.subtitle}</p>
+      <div className={`player-wave ${playing ? 'is-playing' : ''}`} aria-hidden="true">{Array.from({ length: 36 }, (_, i) => <i key={i} style={{ height: `${12 + ((i * 17 + 9) % 46)}px`, animationDelay: `${i * .045}s` }} />)}</div>
+      <div className="player-controls"><button className="play-control" onClick={speak} disabled={!supported} aria-label={playing ? 'Pause narration' : 'Play narration'}>{playing ? <Pause size={20} /> : <Play size={20} />}</button><progress value={progress} max={100} aria-label="Narration progress" /><button className="icon-button" aria-label="Reset narration" onClick={() => { stop(); setProgress(0); }}><RotateCcw size={17} /></button><label className="speed-label">Speed<select value={speed} onChange={event => { stop(); setProgress(0); setSpeed(Number(event.target.value)); }}><option value="0.8">0.8×</option><option value="1">1×</option><option value="1.2">1.2×</option><option value="1.5">1.5×</option></select></label></div>
+      <p className="voice-note">Browser voice preview · Play to listen · Your microphone is not used</p>{error && <p role="alert">{error}</p>}{!supported && <p role="status">Audio is unavailable in this browser. Read the transcript below.</p>}
+      <div className="question-buttons"><button className={answer === story.transcript ? 'active' : ''} onClick={() => chooseAnswer(story.transcript)}>Full story</button>{story.questions.map(q => <button key={q.label} className={answer === q.answer ? 'active' : ''} onClick={() => chooseAnswer(q.answer)}>{q.label}</button>)}</div><div className="transcript"><span className="eyebrow">TRANSCRIPT</span><p>{answer}</p></div><p className="voice-note">These explanations use the information in this portfolio.</p>
+    </div>
+  </dialog>;
 }
 
-export default App;
+function ProjectCard({ project, number, onListen }: { project: Project; number: number; onListen: (story: Story) => void }) {
+  const [imageFailed, setImageFailed] = useState(false);
+  const hasDemo = Boolean(project.demo && project.demo !== github); const hasCode = Boolean(project.github && project.github !== github);
+  const isClinical = project.title === 'NextViseAI'; const isResearch = project.category === 'AI Research'; const isEmail = project.title === 'Hotel Email Automation';
+  return <article className="work-card"><div className={`project-visual ${isClinical ? 'clinical-visual' : ''}`}>
+    {isEmail ? <div className="email-preview"><div className="email-preview-header"><Mail size={15} /><span>HOTEL EMAIL WORKFLOW</span></div><div className="email-flow-visual"><span>Read</span><ArrowRight size={13} /><span>Classify</span><ArrowRight size={13} /><span>Process</span></div><div className="email-tag-visual"><Check size={13} /> Apply tags automatically</div><small>Workflow illustration</small></div> : isClinical ? <div className="clinical-preview"><div className="document-lines"><span>CLINICAL DOCUMENT</span><i /><i /><i /><i /></div><ArrowRight size={24} /><div className="entity-preview"><span>ENTITY EXTRACTION</span><b>Biomarker</b><b>Condition</b><b>Medication</b></div><small>Architecture illustration</small></div> : isResearch ? <div className="research-preview"><Code2 size={35} /><h4>Multi-agent research</h4><p>Planning → Tools → Reflection</p><small>Prototype / in development</small></div> : !imageFailed ? <img src={project.image} alt={`${project.title} application screenshot`} loading="lazy" onError={() => setImageFailed(true)} /> : <div className="research-preview"><Code2 size={35} /><h4>{project.title}</h4><p>Application preview unavailable</p></div>}<span className="project-index">0{number}</span></div>
+    <div className="work-body"><div className="project-meta"><span>{project.category}</span><span className={hasDemo ? 'live-tag' : 'research-tag'}><i />{hasDemo ? 'Demo available' : isResearch ? 'In development' : 'Company project'}</span></div><h3>{project.title}<ArrowUpRight size={23} /></h3><p>{project.description}</p><div className="tag-row">{project.tags.slice(0, 4).map(tag => <span key={tag}>{tag}</span>)}</div><button className="listen-button" onClick={() => onListen(storyFor(project))}><Headphones size={16} /><span>Hear the project story</span><Play size={13} /></button>
+      <details className="project-details"><summary>Technical breakdown<ChevronDown size={15} /></summary><div><h4>Project & contribution</h4><p>{project.details.overview}</p><h4>What it includes</h4><ul>{project.details.features.map(feature => <li key={feature}>{feature}</li>)}</ul><h4>Architecture</h4>{isEmail ? <p>Read incoming emails → AI-assisted classification → Processing workflow → Automatic tagging.</p> : <p><strong>Frontend:</strong> {project.details.techStack.frontend.join(', ')}<br /><strong>Backend:</strong> {project.details.techStack.backend.join(', ')}<br /><strong>Deployment:</strong> {project.details.techStack.deployment.join(', ')}</p>}</div></details>
+      <div className="project-links">{hasCode && <a href={project.github} target="_blank" rel="noreferrer"><Github size={15} /> Source code</a>}{hasDemo ? <a href={project.demo} target="_blank" rel="noreferrer">Open demo <ExternalLink size={14} /></a> : <span>{isResearch ? 'Demo not yet available' : 'Public demo not provided'}</span>}</div>
+    </div></article>;
+}
+
+function Portfolio() {
+  const { theme, toggleTheme } = useTheme();
+  const [menuOpen, setMenuOpen] = useState(false); const [filter, setFilter] = useState('All'); const [more, setMore] = useState(false); const [story, setStory] = useState<Story | null>(null); const [copied, setCopied] = useState(false); const [copyError, setCopyError] = useState(false);
+  const copyTimer = useRef<ReturnType<typeof setTimeout>>();
+  useEffect(() => () => clearTimeout(copyTimer.current), []);
+  useEffect(() => { document.body.style.overflow = story ? 'hidden' : ''; return () => { document.body.style.overflow = ''; }; }, [story]);
+  const featuredTitles = ['Hotel Email Automation', 'PDFChat AI', 'SkillSwap'];
+  const ordered = [...featuredTitles.map(title => projects.find(p => p.title === title)!), ...projects.filter(p => !featuredTitles.includes(p.title))];
+  const filtered = ordered.filter(p => filter === 'All' || (filter === 'AI' ? !['Full Stack', 'E-Commerce', 'Food Tech'].includes(p.category) : ['Full Stack', 'E-Commerce', 'Food Tech'].includes(p.category)));
+  const visible = more ? filtered : filtered.slice(0, 3);
+  const skills = [
+    { icon: <Mic size={22} />, title: 'Voice AI', caption: 'From conversation to integration', items: ['Deepgram', 'ElevenLabs', 'Retell AI', 'Vapi', 'Conversation workflows'], link: '#voice', evidence: 'Explore my voice AI approach' },
+    { icon: <AudioLines size={22} />, title: 'Generative AI', caption: 'Context, retrieval & orchestration', items: ['RAG', 'LangChain', 'CrewAI', 'Gemini API', 'ChromaDB'], link: '#projects', evidence: 'See PDFChat AI & AI projects' },
+    { icon: <Code2 size={22} />, title: 'Full-stack development', caption: 'Interfaces connected to real systems', items: ['React', 'Next.js', 'TypeScript', 'Node.js', 'Python', 'FastAPI'], link: '#projects', evidence: 'See SkillSwap & web projects' },
+    { icon: <ExternalLink size={22} />, title: 'Backend & AI integrations', caption: 'APIs, automation & business workflows', items: ['Node.js', 'Python', 'FastAPI', 'MongoDB', 'AWS', 'Docker'], link: '#projects', evidence: 'See hotel email automation' },
+  ];
+  const copyEmail = async () => { try { await navigator.clipboard.writeText(email); setCopied(true); setCopyError(false); clearTimeout(copyTimer.current); copyTimer.current = setTimeout(() => setCopied(false), 2500); } catch { setCopyError(true); } };
+  return <div className="portfolio"><a className="skip-link" href="#main">Skip to content</a>
+    <header className="site-header"><div className="header-inner"><a className="brand" href="#home" aria-label="Rakesh Kushwaha home"><span className="brand-mark">rk<span>.</span></span><span className="brand-name">RAKESH KUSHWAHA</span></a><nav aria-label="Main navigation" className={menuOpen ? 'nav-open' : ''}>{[['projects', 'Work'], ['voice', 'Voice AI'], ['experience', 'Experience'], ['about', 'About']].map(([id, label]) => <a key={id} href={`#${id}`} onClick={() => setMenuOpen(false)}>{label}</a>)}</nav><div className="header-actions"><button className="icon-button" onClick={toggleTheme} aria-label={`Switch to ${theme === 'dark' ? 'light' : 'dark'} theme`}>{theme === 'dark' ? <Sun size={18} /> : <Moon size={18} />}</button><a className="header-contact" href="#contact">Let’s talk <ArrowUpRight size={15} /></a><button className="icon-button menu-toggle" aria-expanded={menuOpen} aria-label={menuOpen ? 'Close navigation' : 'Open navigation'} onClick={() => setMenuOpen(!menuOpen)}>{menuOpen ? <X size={20} /> : <Menu size={20} />}</button></div></div></header>
+    <main id="main"><section id="home" className="hero-section section-wrap"><div className="hero-copy"><span className="eyebrow status-label"><i /> GEN AI & FULL-STACK DEVELOPER</span><h1>I build AI that<br /><span>speaks.</span> And<br />products that work.</h1><p className="hero-intro">I’m <strong>Rakesh Kushwaha.</strong> I build end-to-end voice AI, backend automations, and full-stack web products—connecting AI with the systems people use every day.</p><div className="hero-buttons"><a className="primary-button" href="#projects">Explore my work <ArrowDown size={17} /></a><a className="secondary-button" href={resume} target="_blank" rel="noreferrer">View resume <ArrowUpRight size={17} /></a></div><div className="hero-person"><img src="https://github.com/RAKESHKUSHWAHA7518.png?size=120" alt="Rakesh Kushwaha" onError={event => { event.currentTarget.style.display = 'none'; }} /><div><strong>2.5 years of development experience</strong><span>Currently building AI at Neurodrift INC</span></div></div></div>
+      <div className="hero-studio"><div className="studio-top"><span><i /> VOICE AI / FULL STACK</span><span>01 — WHAT I BUILD</span></div><div className="studio-orbit" aria-hidden="true"><div className="orbit-ring ring-one" /><div className="orbit-ring ring-two" /><div className="orbit-ring ring-three" /><div className="orbit-core"><AudioLines size={62} strokeWidth={1.2} /></div><span className="orbit-chip chip-one"><Mic size={14} /> Voice input</span><span className="orbit-chip chip-two"><Code2 size={14} /> Tool calling</span><span className="orbit-chip chip-three"><Volume2 size={14} /> Voice output</span></div><div className="studio-title"><span className="eyebrow">CONVERSATIONS, CONNECTED.</span><h2>From voice.<br />To intelligence.<br /><em>To action.</em></h2></div><button className="studio-listen" onClick={() => setStory(intro)}><span className="small-play"><Play size={15} /></span><span><strong>Meet the developer</strong><small>Listen to a short introduction</small></span><div className="mini-wave" aria-hidden="true">{[10, 18, 12, 24, 16, 28, 12, 20].map((height, i) => <i key={i} style={{ height }} />)}</div></button><span className="studio-footnote">Deepgram · ElevenLabs · React · Python</span></div>
+      <div className="hero-bottom"><span>VOICE AI</span><i /><span>GEN AI APPLICATIONS</span><i /><span>FULL-STACK PRODUCTS</span><a href="#projects">SCROLL TO EXPLORE <ArrowDown size={13} /></a></div></section>
+      <section id="projects" className="work-section section-wrap"><div className="section-heading"><div><span className="eyebrow">01 / SELECTED WORK</span><h2>Ideas, made <em>real.</em></h2><p>Backend automation, AI integrations, and web products. Explore the build—or hear the story.</p></div><div className="filters" aria-label="Filter projects">{['All', 'AI', 'Full Stack'].map(label => <button key={label} className={filter === label ? 'selected' : ''} aria-pressed={filter === label} onClick={() => { setFilter(label); setMore(false); }}>{label}</button>)}</div></div><div className="work-grid">{visible.map((project, i) => <ProjectCard key={project.title} project={project} number={i + 1} onListen={setStory} />)}</div>{filtered.length > 3 && <button className="more-button" onClick={() => setMore(!more)}>{more ? 'Show selected work' : `Explore ${filtered.length - 3} more projects`}<ChevronDown size={16} className={more ? 'rotated' : ''} /></button>}</section>
+      <section id="voice" className="voice-section section-wrap"><div className="voice-intro"><span className="eyebrow">02 / MY SPECIALISATION</span><h2>A voice is only<br />the <em>beginning.</em></h2><p>I build end-to-end voice AI experiences, connecting speech, conversation logic, and the systems behind the interaction.</p><div className="tag-row"><span>Deepgram</span><span>ElevenLabs</span><span>Retell AI</span><span>Vapi</span></div><a className="text-link" href="#contact">Let’s discuss a voice AI project <ArrowUpRight size={16} /></a></div><div className="voice-flow"><div className="flow-label">A VOICE AI SYSTEM, AT A GLANCE</div>{[{ number: '01', name: 'Listen', desc: 'Speech input & transcription', icon: <Mic size={20} /> }, { number: '02', name: 'Understand', desc: 'Context, conversation & AI reasoning', icon: <AudioLines size={20} /> }, { number: '03', name: 'Act', desc: 'Tools, APIs & workflow integrations', icon: <Code2 size={20} /> }, { number: '04', name: 'Respond', desc: 'Speech output & user experience', icon: <Volume2 size={20} /> }].map(step => <div className="flow-step" key={step.number}><span>{step.number}</span><div className="flow-icon">{step.icon}</div><div><h3>{step.name}</h3><p>{step.desc}</p></div><ArrowDown size={15} /></div>)}<p className="flow-note">Illustrative workflow · Implementation varies by project</p></div></section>
+      <section id="experience" className="experience-section section-wrap"><div className="section-heading"><div><span className="eyebrow">03 / EXPERIENCE</span><h2>Built through <em>practice.</em></h2><p>From full-stack foundations to voice AI and generative applications.</p></div></div><div className="experience-list">{experiences.map((exp, i) => <article className="experience-row" key={exp.company}><div className="experience-number">0{i + 1}</div><div className="experience-company"><h3>{exp.company}</h3><span>{exp.period}</span><span className="employment-type">{exp.type}</span></div><div className="experience-description"><h4>{exp.title}</h4><p>{exp.description[0].replace('ultra-low latency', 'real-time').replace('Pioneered', 'Built').replace(/, achieving a 20% improvement.*?experiences\./, '.')}</p><details><summary>More about this role <ChevronDown size={14} /></summary><ul>{exp.description.slice(1).filter(line => !/\d+%|10k|50\+/i.test(line)).map(line => <li key={line}>{line}</li>)}</ul><div className="tag-row">{exp.skills.slice(0, 6).map(skill => <span key={skill}>{skill}</span>)}</div></details></div>{i === 0 && <span className="current-label">CURRENT</span>}</article>)}</div><p className="timeline-note">Internship and employment dates are shown as listed; some periods overlap.</p></section>
+      <section id="skills" className="skills-section section-wrap"><div className="section-heading"><div><span className="eyebrow">04 / THE TOOLKIT</span><h2>The right tools.<br /><em>Connected thoughtfully.</em></h2></div><p className="heading-aside">Voice AI, backend engineering, AI integrations, and the interfaces that bring them together.</p></div><div className="skills-grid">{skills.map(skill => <article key={skill.title}><div className="skill-icon">{skill.icon}</div><h3>{skill.title}</h3><p>{skill.caption}</p><div className="tag-row">{skill.items.map(item => <span key={item}>{item}</span>)}</div><a href={skill.link}>{skill.evidence}<ArrowUpRight size={14} /></a></article>)}</div></section>
+      <section id="about" className="about-section section-wrap"><div><span className="eyebrow">05 / THE PERSON BEHIND THE BUILD</span><h2>Curious by nature.<br /><em>A builder by choice.</em></h2></div><div className="about-copy"><p>I’m Rakesh, a Gen AI and full-stack developer working at the intersection of conversation and software. I enjoy connecting AI capabilities with useful interfaces and backend workflows.</p><p>My experience includes voice AI, backend development, and AI integrations—including automated email reading, classification, processing, and tagging for a hotel chain. I also founded Rkcoder.tech to share development tutorials and technical articles.</p><div className="education-note"><span className="eyebrow">EDUCATION</span><strong>B.Tech · Computer Science & Engineering</strong><span>Rajkiya Engineering College, Banda · 2021–2025</span></div><div className="social-links"><a href={github} target="_blank" rel="noreferrer"><Github size={17} /> GitHub <ArrowUpRight size={13} /></a><a href={linkedin} target="_blank" rel="noreferrer"><Linkedin size={17} /> LinkedIn <ArrowUpRight size={13} /></a></div></div></section>
+      <section id="contact" className="contact-section section-wrap"><span className="eyebrow">HAVE SOMETHING IN MIND?</span><h2>Let’s build something<br /><em>worth talking about.</em></h2><p>A voice AI experience, backend automation, an AI integration, or your next web product.</p><div className="contact-actions"><a className="primary-button" href={`mailto:${email}?subject=Let%27s%20build%20something`}>Start a conversation <ArrowUpRight size={18} /></a><button className="secondary-button" onClick={copyEmail}>{copied ? <Check size={17} /> : <Copy size={17} />}{copied ? 'Email copied' : 'Copy email'}</button></div><a className="email-link" href={`mailto:${email}`}><Mail size={16} /> {email}</a><p className="copy-status" role="status">{copyError ? 'Copy unavailable. You can select the email address above.' : copied ? 'Email address copied to clipboard.' : ''}</p></section>
+    </main><footer className="site-footer section-wrap"><a className="brand-mark" href="#home">rk<span>.</span></a><span>© {new Date().getFullYear()} Rakesh Kushwaha</span><span>Gen AI. Voice AI. Full stack.</span><a href="#home">Back to top <ArrowUpRight size={14} /></a></footer>{story && <StoryPlayer key={story.title} story={story} onClose={() => setStory(null)} />}
+  </div>;
+}
+export default function App() { return <ThemeProvider><Portfolio /></ThemeProvider>; }
+
+
